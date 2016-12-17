@@ -1,0 +1,40 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "Template for new projects using MongoDB, Express, React and NodeJS.",
+  "main": "app.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waterkhair/template.git"
+  },
+  "keywords": [
+    "template",
+    "mongodb",
+    "express",
+    "react",
+    "node",
+    "redux"
+  ],
+  "author": "Jesus Barajas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/waterkhair/template/issues"
+  },
+  "homepage": "https://github.com/waterkhair/template#readme",
+  "dependencies": {
+    "express": "4.14.0",
+    "react": "15.4.1",
+    "react-router": "3.0.0",
+    "redux": "3.6.0"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "chai-http": "3.0.0",
+    "gulp": "3.9.1",
+    "jshint": "2.9.4",
+    "mocha": "3.2.0"
+  }
+}
