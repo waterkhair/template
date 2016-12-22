@@ -63,6 +63,7 @@
   "sub"           : false,     // true: Tolerate using `[]` notation when it can still be expressed in dot notation
   "supernew"      : false,     // true: Tolerate `new function () { ... };` and `new Object;`
   "validthis"     : false,     // true: Tolerate using this in a non-constructor function
+  "-W138"         : true,      // true: Disable warning 'Regular parameters should not come after default parameters'
 
   // Environments
   "browser"       : true,     // Web Browser (window, document, etc)
