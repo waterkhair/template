@@ -1,29 +1,16 @@
-var path = require('path'),
-    nodeExternals = require('webpack-node-externals'),
-    CopyPlugin = require('copy-webpack-plugin');
+var CopyPlugin = require('copy-webpack-plugin'),
+    Path = require('path'),
+    webpackNodeExternals = require('webpack-node-externals');
 
 module.exports = {
-    context: path.resolve('server'),
+    context: Path.resolve('server'),
     entry: 'server',
-    output: {
-        path: path.resolve('../../dist/server'),
-        filename: '[name].js'
-    },
-    target: 'node',
     externals: [
-        nodeExternals()
+        webpackNodeExternals()
     ],
     module: {
-        preLoaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_module/,
-                loader: 'eslint'
-            }
-        ],
         loaders: [
             {
-                test: /\.(js|jsx)$/,
                 exclude: /node_module/,
                 loader: 'babel',
                 query: {
@@ -31,23 +18,36 @@ module.exports = {
                         'es2015',
                         'stage-3'
                     ]
-                }
+                },
+                test: /\.(js|jsx)$/
+            }
+        ],
+        preLoaders: [
+            {
+                exclude: /node_module/,
+                loader: 'eslint',
+                test: /\.js$/
             }
         ]
     },
+    output: {
+        filename: '[name].js',
+        path: Path.resolve('../../dist/server')
+    },
     plugins: [
         new CopyPlugin([{
-                from: 'package.json',
-                to: 'package.json',
-                toType: 'file'
-            }], {
-                copyUnmodified: true
-            })
+            from: 'package.json',
+            to: 'package.json',
+            toType: 'file'
+        }], {
+            copyUnmodified: true
+        })
     ],
     resolve: {
         extensions: [
             '',
             '.js'
         ]
-    }
+    },
+    target: 'node'
 };

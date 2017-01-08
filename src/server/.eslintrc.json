@@ -3,11 +3,12 @@
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": "eslint:all",
     "parserOptions": {
         "sourceType": "module"
     },
     "rules": {
+        "dot-location": "off",
         "indent": [
             "error",
             4
@@ -16,13 +17,37 @@
             "error",
             "unix"
         ],
+        "max-len": "off",
+        "max-params": [
+            "error",
+            5
+        ],
+        "newline-after-var": "off",
+        "no-process-env": "off",
+        "no-shadow": "off",
+        "no-ternary": "off",
+        "no-var": "off",
+        "object-curly-newline": [
+            "error", {
+                "ObjectExpression": "always",
+                "ObjectPattern": {
+                    "multiline": true
+                }
+            }
+        ],
+        "padded-blocks": [
+            "error",
+            "never"
+        ],
         "quotes": [
             "error",
             "single"
         ],
+        "quote-props": "off",
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "space-before-function-paren": "off"
     }
 }

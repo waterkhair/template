@@ -1,17 +1,16 @@
-const webpackConfig = require('../config/webpack'),
-    gulp = require('gulp'),
-    webpack = require('webpack'),
-    winston = require('winston');
+const Gulp = require('gulp'),
+    WebpackConfig = require('../config/webpack'),
+    webpack = require('webpack');
 
-gulp.task('build-server', function(callback) {
-    webpack(webpackConfig, function(error, stats) {
-        if (error) {
-            winston.error('Error: ' + error);
+Gulp.task('build-server', function(callback) {
+    webpack(WebpackConfig, function(err, stats) {
+        if (err) {
+            console.error(`Error: ${err}`);
         } else {
-            winston.info('Stats: ' + stats.toString({
+            console.info(`Stats: ${stats.toString({
                 chunks: false,
                 colors: true
-            }));
+            })}`);
         }
         callback();
     });

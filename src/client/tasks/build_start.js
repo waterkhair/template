@@ -1,25 +1,20 @@
-const Path = require('path'),
-    Gulp = require('gulp'),
+const Gulp = require('gulp'),
+    Path = require('path'),
     gulpNodemon = require('gulp-nodemon');
 
 Gulp.task('start-client-server', function() {
     gulpNodemon({
-        script: Path.resolve(__dirname + '/../../../dist/client/server.js'),
-        ext: 'js jsx css jpg png gif',
-        watch: [
-            Path.resolve(__dirname + '/../**/*')
-        ],
         env: {
             NODE_ENV: 'development'
         },
-        tasks: function(changedFiles) {
-            console.log('**************************************************CHANGED FILES**************************************************');
-            console.log(changedFiles);
-            console.log('**************************************************CHANGED FILES**************************************************');
-            return [
-                'build-server',
-                'build-client'
-            ];
-        }
+        ext: 'js jsx css jpg png gif',
+        script: Path.resolve(`${__dirname}/../../../dist/client/server.js`),
+        tasks: [
+            'build-server',
+            'build-client'
+        ],
+        watch: [
+            Path.resolve(`${__dirname}/../**/*`)
+        ]
     });
 });
