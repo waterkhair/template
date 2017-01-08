@@ -6,14 +6,14 @@ requireDir('./tasks', {
     recursive: true
 });
 
-gulp.task('build', function() {
+gulp.task('build', () => {
     runSequence(
         'build-client',
         'build-server'
     );
 });
 
-gulp.task('start', function() {
+gulp.task('start', () => {
     runSequence(
         'start-client-server'
     );

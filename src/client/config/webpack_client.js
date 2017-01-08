@@ -44,7 +44,6 @@ module.exports = {
         }, {
             loader: 'url?limit=10000&name=./fonts/[name].[ext]',
             test: /\.(svg|ttf|eot|woff|woff2)(\?.*$|$)/
-            
         }],
         preLoaders: [{
             exclude: /node_module/,

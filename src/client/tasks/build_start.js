@@ -2,7 +2,7 @@ const Gulp = require('gulp'),
     Path = require('path'),
     gulpNodemon = require('gulp-nodemon');
 
-Gulp.task('start-client-server', function() {
+Gulp.task('start-client-server', () => {
     gulpNodemon({
         env: {
             NODE_ENV: 'development'

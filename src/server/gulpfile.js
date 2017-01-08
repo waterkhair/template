@@ -6,7 +6,7 @@ requireDir('./tasks', {
     recursive: true
 });
 
-gulp.task('build', function() {
+gulp.task('build', () => {
     runSequence(
         'build-server'
     );
