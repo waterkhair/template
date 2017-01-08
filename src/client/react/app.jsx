@@ -1,24 +1,22 @@
 // Modules
-import React from 'react';
-import { render } from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import { createEpicMiddleware } from 'redux-observable';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-// Components
-import DefaultLayout from './layouts/default';
-import HomePage from './pages/home/home';
+import {applyMiddleware, createStore} from 'redux';
+import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import AboutPage from './pages/about/about';
+import DefaultLayout from './layouts/default';
 import ErrorPage from './pages/error/error';
+import HomePage from './pages/home/home';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Provider} from 'react-redux';
+import React from 'react';
+import {createEpicMiddleware} from 'redux-observable';
 import epics from '../redux/epics/epics';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import reducers from '../redux/reducers/reducers';
+import {render} from 'react-dom';
 
-const epicMiddleware = createEpicMiddleware(epics);
-const store = createStore(reducers, applyMiddleware(epicMiddleware));
+const epicMiddleware = createEpicMiddleware(epics),
+    store = createStore(reducers, applyMiddleware(epicMiddleware));
 
 injectTapEventPlugin();
 

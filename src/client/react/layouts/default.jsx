@@ -1,9 +1,9 @@
 // Modules
-import appConfig from '../../config/app';
-import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
+import React from 'react';
+import appConfig from '../../config/app';
 
-export default class DefaultLayout extends Component {
+export default class DefaultLayout extends React.Component {
     render() {
         return (
             <div>
