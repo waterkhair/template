@@ -1,34 +1,31 @@
 import actions from '../actions/session';
 
-const INITIAL_STATE = () => {
-    return {
-        token: null,
+const INITIAL_STATE = {
         session: {
-            username: null,
-            email: null,
-            displayName: null
-        }
-    };
-};
+            displayName: '',
+            email: '',
+            username: ''
+        },
+        token: ''
+    },
+    initialState = () => INITIAL_STATE;
 
-export default (state = INITIAL_STATE(), action) => {
+export default (state = initialState(), action) => {
     switch (action.type) {
-        case actions.ACTION_TYPE.LOG_IN_SUCCESS:
-        case actions.ACTION_TYPE.REGISTER_USER_SUCCESS:
-            return {
-                /*jshint ignore:start*/
-                ...state,
-                /*jshint ignore:end*/
-                token: action.token,
-                session: {
-                    username: action.session.username,
-                    email: action.session.email,
-                    displayName: action.session.displayName
-                }
-            };
-        case actions.ACTION_TYPE.LOG_OUT_SUCCESS:
-            return INITIAL_STATE();
-        default:
-            return state;
+    case actions.ACTION_TYPE.LOG_IN_SUCCESS:
+    case actions.ACTION_TYPE.REGISTER_USER_SUCCESS:
+        return {
+            ...state,
+            session: {
+                displayName: action.session.displayName,
+                email: action.session.email,
+                username: action.session.username
+            },
+            token: action.token
+        };
+    case actions.ACTION_TYPE.LOG_OUT_SUCCESS:
+        return initialState();
+    default:
+        return state;
     }
 };

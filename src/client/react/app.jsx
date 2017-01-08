@@ -8,9 +8,12 @@ import { createEpicMiddleware } from 'redux-observable';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+// Components
 import DefaultLayout from './layouts/default';
 import HomePage from './pages/home/home';
 import AboutPage from './pages/about/about';
+import ErrorPage from './pages/error/error';
 import epics from '../redux/epics/epics';
 import reducers from '../redux/reducers/reducers';
 
@@ -26,6 +29,7 @@ render(
                 <Route path="/" component={DefaultLayout}>
                     <IndexRoute name="Home" component={HomePage} />
                     <Route name="About" path="/about" component={AboutPage} />
+                    <Route name="Error" path="/error" component={ErrorPage} />
                 </Route>
             </Router>
         </MuiThemeProvider>

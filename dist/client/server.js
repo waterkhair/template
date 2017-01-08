@@ -57,25 +57,23 @@
 	    value: true
 	});
 
-	var _hapi = __webpack_require__(2);
+	var _fs = __webpack_require__(2);
 
-	var _hapi2 = _interopRequireDefault(_hapi);
+	var _main = __webpack_require__(3);
 
-	var _good = __webpack_require__(3);
+	var _main2 = _interopRequireDefault(_main);
+
+	var _good = __webpack_require__(6);
 
 	var _good2 = _interopRequireDefault(_good);
 
-	var _inert = __webpack_require__(4);
+	var _hapi = __webpack_require__(7);
+
+	var _hapi2 = _interopRequireDefault(_hapi);
+
+	var _inert = __webpack_require__(8);
 
 	var _inert2 = _interopRequireDefault(_inert);
-
-	var _fs = __webpack_require__(5);
-
-	var _fs2 = _interopRequireDefault(_fs);
-
-	var _main = __webpack_require__(6);
-
-	var _main2 = _interopRequireDefault(_main);
 
 	var _hapi_helper = __webpack_require__(9);
 
@@ -87,92 +85,73 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//import notFound from './content/not_found';
-
 	// Folders
-	if (!_fs2.default.existsSync('../../dist/client/logs')) {
-	    _fs2.default.mkdirSync('../../dist/client/logs');
+	if (!(0, _fs.existsSync)('../../dist/client/logs')) {
+	    (0, _fs.mkdirSync)('../../dist/client/logs');
 	}
 
 	// Hapi
 	// Modules
-	var server = new _hapi2.default.Server();
-	var hapiHelper = new _hapi_helper2.default(server);
-	server.connection(_main2.default.Hapi.connection);
-	server.register({
-	    register: _good2.default,
-	    options: _main2.default.Hapi.goodOptions
+	var hapiServer = new _hapi2.default.Server();
+	hapiServer.connection(_main2.default.Hapi.connection);
+
+	// PlugIns
+	hapiServer.register({
+	    options: _main2.default.Hapi.goodOptions,
+	    register: _good2.default
 	});
-	server.register({
+	hapiServer.register({
 	    register: _inert2.default
-	}, hapiHelper.registerServerHanlder);
+	}, _hapi_helper2.default.registerServer(hapiServer));
 
 	// Routers
-	server.route({
-	    method: 'GET',
-	    path: '/css/{path*}',
+	hapiServer.route({
 	    handler: {
 	        directory: {
 	            path: '../../dist/client/content/css'
 	        }
-	    }
-	});
-	server.route({
+	    },
 	    method: 'GET',
-	    path: '/font/{file*}',
+	    path: '/css/{path*}'
+	});
+	hapiServer.route({
 	    handler: {
 	        directory: {
 	            path: '../../dist/client/content/font'
 	        }
-	    }
-	});
-	server.route({
+	    },
 	    method: 'GET',
-	    path: '/js/{file*}',
+	    path: '/font/{path*}'
+	});
+	hapiServer.route({
 	    handler: {
 	        directory: {
 	            path: '../../dist/client/content/js'
 	        }
-	    }
-	});
-	server.route({
+	    },
 	    method: 'GET',
-	    path: '/',
+	    path: '/js/{path*}'
+	});
+	hapiServer.route({
 	    handler: function handler(req, reply) {
 	        reply((0, _index2.default)({
 	            app: _main2.default.App
 	        }));
-	    }
+	    },
+	    method: 'GET',
+	    path: '/{path*}'
 	});
 
-	exports.default = server;
+	exports.default = hapiServer;
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	module.exports = require("hapi");
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	module.exports = require("good");
-
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
-	module.exports = require("inert");
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
 	module.exports = require("fs");
 
 /***/ },
-/* 6 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -181,11 +160,11 @@
 	    value: true
 	});
 
-	var _app = __webpack_require__(7);
+	var _app = __webpack_require__(4);
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _hapi = __webpack_require__(8);
+	var _hapi = __webpack_require__(5);
 
 	var _hapi2 = _interopRequireDefault(_hapi);
 
@@ -198,7 +177,7 @@
 	};
 
 /***/ },
-/* 7 */
+/* 4 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -208,12 +187,12 @@
 	});
 	// App Configuration
 	exports.default = {
-	    title: 'Template',
-	    description: 'Template for new projects using MongoDB, Express, React and NodeJS.'
+	    description: 'Template for new projects using MongoDB, Express, React and NodeJS.',
+	    title: 'Template'
 	};
 
 /***/ },
-/* 8 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -222,19 +201,18 @@
 	    value: true
 	});
 	// HapiJS configuration
-	var host = 'localhost';
-	var port = 8080;
-	var interval = 1000;
-	var logsPath = 'logs';
-	var httpLogUrl = 'http://localhost:3000';
-	var apiKey = 12345;
+	var apiKey = 12345,
+	    host = 'localhost',
+	    httpLogUrl = 'http://localhost:3000',
+	    interval = 1000,
+	    logsPath = 'logs',
+	    port = 8080;
 
 	exports.default = {
 	    connection: {
 	        host: host,
 	        port: port
 	    },
-	    logsPath: logsPath,
 	    goodOptions: {
 	        ops: {
 	            interval: interval
@@ -242,51 +220,70 @@
 	        reporters: {
 	            // Monitor responses and logs
 	            consoleReporter: [{
-	                module: 'good-squeeze',
-	                name: 'Squeeze',
 	                args: [{
 	                    log: '*',
 	                    response: '*'
-	                }]
+	                }],
+	                module: 'good-squeeze',
+	                name: 'Squeeze'
 	            }, {
 	                module: 'good-console'
 	            }, 'stdout'],
 
 	            // Monitor ops
 	            fileReporter: [{
-	                module: 'good-squeeze',
-	                name: 'Squeeze',
 	                args: [{
 	                    ops: '*'
-	                }]
+	                }],
+	                module: 'good-squeeze',
+	                name: 'Squeeze'
 	            }, {
 	                module: 'good-squeeze',
 	                name: 'SafeJson'
 	            }, {
-	                module: 'good-file',
-	                args: ['../../dist/client/logs/ops.log']
+	                args: ['../../dist/client/logs/ops.log'],
+	                module: 'good-file'
 	            }],
 
 	            // Monitor HTTP errors
 	            httpReporter: [{
-	                module: 'good-squeeze',
-	                name: 'Squeeze',
 	                args: [{
 	                    error: '*'
-	                }]
+	                }],
+	                module: 'good-squeeze',
+	                name: 'Squeeze'
 	            }, {
-	                module: 'good-http',
 	                args: [httpLogUrl, {
 	                    wreck: {
 	                        headers: {
 	                            'x-api-key': apiKey
 	                        }
 	                    }
-	                }]
+	                }],
+	                module: 'good-http'
 	            }]
 	        }
-	    }
+	    },
+	    logsPath: logsPath
 	};
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = require("good");
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	module.exports = require("hapi");
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	module.exports = require("inert");
 
 /***/ },
 /* 9 */
@@ -297,41 +294,24 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 	// HapiHelper class
-	var HapiHelper = function () {
-	    function HapiHelper(server) {
-	        _classCallCheck(this, HapiHelper);
-
-	        this.server = server;
-	        this.registerServerHanlder = this.onRegisterServerHandler.bind(this);
-	    }
-
-	    _createClass(HapiHelper, [{
-	        key: 'onRegisterServerHandler',
-	        value: function onRegisterServerHandler(err) {
-	            var _this = this;
-
+	var registerServer = function registerServer(hapiServer) {
+	    return function (err) {
+	        if (err) {
+	            throw err;
+	        }
+	        hapiServer.start(function (err) {
 	            if (err) {
 	                throw err;
 	            }
-	            this.server.start(function (err) {
-	                if (err) {
-	                    throw err;
-	                }
-	                _this.server.log('info', 'Started at: ' + _this.server.info.uri);
-	            });
-	        }
-	    }]);
+	            hapiServer.log('info', 'Started at: ' + hapiServer.info.uri);
+	        });
+	    };
+	};
 
-	    return HapiHelper;
-	}();
-
-	exports.default = HapiHelper;
+	exports.default = {
+	    registerServer: registerServer
+	};
 
 /***/ },
 /* 10 */
@@ -344,7 +324,7 @@
 	});
 
 	exports.default = function (config) {
-	    return "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <title>" + config.app.title + "</title>\n    <meta name=\"description\" content=\"" + config.app.description + "\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1\">\n    <link href=\"https://fonts.googleapis.com/css?family=Roboto:300,400,500\" rel=\"stylesheet\">\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/styles.css\">\n    <link rel=\"shortcut icon\" href=\"\">\n</head>\n<body>\n    <div id=\"app\"></div>\n    <script>\n        window.config = " + JSON.stringify(config) + "\n    </script>\n    <script src=\"/js/vendor.js\"></script>\n    <script src=\"/js/bundle.js\"></script>\n</body>\n</html>";
+	    return "<!DOCTYPE html>\n    <html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n        <title>" + config.app.title + "</title>\n        <meta name=\"description\" content=\"" + config.app.description + "\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1\">\n        <link href=\"https://fonts.googleapis.com/css?family=Roboto:300,400,500\" rel=\"stylesheet\">\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/styles.css\">\n        <link rel=\"shortcut icon\" href=\"\">\n    </head>\n    <body>\n        <div id=\"app\"></div>\n        <script>\n            window.config = " + JSON.stringify(config) + "\n        </script>\n        <script src=\"/js/vendor.js\"></script>\n        <script src=\"/js/bundle.js\"></script>\n    </body>\n    </html>";
 	};
 
 /***/ }

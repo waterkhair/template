@@ -1,68 +1,67 @@
 // Modules
-import Hapi from 'hapi';
-import Good from 'good';
-import Inert from 'inert';
-import FS from 'fs';
-
+import {existsSync, mkdirSync} from 'fs';
 import Config from './config/main';
-import HapiHelper from './helpers/hapi_helper';
+import Good from 'good';
+import Hapi from 'hapi';
+import Inert from 'inert';
+import hapiHelper from './helpers/hapi_helper';
 import index from './content/index';
-//import notFound from './content/not_found';
 
 // Folders
-if (!FS.existsSync('../../dist/client/logs')) {
-    FS.mkdirSync('../../dist/client/logs');
+if (!existsSync('../../dist/client/logs')) {
+    mkdirSync('../../dist/client/logs');
 }
 
 // Hapi
-let server = new Hapi.Server();
-let hapiHelper = new HapiHelper(server);
-server.connection(Config.Hapi.connection);
-server.register({
-        register: Good,
-        options: Config.Hapi.goodOptions
-    });
-server.register({
-        register: Inert
-    },
-    hapiHelper.registerServerHanlder);
+const hapiServer = new Hapi.Server();
+hapiServer.connection(Config.Hapi.connection);
+
+// PlugIns
+hapiServer.register({
+    options: Config.Hapi.goodOptions,
+    register: Good
+});
+hapiServer.register({
+    register: Inert
+},
+hapiHelper.registerServer(hapiServer));
 
 // Routers
-server.route({
-        method: 'GET',
-        path: '/css/{path*}',
-        handler: {
-            directory: {
-                path: '../../dist/client/content/css'
-            }
+hapiServer.route({
+    handler: {
+        directory: {
+            path: '../../dist/client/content/css'
         }
-    });
-server.route({
-        method: 'GET',
-        path: '/font/{file*}',
-        handler: {
-            directory: {
-                path: '../../dist/client/content/font'
-            }
+    },
+    method: 'GET',
+    path: '/css/{path*}'
+});
+hapiServer.route({
+    handler: {
+        directory: {
+            path: '../../dist/client/content/font'
         }
-    });
-server.route({
-        method: 'GET',
-        path: '/js/{file*}',
-        handler: {
-            directory: {
-                path: '../../dist/client/content/js'
-            }
+    },
+    method: 'GET',
+    path: '/font/{path*}'
+});
+hapiServer.route({
+    handler: {
+        directory: {
+            path: '../../dist/client/content/js'
         }
-    });
-server.route({
-        method: 'GET',
-        path: '/',
-        handler: (req, reply) => {
-            reply(index({
-                app: Config.App
-            }));
-        }
-    });
+    },
+    method: 'GET',
+    path: '/js/{path*}'
+});
+hapiServer.route({
+    handler: (req, reply) => {
+        reply(index({
+            app: Config.App
+        }));
+    },
+    method: 'GET',
+    path: '/{path*}'
+});
 
-export default server;
+export default hapiServer;

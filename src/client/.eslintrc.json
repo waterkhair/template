@@ -1,0 +1,60 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": "eslint:all",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "dot-location": "off",
+        "quote-props": "off",
+        "space-before-function-paren": "off",
+
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "max-len": "off",
+        "max-params": [
+            "error",
+            5
+        ],
+        "newline-after-var": "off",
+        "no-shadow": "off",
+        "object-curly-newline": [
+            "error", {
+                "ObjectExpression": "always",
+                "ObjectPattern": {
+                    "multiline": true
+                }
+            }
+        ],
+        "padded-blocks": [
+            "error",
+            "never"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}

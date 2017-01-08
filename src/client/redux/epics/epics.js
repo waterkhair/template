@@ -1,5 +1,5 @@
 // Modules
-import { combineEpics } from 'redux-observable';
+import {combineEpics} from 'redux-observable';
 import session from './session';
 
 const epics = combineEpics(

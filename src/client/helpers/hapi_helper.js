@@ -1,19 +1,16 @@
 // HapiHelper class
-export default class HapiHelper {
-    constructor(server) {
-        this.server = server;
-        this.registerServerHanlder = this.onRegisterServerHandler.bind(this);
+const registerServer = (hapiServer) => (err) => {
+    if (err) {
+        throw err;
     }
-
-    onRegisterServerHandler(err) {
+    hapiServer.start((err) => {
         if (err) {
             throw err;
         }
-        this.server.start((err) => {
-            if (err) {
-                throw err;
-            }
-            this.server.log('info', 'Started at: ' + this.server.info.uri);
-        });
-    }
-}
+        hapiServer.log('info', `Started at: ${hapiServer.info.uri}`);
+    });
+};
+
+export default {
+    registerServer
+};

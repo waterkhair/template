@@ -2162,6 +2162,12 @@ gulplog@^1.0.0:
   dependencies:
     glogg "^1.0.0"
 
+hapi-error@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/hapi-error/-/hapi-error-1.6.0.tgz#2935eaa92cc5a9c0bb9ec7575891bea4ede34c08"
+  dependencies:
+    hoek "^4.1.0"
+
 hapi@16.1.0:
   version "16.1.0"
   resolved "https://registry.yarnpkg.com/hapi/-/hapi-16.1.0.tgz#419dd86347588821eb5a0a5f493bce019802d33b"
@@ -2260,7 +2266,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoek@4.x.x:
+hoek@4.x.x, hoek@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.1.0.tgz#4a4557460f69842ed463aa00628cc26d2683afa7"
 
