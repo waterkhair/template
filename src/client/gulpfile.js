@@ -12,3 +12,9 @@ gulp.task('build', function() {
         'build-server'
     );
 });
+
+gulp.task('start', function() {
+    runSequence(
+        'start-client-server'
+    );
+});

@@ -1,38 +1,68 @@
 // Modules
-import config from './config/main';
-import http from 'http';
-import express from 'express';
-import winston from 'winston';
-import morgan from 'morgan';
-import index from './content/index';
-import notFound from './content/not_found';
+import Hapi from 'hapi';
+import Good from 'good';
+import Inert from 'inert';
+import FS from 'fs';
 
-// Express
-const app = express();
-app.disable('x-powered-by');
-app.use(morgan(process.env.NODE_ENV === 'production' ? '' : 'dev'));
+import Config from './config/main';
+import HapiHelper from './helpers/hapi_helper';
+import index from './content/index';
+//import notFound from './content/not_found';
+
+// Folders
+if (!FS.existsSync('../../dist/client/logs')) {
+    FS.mkdirSync('../../dist/client/logs');
+}
+
+// Hapi
+let server = new Hapi.Server();
+let hapiHelper = new HapiHelper(server);
+server.connection(Config.Hapi.connection);
+server.register({
+        register: Good,
+        options: Config.Hapi.goodOptions
+    });
+server.register({
+        register: Inert
+    },
+    hapiHelper.registerServerHanlder);
 
 // Routers
-app.get('/*', (request, response, next) => {
-    if (request.originalUrl.indexOf('/css/') === -1 && request.originalUrl.indexOf('/images/') === -1 && request.originalUrl.indexOf('/js/') === -1) {
-        response.send(index({ app: config.app }));
-    } else {
-        next();
-    }
-});
-app.use(express.static('content'));
-app.use((request, response) => {
-    response.send(notFound({ app: config.app }));
-});
-
-// Server
-const server = http.createServer(app);
-server.listen(8080, (error) => {
-    if (error) {
-        winston.error('Error: ' + error);
-    } else {
-        winston.info('Running client server on localhost:8080');
-    }
-});
+server.route({
+        method: 'GET',
+        path: '/css/{path*}',
+        handler: {
+            directory: {
+                path: '../../dist/client/content/css'
+            }
+        }
+    });
+server.route({
+        method: 'GET',
+        path: '/font/{file*}',
+        handler: {
+            directory: {
+                path: '../../dist/client/content/font'
+            }
+        }
+    });
+server.route({
+        method: 'GET',
+        path: '/js/{file*}',
+        handler: {
+            directory: {
+                path: '../../dist/client/content/js'
+            }
+        }
+    });
+server.route({
+        method: 'GET',
+        path: '/',
+        handler: (req, reply) => {
+            reply(index({
+                app: Config.App
+            }));
+        }
+    });
 
 export default server;

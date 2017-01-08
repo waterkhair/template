@@ -1,14 +1,13 @@
-const webpackConfig = require('../config/webpack_client'),
-    gulp = require('gulp'),
-    webpack = require('webpack'),
-    winston = require('winston');
+const WebpackClientConfig = require('../config/webpack_client'),
+    Gulp = require('gulp'),
+    webpack = require('webpack');
 
-gulp.task('build-client', function(callback) {
-    webpack(webpackConfig, function(error, stats) {
-        if (error) {
-            winston.error('Error: ' + error);
+Gulp.task('build-client', function(callback) {
+    webpack(WebpackClientConfig, function(err, stats) {
+        if (err) {
+            console.error('Error: ' + err);
         } else {
-            winston.info('Stats: ' + stats.toString({
+            console.info('Stats: ' + stats.toString({
                 chunks: false,
                 colors: true
             }));

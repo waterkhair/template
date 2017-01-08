@@ -1,14 +1,16 @@
-var nodeExternals = require('webpack-node-externals'),
+// Webpack Server configuration
+var Path = require('path'),
+    nodeExternals = require('webpack-node-externals'),
     CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
         server: [
-            './server'
+            Path.resolve(__dirname + '/../server')
         ]
     },
     output: {
-        path: '../../dist/client',
+        path: Path.resolve(__dirname + '/../../../dist/client'),
         filename: '[name].js'
     },
     target: 'node',
@@ -16,29 +18,31 @@ module.exports = {
         nodeExternals()
     ],
     module: {
-        preLoaders: [
-            {
+        preLoaders: [{
                 test: /\.js$/,
                 exclude: /node_module/,
                 loader: 'jshint'
             }
         ],
-        loaders: [
-            {
+        loaders: [{
                 test: /\.js$/,
                 exclude: /node_module/,
-                loader: 'babel'
+                loader: 'babel',
+                query: {
+                    presets: [
+                        'es2015',
+                        'stage-3'
+                    ]
+                }
             }
         ]
     },
     plugins: [
-        new CopyPlugin([
-                {
-                    from: 'package.json',
-                    to: 'package.json',
-                    toType: 'file'
-                }
-            ], {
+        new CopyPlugin([{
+                from: 'package.json',
+                to: 'package.json',
+                toType: 'file'
+            }], {
                 copyUnmodified: true
             })
     ],
@@ -47,6 +51,5 @@ module.exports = {
             '',
             '.js'
         ]
-    },
-    devtool: process.env.NODE_ENV === 'production' ? '' : 'source-map'
+    }
 };

@@ -1,41 +1,50 @@
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// Webpack Server configuration
+var Path = require('path'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin'),
+    PreCSS = require('precss'),
+    AutoPrefixer = require('autoprefixer');
 
 module.exports = {
     entry: {
         'js/bundle': [
-            './react/app',
-            './content/css/main'
+            Path.resolve(__dirname + '/../react/app'),
+            Path.resolve(__dirname + '/../content/css/main')
         ],
         'js/vendor': [
             'font-awesome-webpack'
         ]
     },
     output: {
-        path: '../../dist/client/content',
+        path: Path.resolve(__dirname + '/../../../dist/client/content'),
         filename: '[name].js'
     },
     module: {
-        preLoaders: [
-            {
+        preLoaders: [{
                 test: /\.js$/,
                 exclude: /node_module/,
                 loader: 'jshint'
             }
         ],
-        loaders: [
-            {
-                test: /\.(js|jsx)$/,
+        loaders: [{
+                test: /\.jsx?$/,
                 exclude: /node_module/,
-                loader: 'babel'
+                loader: 'babel',
+                query: {
+                    presets: [
+                        'es2015',
+                        'react',
+                        'stage-3'
+                    ]
+                }
             }, {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style', 'css!autoprefixer')
+                loader: ExtractTextPlugin.extract('style', 'css!postcss')
             }, {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract('style', 'css!sass!autoprefixer')
+                loader: ExtractTextPlugin.extract('style', 'css!sass!postcss')
             }, {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('style', 'css!less!autoprefixer')
+                loader: ExtractTextPlugin.extract('style', 'css!less!postcss')
             }, {
                 test: /\.(jpg|jpeg|gif|png)(\?.*$|$)/,
                 loader: 'url?limit=10000&name=./images/[name].[ext]'
@@ -55,6 +64,12 @@ module.exports = {
             '.jsx',
             '.css'
         ]
+    },
+    postcss: () => {
+        return [
+            PreCSS,
+            AutoPrefixer
+        ];
     },
     devtool: process.env.NODE_ENV === 'production' ? '' : 'source-map'
 };
