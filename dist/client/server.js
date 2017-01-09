@@ -91,9 +91,9 @@
 
 	var _scripts_route2 = _interopRequireDefault(_scripts_route);
 
-	var _error_handler = __webpack_require__(17);
+	var _register_plugin_handler = __webpack_require__(17);
 
-	var _error_handler2 = _interopRequireDefault(_error_handler);
+	var _register_plugin_handler2 = _interopRequireDefault(_register_plugin_handler);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -108,8 +108,8 @@
 	hapiServer.connection(_main2.default.Hapi.connection);
 
 	// PlugIns
-	hapiServer.register(_good_plugin2.default, (0, _error_handler2.default)());
-	hapiServer.register(_inert_plugin2.default, (0, _error_handler2.default)());
+	hapiServer.register(_good_plugin2.default, (0, _register_plugin_handler2.default)());
+	hapiServer.register(_inert_plugin2.default, (0, _register_plugin_handler2.default)());
 
 	// Routers
 	hapiServer.route(_css_route2.default);
@@ -118,7 +118,7 @@
 	hapiServer.route(_scripts_route2.default);
 
 	// Start Server
-	hapiServer.start((0, _error_handler2.default)(function () {
+	hapiServer.start((0, _register_plugin_handler2.default)(function () {
 	    hapiServer.log('info', 'Started at: ' + hapiServer.info.uri);
 	}));
 
@@ -450,7 +450,7 @@
 	    value: true
 	});
 	var internalCallback = null;
-	var errorHandler = function errorHandler(err) {
+	var registerPluginHandler = function registerPluginHandler(err) {
 	    if (err) {
 	        throw err;
 	    }
@@ -462,7 +462,7 @@
 	exports.default = function (callback) {
 	    internalCallback = callback;
 
-	    return errorHandler;
+	    return registerPluginHandler;
 	};
 
 /***/ }

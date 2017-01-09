@@ -1,5 +1,5 @@
 let internalCallback = null;
-const errorHandler = (err) => {
+const registerPluginHandler = (err) => {
     if (err) {
         throw err;
     }
@@ -11,5 +11,5 @@ const errorHandler = (err) => {
 export default (callback) => {
     internalCallback = callback;
 
-    return errorHandler;
+    return registerPluginHandler;
 };

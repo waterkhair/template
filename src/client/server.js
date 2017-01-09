@@ -8,7 +8,7 @@ import Hapi from 'hapi';
 import IndexRoute from './routes/index_route';
 import InertPlugin from './plugins/inert_plugin';
 import ScriptsRoute from './routes/scripts_route';
-import errorHandler from './helpers/error_handler';
+import registerPluginHandler from './helpers/register_plugin_handler';
 
 // Folders
 if (!existsSync('../../dist/client/logs')) {
@@ -20,8 +20,8 @@ const hapiServer = new Hapi.Server();
 hapiServer.connection(Config.Hapi.connection);
 
 // PlugIns
-hapiServer.register(GoodPlugin, errorHandler());
-hapiServer.register(InertPlugin, errorHandler());
+hapiServer.register(GoodPlugin, registerPluginHandler());
+hapiServer.register(InertPlugin, registerPluginHandler());
 
 // Routers
 hapiServer.route(CssRoute);
@@ -30,7 +30,7 @@ hapiServer.route(IndexRoute);
 hapiServer.route(ScriptsRoute);
 
 // Start Server
-hapiServer.start(errorHandler(() => {
+hapiServer.start(registerPluginHandler(() => {
     hapiServer.log('info', `Started at: ${hapiServer.info.uri}`);
 }));
 
