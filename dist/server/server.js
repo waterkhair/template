@@ -63,49 +63,52 @@
 
 	var _auth_route2 = _interopRequireDefault(_auth_route);
 
-	var _main = __webpack_require__(10);
+	var _main = __webpack_require__(6);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _good_plugin = __webpack_require__(13);
+	var _good_plugin = __webpack_require__(15);
 
 	var _good_plugin2 = _interopRequireDefault(_good_plugin);
 
-	var _hapi = __webpack_require__(15);
+	var _hapi = __webpack_require__(17);
 
 	var _hapi2 = _interopRequireDefault(_hapi);
 
-	var _hapiAuthJwt = __webpack_require__(16);
+	var _hapiAuthJwt = __webpack_require__(18);
 
 	var _hapiAuthJwt2 = _interopRequireDefault(_hapiAuthJwt);
 
-	var _index_route = __webpack_require__(17);
+	var _index_route = __webpack_require__(19);
 
 	var _index_route2 = _interopRequireDefault(_index_route);
 
-	var _mongoose = __webpack_require__(9);
+	var _mongoose = __webpack_require__(14);
 
 	var _mongoose2 = _interopRequireDefault(_mongoose);
-
-	var _register_plugin_handler = __webpack_require__(18);
-
-	var _register_plugin_handler2 = _interopRequireDefault(_register_plugin_handler);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Folders
+	// Modules
 	if (!(0, _fs.existsSync)('../../dist/server/logs')) {
 	    (0, _fs.mkdirSync)('../../dist/server/logs');
 	}
 
 	// Hapi
-	// Modules
 	var hapiServer = new _hapi2.default.Server();
-	hapiServer.connection(_main2.default.Hapi.connection);
+	hapiServer.connection(_main2.default.HAPI.CONNECTION);
 
 	// PlugIns
-	hapiServer.register(_good_plugin2.default, (0, _register_plugin_handler2.default)());
-	hapiServer.register(_hapiAuthJwt2.default, (0, _register_plugin_handler2.default)(function () {
+	hapiServer.register(_good_plugin2.default, function (err) {
+	    if (err) {
+	        throw err;
+	    }
+	});
+	hapiServer.register(_hapiAuthJwt2.default, function (err) {
+	    if (err) {
+	        throw err;
+	    }
 	    hapiServer.auth.strategy('jwt', 'jwt', {
 	        key: 'secretkey',
 	        verifyOptions: {
@@ -115,15 +118,22 @@
 
 	    // Routers
 	    hapiServer.route(_index_route2.default);
-	    hapiServer.route(_auth_route2.default.register);
+	    hapiServer.route(_auth_route2.default.signUp);
 	    hapiServer.route(_auth_route2.default.login);
-	}));
+	});
 
 	// Start Server
-	hapiServer.start((0, _register_plugin_handler2.default)(function () {
+	hapiServer.start(function (err) {
+	    if (err) {
+	        throw err;
+	    }
 	    hapiServer.log('info', 'Started at: ' + hapiServer.info.uri);
-	    _mongoose2.default.connect(_main2.default.MongoDB.connection, {}, (0, _register_plugin_handler2.default)());
-	}));
+	    _mongoose2.default.connect(_main2.default.MONGO_DB.CONNECTION_STRING, {}, function (err) {
+	        if (err) {
+	            throw err;
+	        }
+	    });
+	});
 
 	exports.default = hapiServer;
 
@@ -151,27 +161,31 @@
 
 	var _boom2 = _interopRequireDefault(_boom);
 
-	var _jsonwebtoken = __webpack_require__(6);
+	var _main = __webpack_require__(6);
+
+	var _main2 = _interopRequireDefault(_main);
+
+	var _http_status_codes = __webpack_require__(10);
+
+	var _http_status_codes2 = _interopRequireDefault(_http_status_codes);
+
+	var _jsonwebtoken = __webpack_require__(11);
 
 	var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
-	var _joi = __webpack_require__(7);
+	var _joi = __webpack_require__(12);
 
 	var _joi2 = _interopRequireDefault(_joi);
 
-	var _user = __webpack_require__(8);
+	var _user = __webpack_require__(13);
 
 	var _user2 = _interopRequireDefault(_user);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _createdStatusCode = 201,
-	    _maxChars = 30,
-	    _minChars = 2,
-	    _saltNumber = 10,
-	    authenticateUserSchema = _joi2.default.alternatives().try(_joi2.default.object({
+	var authenticateUserSchema = _joi2.default.alternatives().try(_joi2.default.object({
 	    password: _joi2.default.string().required(),
-	    username: _joi2.default.string().alphanum().min(_minChars).max(_maxChars).required()
+	    username: _joi2.default.string().alphanum().min(_main2.default.AUTH.USER.USERNAME_MIN_CHARS).max(_main2.default.AUTH.USER.USERNAME_MAX_CHARS).required()
 	}), _joi2.default.object({
 	    password: _joi2.default.string().required(),
 	    username: _joi2.default.string().email().required()
@@ -186,7 +200,7 @@
 	        id: user._id,
 	        scope: scopes,
 	        username: user.username
-	    }, 'secretkey', {
+	    }, _main2.default.AUTH.SECRET_KEY, {
 	        algorithm: 'HS256',
 	        expiresIn: '1h'
 	    });
@@ -194,10 +208,10 @@
 	    createUserSchema = _joi2.default.object({
 	    email: _joi2.default.string().email().required(),
 	    password: _joi2.default.string().required(),
-	    username: _joi2.default.string().alphanum().min(_minChars).max(_maxChars).required()
+	    username: _joi2.default.string().alphanum().min(_main2.default.AUTH.USER.USERNAME_MIN_CHARS).max(_main2.default.AUTH.USER.USERNAME_MAX_CHARS).required()
 	}),
 	    hashPassword = function hashPassword(password, callback) {
-	    _bcryptjs2.default.genSalt(_saltNumber, function (err, salt) {
+	    _bcryptjs2.default.genSalt(_main2.default.AUTH.SALT_NUMBER, function (err, salt) {
 	        if (err) {
 	            throw err;
 	        }
@@ -262,7 +276,7 @@
 	            handler: function handler(req, reply) {
 	                reply({
 	                    idToken: createToken(req.pre.user)
-	                }).code(_createdStatusCode);
+	                }).code(_http_status_codes2.default.SUCCESS_201_CREATED);
 	            },
 	            pre: [{
 	                assign: 'user',
@@ -275,7 +289,7 @@
 	        method: 'POST',
 	        path: '/auth/authenticate'
 	    },
-	    register: {
+	    signUp: {
 	        config: {
 	            handler: function handler(req, reply) {
 	                var user = new _user2.default();
@@ -293,7 +307,7 @@
 	                        }
 	                        reply({
 	                            idToken: createToken(user)
-	                        }).code(_createdStatusCode);
+	                        }).code(_http_status_codes2.default.SUCCESS_201_CREATED);
 	                    });
 	                });
 	            },
@@ -305,7 +319,7 @@
 	            }
 	        },
 	        method: 'POST',
-	        path: '/auth/register'
+	        path: '/auth/signup'
 
 	    },
 	    users: {
@@ -345,91 +359,54 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = require("jsonwebtoken");
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _auth = __webpack_require__(7);
+
+	var _auth2 = _interopRequireDefault(_auth);
+
+	var _hapi = __webpack_require__(8);
+
+	var _hapi2 = _interopRequireDefault(_hapi);
+
+	var _mongo_db = __webpack_require__(9);
+
+	var _mongo_db2 = _interopRequireDefault(_mongo_db);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    AUTH: _auth2.default,
+	    HAPI: _hapi2.default,
+	    MONGO_DB: _mongo_db2.default
+	}; // Main Configuration
 
 /***/ },
 /* 7 */
 /***/ function(module, exports) {
 
-	module.exports = require("joi");
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _mongoose = __webpack_require__(9);
-
-	var _mongoose2 = _interopRequireDefault(_mongoose);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _mongoose2.default.model('User', new _mongoose2.default.Schema({
-	    admin: {
-	        required: true,
-	        type: Boolean
-	    },
-	    email: {
-	        index: {
-	            unique: true
-	        },
-	        required: true,
-	        type: String
-	    },
-	    password: {
-	        required: true,
-	        type: String
-	    },
-	    username: {
-	        index: {
-	            unique: true
-	        },
-	        required: true,
-	        type: String
-	    }
-	})); // Modules
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	module.exports = require("mongoose");
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _hapi = __webpack_require__(11);
-
-	var _hapi2 = _interopRequireDefault(_hapi);
-
-	var _mongodb = __webpack_require__(12);
-
-	var _mongodb2 = _interopRequireDefault(_mongodb);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// Main Configuration
 	exports.default = {
-	    Hapi: _hapi2.default,
-	    MongoDB: _mongodb2.default
+	    SALT_NUMBER: 10,
+	    SECRET_KEY: 'SECRET_KEY',
+	    USER: {
+	        USERNAME_MAX_CHARS: 30,
+	        USERNAME_MIN_CHARS: 2
+	    }
 	};
 
 /***/ },
-/* 11 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -446,11 +423,11 @@
 	    port = 3000;
 
 	exports.default = {
-	    connection: {
+	    CONNECTION: {
 	        host: host,
 	        port: port
 	    },
-	    goodOptions: {
+	    GOOD_OPTIONS: {
 	        ops: {
 	            interval: interval
 	        },
@@ -501,11 +478,11 @@
 	            }]
 	        }
 	    },
-	    logsPath: logsPath
+	    LOGS_PATH: logsPath
 	};
 
 /***/ },
-/* 12 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -514,8 +491,90 @@
 	    value: true
 	});
 	exports.default = {
-	    connection: 'mongodb://localhost:27017/hapi-app'
+	    CONNECTION_STRING: 'mongodb://localhost:27017/template'
 	};
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+	    CLIENT_ERROR_400_BAD_REQUEST: 400,
+	    CLIENT_ERROR_401_UNAUTHORIZED: 401,
+	    CLIENT_ERROR_402_PAYMENT_REQUIRED: 402,
+	    CLIENT_ERROR_403_FORBIDDEN: 403,
+	    CLIENT_ERROR_404_NOT_FOUND: 404,
+	    CLIENT_ERROR_405_METHOD_NOT_ALLOWED: 405,
+	    CLIENT_ERROR_406_NOT_ACCEPTABLE: 406,
+	    CLIENT_ERROR_407_PROXY_AUTHENTICATION_REQUIRED: 407,
+	    CLIENT_ERROR_408_REQUEST_TIMEOUT: 408,
+	    CLIENT_ERROR_409_CONFLICT: 409,
+	    CLIENT_ERROR_410_GONE: 410,
+	    CLIENT_ERROR_411_LENGTH_REQUIRED: 411,
+	    CLIENT_ERROR_412_PRECONDITION_FAILED: 412,
+	    CLIENT_ERROR_413_PAYLOAD_TOO_LARGE: 413,
+	    CLIENT_ERROR_414_URI_TOO_LON: 414,
+	    CLIENT_ERROR_415_UNSUPPORTED_MEDIA_TYPE: 415,
+	    CLIENT_ERROR_416_RANGE_NOT_SATISFIABLE: 416,
+	    CLIENT_ERROR_417_EXPECTATION_FAILED: 417,
+	    CLIENT_ERROR_418_IM_A_TEAPOT: 418,
+	    CLIENT_ERROR_421_MISDIRECTED_REQUEST: 421,
+	    CLIENT_ERROR_422_UNPROCESSABLE_ENTITY: 422,
+	    CLIENT_ERROR_423_LOCKED: 423,
+	    CLIENT_ERROR_424_FAILED_DEPENDENCY: 424,
+	    CLIENT_ERROR_426_UPGRADE_REQUIRED: 426,
+	    CLIENT_ERROR_428_PRECONDITION_REQUIRED: 428,
+	    CLIENT_ERROR_429_TOO_MANY_REQUESTS: 429,
+	    CLIENT_ERROR_431_REQUEST_HEADER_FIELDS_TOO_LARGE: 431,
+	    CLIENT_ERROR_451_UNAVAILABLE_FOR_LEGAL_REASONS: 451,
+	    REDIRECTION_300_MULTIPLE_CHOICES: 300,
+	    REDIRECTION_301_MOVED_PERMANENTLY: 301,
+	    REDIRECTION_302_FOUND: 302,
+	    REDIRECTION_303_SEE_OTHER: 303,
+	    REDIRECTION_304_NOT_MODIFIED: 304,
+	    REDIRECTION_305_USE_PROXY: 305,
+	    REDIRECTION_306_SWITCH_PROXY: 306,
+	    REDIRECTION_307_TEMPORARY_REDIRECT: 307,
+	    REDIRECTION_308_PERMANENT_REDIRECT: 308,
+	    SERVER_ERROR_500_INTERNAL_SERVER_ERROR: 500,
+	    SERVER_ERROR_501_NOT_IMPLEMENTED: 501,
+	    SERVER_ERROR_502_BAD_GATEWAY: 502,
+	    SERVER_ERROR_503_SERVICE_UNAVAILABLE: 503,
+	    SERVER_ERROR_504_GATEWAY_TIMEOUT: 504,
+	    SERVER_ERROR_505_HTTP_VERSION_NOT_SUPPORTED: 505,
+	    SERVER_ERROR_506_VARIANT_ALSO_NEGATIATES: 506,
+	    SERVER_ERROR_507_INSUFFICIENT_STORAGE: 507,
+	    SERVER_ERROR_508_LOOP_DETECTED: 508,
+	    SERVER_ERROR_510_NOT_EXTENDED: 510,
+	    SERVER_ERROR_511_NETWORK_AUTHENTICATION_REQUIRED: 511,
+	    SUCCESS_200_OK: 200,
+	    SUCCESS_201_CREATED: 201,
+	    SUCCESS_202_ACCEPTED: 202,
+	    SUCCESS_203_NON_AUTHORITATIVE_INFORMATION: 203,
+	    SUCCESS_204_NO_CONTENT: 204,
+	    SUCCESS_205_RESET_CONTENT: 205,
+	    SUCCESS_206_PARTIAL_CONTENT: 206,
+	    SUCCESS_207_MUTLI_STATUS: 207,
+	    SUCCESS_208_ALREADY_REPORTED: 208,
+	    SUCCESS_226_IM_USED: 226
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	module.exports = require("jsonwebtoken");
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	module.exports = require("joi");
 
 /***/ },
 /* 13 */
@@ -527,11 +586,58 @@
 	    value: true
 	});
 
-	var _main = __webpack_require__(10);
+	var _mongoose = __webpack_require__(14);
+
+	var _mongoose2 = _interopRequireDefault(_mongoose);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _mongoose2.default.model('User', new _mongoose2.default.Schema({
+	    admin: {
+	        required: true,
+	        type: Boolean
+	    },
+	    email: {
+	        index: {
+	            unique: true
+	        },
+	        required: true,
+	        type: String
+	    },
+	    password: {
+	        required: true,
+	        type: String
+	    },
+	    username: {
+	        index: {
+	            unique: true
+	        },
+	        required: true,
+	        type: String
+	    }
+	})); // Modules
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = require("mongoose");
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _main = __webpack_require__(6);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _good = __webpack_require__(14);
+	var _good = __webpack_require__(16);
 
 	var _good2 = _interopRequireDefault(_good);
 
@@ -539,30 +645,30 @@
 
 	// Modules
 	exports.default = {
-	    options: _main2.default.Hapi.goodOptions,
+	    options: _main2.default.HAPI.GOOD_OPTIONS,
 	    register: _good2.default
 	};
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	module.exports = require("good");
-
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	module.exports = require("hapi");
 
 /***/ },
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = require("hapi-auth-jwt");
+	module.exports = require("good");
 
 /***/ },
 /* 17 */
+/***/ function(module, exports) {
+
+	module.exports = require("hapi");
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	module.exports = require("hapi-auth-jwt");
+
+/***/ },
+/* 19 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -576,31 +682,6 @@
 	    },
 	    method: 'GET',
 	    path: '/'
-	};
-
-/***/ },
-/* 18 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var internalCallback = null;
-	var registerPluginHandler = function registerPluginHandler(err) {
-	    if (err) {
-	        throw err;
-	    }
-	    if (internalCallback) {
-	        internalCallback();
-	    }
-	};
-
-	exports.default = function (callback) {
-	    internalCallback = callback;
-
-	    return registerPluginHandler;
 	};
 
 /***/ }

@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/waterkhair/template#readme",
   "dependencies": {
+    "flexboxgrid": "6.3.1",
     "good": "7.1.0",
     "good-console": "6.2.0",
     "good-file": "6.0.1",

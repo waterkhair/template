@@ -1,8 +1,10 @@
 // Main Configuration
-import Hapi from './hapi';
-import MongoDB from './mongodb';
+import AUTH from './auth';
+import HAPI from './hapi';
+import MONGO_DB from './mongo_db';
 
 export default {
-    Hapi,
-    MongoDB
+    AUTH,
+    HAPI,
+    MONGO_DB
 };

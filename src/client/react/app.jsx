@@ -1,11 +1,12 @@
 // Modules
+import 'flexboxgrid';
 import {applyMiddleware, createStore} from 'redux';
 import {browserHistory, IndexRoute, Route, Router} from 'react-router';
-import AboutPage from './pages/about/about';
+import AboutPage from './pages/about/about_page';
 import DefaultLayout from './layouts/default';
-import ErrorPage from './pages/error/error';
-import HomePage from './pages/home/home';
-import LoginPage from './pages/login/login';
+import ErrorPage from './pages/error/error_page';
+import HomePage from './pages/home/home_page';
+import LoginPage from './pages/login/login_page';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Provider} from 'react-redux';
 import React from 'react';
@@ -25,11 +26,11 @@ render(
     <Provider store={store}>
         <MuiThemeProvider muiTheme={getMuiTheme()}>
             <Router history={browserHistory}>
-                <Route path="/login" component={LoginPage} />
                 <Route path="/" component={DefaultLayout}>
                     <IndexRoute name="Home" component={HomePage} />
                     <Route name="About" path="/about" component={AboutPage} />
                     <Route name="Error" path="/error" component={ErrorPage} />
+                    <Route path="/login" component={LoginPage} />
                 </Route>
             </Router>
         </MuiThemeProvider>

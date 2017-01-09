@@ -91,25 +91,29 @@
 
 	var _scripts_route2 = _interopRequireDefault(_scripts_route);
 
-	var _register_plugin_handler = __webpack_require__(17);
-
-	var _register_plugin_handler2 = _interopRequireDefault(_register_plugin_handler);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Folders
-	// Modules
 	if (!(0, _fs.existsSync)('../../dist/client/logs')) {
 	    (0, _fs.mkdirSync)('../../dist/client/logs');
 	}
 
 	// Hapi
+	// Modules
 	var hapiServer = new _hapi2.default.Server();
 	hapiServer.connection(_main2.default.Hapi.connection);
 
 	// PlugIns
-	hapiServer.register(_good_plugin2.default, (0, _register_plugin_handler2.default)());
-	hapiServer.register(_inert_plugin2.default, (0, _register_plugin_handler2.default)());
+	hapiServer.register(_good_plugin2.default, function (err) {
+	    if (err) {
+	        throw err;
+	    }
+	});
+	hapiServer.register(_inert_plugin2.default, function (err) {
+	    if (err) {
+	        throw err;
+	    }
+	});
 
 	// Routers
 	hapiServer.route(_css_route2.default);
@@ -118,9 +122,12 @@
 	hapiServer.route(_scripts_route2.default);
 
 	// Start Server
-	hapiServer.start((0, _register_plugin_handler2.default)(function () {
+	hapiServer.start(function (err) {
+	    if (err) {
+	        throw err;
+	    }
 	    hapiServer.log('info', 'Started at: ' + hapiServer.info.uri);
-	}));
+	});
 
 	exports.default = hapiServer;
 
@@ -439,31 +446,6 @@
 	    method: 'GET',
 	    path: '/scripts/{path*}'
 	}; // Modules
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var internalCallback = null;
-	var registerPluginHandler = function registerPluginHandler(err) {
-	    if (err) {
-	        throw err;
-	    }
-	    if (internalCallback) {
-	        internalCallback();
-	    }
-	};
-
-	exports.default = function (callback) {
-	    internalCallback = callback;
-
-	    return registerPluginHandler;
-	};
 
 /***/ }
 /******/ ]);

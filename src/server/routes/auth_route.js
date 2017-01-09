@@ -1,14 +1,12 @@
 import BCryptJS from 'bcryptjs';
 import Boom from 'boom';
+import Config from '../config/main';
+import HTTP_STATUS_CODES from '../const/http_status_codes';
 import JWT from 'jsonwebtoken';
 import Joi from 'joi';
 import User from '../models/user';
 
-const _createdStatusCode = 201,
-    _maxChars = 30,
-    _minChars = 2,
-    _saltNumber = 10,
-    authenticateUserSchema = Joi
+const authenticateUserSchema = Joi
         .alternatives()
         .try(
             Joi.object({
@@ -18,8 +16,8 @@ const _createdStatusCode = 201,
                 username: Joi
                     .string()
                     .alphanum()
-                    .min(_minChars)
-                    .max(_maxChars)
+                    .min(Config.AUTH.USER.USERNAME_MIN_CHARS)
+                    .max(Config.AUTH.USER.USERNAME_MAX_CHARS)
                     .required()
             }),
             Joi.object({
@@ -43,7 +41,7 @@ const _createdStatusCode = 201,
             scope: scopes,
             username: user.username
         },
-        'secretkey', {
+        Config.AUTH.SECRET_KEY, {
             algorithm: 'HS256',
             expiresIn: '1h'
         });
@@ -59,12 +57,12 @@ const _createdStatusCode = 201,
         username: Joi
             .string()
             .alphanum()
-            .min(_minChars)
-            .max(_maxChars)
+            .min(Config.AUTH.USER.USERNAME_MIN_CHARS)
+            .max(Config.AUTH.USER.USERNAME_MAX_CHARS)
             .required()
     }),
     hashPassword = (password, callback) => {
-        BCryptJS.genSalt(_saltNumber, (err, salt) => {
+        BCryptJS.genSalt(Config.AUTH.SALT_NUMBER, (err, salt) => {
             if (err) {
                 throw err;
             }
@@ -131,7 +129,7 @@ export default {
             handler: (req, reply) => {
                 reply({
                     idToken: createToken(req.pre.user)
-                }).code(_createdStatusCode);
+                }).code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
             },
             pre: [{
                 assign: 'user',
@@ -144,7 +142,7 @@ export default {
         method: 'POST',
         path: '/auth/authenticate'
     },
-    register: {
+    signUp: {
         config: {
             handler: (req, reply) => {
                 const user = new User();
@@ -162,7 +160,7 @@ export default {
                         }
                         reply({
                             idToken: createToken(user)
-                        }).code(_createdStatusCode);
+                        }).code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
                     });
                 });
             },
@@ -174,7 +172,7 @@ export default {
             }
         },
         method: 'POST',
-        path: '/auth/register'
+        path: '/auth/signup'
 
     },
     users: {

@@ -3,6 +3,18 @@ html {
 }
 
 body {
-  font-size: 13px;
-  line-height: 20px;
+  background-color: #fff;
+}
+
+/* LOGIN */
+.login-form {
+  padding: 10px
+}
+
+.login-checkbox {
+  margin-top: 15px
+}
+
+.login-button {
+  margin-top: 20px
 }

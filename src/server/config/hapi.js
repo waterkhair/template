@@ -7,11 +7,11 @@ const apiKey = 12345,
     port = 3000;
 
 export default {
-    connection: {
+    CONNECTION: {
         host,
         port
     },
-    goodOptions: {
+    GOOD_OPTIONS: {
         ops: {
             interval
         },
@@ -66,5 +66,5 @@ export default {
             }]
         }
     },
-    logsPath
+    LOGS_PATH: logsPath
 };

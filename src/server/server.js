@@ -7,7 +7,6 @@ import Hapi from 'hapi';
 import HapiAuthJwt from 'hapi-auth-jwt';
 import IndexRoute from './routes/index_route';
 import Mongoose from 'mongoose';
-import registerPluginHandler from './helpers/register_plugin_handler';
 
 // Folders
 if (!existsSync('../../dist/server/logs')) {
@@ -16,11 +15,18 @@ if (!existsSync('../../dist/server/logs')) {
 
 // Hapi
 const hapiServer = new Hapi.Server();
-hapiServer.connection(Config.Hapi.connection);
+hapiServer.connection(Config.HAPI.CONNECTION);
 
 // PlugIns
-hapiServer.register(GoodPlugin, registerPluginHandler());
-hapiServer.register(HapiAuthJwt, registerPluginHandler(() => {
+hapiServer.register(GoodPlugin, (err) => {
+    if (err) {
+        throw err;
+    }
+});
+hapiServer.register(HapiAuthJwt, (err) => {
+    if (err) {
+        throw err;
+    }
     hapiServer.auth.strategy('jwt', 'jwt', {
         key: 'secretkey',
         verifyOptions: {
@@ -32,15 +38,22 @@ hapiServer.register(HapiAuthJwt, registerPluginHandler(() => {
 
     // Routers
     hapiServer.route(IndexRoute);
-    hapiServer.route(AuthRoute.register);
+    hapiServer.route(AuthRoute.signUp);
     hapiServer.route(AuthRoute.login);
-}));
+});
 
 // Start Server
-hapiServer.start(registerPluginHandler(() => {
+hapiServer.start((err) => {
+    if (err) {
+        throw err;
+    }
     hapiServer.log('info', `Started at: ${hapiServer.info.uri}`);
-    Mongoose.connect(Config.MongoDB.connection, {
-    }, registerPluginHandler());
-}));
+    Mongoose.connect(Config.MONGO_DB.CONNECTION_STRING, {
+    }, (err) => {
+        if (err) {
+            throw err;
+        }
+    });
+});
 
 export default hapiServer;
