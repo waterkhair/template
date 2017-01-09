@@ -15,7 +15,7 @@ export default (config) => `<!DOCTYPE html>
         <script>
             window.config = ${JSON.stringify(config)}
         </script>
-        <script src="/js/vendor.js"></script>
-        <script src="/js/bundle.js"></script>
+        <script src="/scripts/vendor.js"></script>
+        <script src="/scripts/bundle.js"></script>
     </body>
     </html>`;

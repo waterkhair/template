@@ -9,11 +9,11 @@ module.exports = {
         ? ''
         : 'source-map',
     entry: {
-        'js/bundle': [
+        'scripts/bundle': [
             Path.resolve(`${__dirname}/../react/app`),
             Path.resolve(`${__dirname}/../content/css/main`)
         ],
-        'js/vendor': [
+        'scripts/vendor': [
             'font-awesome-webpack'
         ]
     },

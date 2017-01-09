@@ -1,11 +1,14 @@
 // Modules
 import {existsSync, mkdirSync} from 'fs';
 import Config from './config/main';
-import Good from 'good';
+import CssRoute from './routes/css_route';
+import FontsRoute from './routes/fonts_route';
+import GoodPlugin from './plugins/good_plugin';
 import Hapi from 'hapi';
-import Inert from 'inert';
-import hapiHelper from './helpers/hapi_helper';
-import index from './content/index';
+import IndexRoute from './routes/index_route';
+import InertPlugin from './plugins/inert_plugin';
+import ScriptsRoute from './routes/scripts_route';
+import errorHandler from './helpers/error_handler';
 
 // Folders
 if (!existsSync('../../dist/client/logs')) {
@@ -17,51 +20,18 @@ const hapiServer = new Hapi.Server();
 hapiServer.connection(Config.Hapi.connection);
 
 // PlugIns
-hapiServer.register({
-    options: Config.Hapi.goodOptions,
-    register: Good
-});
-hapiServer.register({
-    register: Inert
-},
-hapiHelper.registerServer(hapiServer));
+hapiServer.register(GoodPlugin, errorHandler());
+hapiServer.register(InertPlugin, errorHandler());
 
 // Routers
-hapiServer.route({
-    handler: {
-        directory: {
-            path: '../../dist/client/content/css'
-        }
-    },
-    method: 'GET',
-    path: '/css/{path*}'
-});
-hapiServer.route({
-    handler: {
-        directory: {
-            path: '../../dist/client/content/font'
-        }
-    },
-    method: 'GET',
-    path: '/font/{path*}'
-});
-hapiServer.route({
-    handler: {
-        directory: {
-            path: '../../dist/client/content/js'
-        }
-    },
-    method: 'GET',
-    path: '/js/{path*}'
-});
-hapiServer.route({
-    handler: (req, reply) => {
-        reply(index({
-            app: Config.App
-        }));
-    },
-    method: 'GET',
-    path: '/{path*}'
-});
+hapiServer.route(CssRoute);
+hapiServer.route(FontsRoute);
+hapiServer.route(IndexRoute);
+hapiServer.route(ScriptsRoute);
+
+// Start Server
+hapiServer.start(errorHandler(() => {
+    hapiServer.log('info', `Started at: ${hapiServer.info.uri}`);
+}));
 
 export default hapiServer;
