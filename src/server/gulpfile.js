@@ -11,3 +11,9 @@ gulp.task('build', () => {
         'build-server'
     );
 });
+
+gulp.task('start', () => {
+    runSequence(
+        'start-server'
+    );
+});

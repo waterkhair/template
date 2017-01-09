@@ -3,36 +3,35 @@ var CopyPlugin = require('copy-webpack-plugin'),
     webpackNodeExternals = require('webpack-node-externals');
 
 module.exports = {
-    context: Path.resolve('server'),
-    entry: 'server',
+    entry: {
+        server: [
+            Path.resolve(`${__dirname}/../server`)
+        ]
+    },
     externals: [
         webpackNodeExternals()
     ],
     module: {
-        loaders: [
-            {
-                exclude: /node_module/,
-                loader: 'babel',
-                query: {
-                    presets: [
-                        'es2015',
-                        'stage-3'
-                    ]
-                },
-                test: /\.(js|jsx)$/
-            }
-        ],
-        preLoaders: [
-            {
-                exclude: /node_module/,
-                loader: 'eslint',
-                test: /\.js$/
-            }
-        ]
+        loaders: [{
+            exclude: /node_module/,
+            loader: 'babel',
+            query: {
+                presets: [
+                    'es2015',
+                    'stage-3'
+                ]
+            },
+            test: /\.js$/
+        }],
+        preLoaders: [{
+            exclude: /node_module/,
+            loader: 'eslint',
+            test: /\.js$/
+        }]
     },
     output: {
         filename: '[name].js',
-        path: Path.resolve('../../dist/server')
+        path: Path.resolve(`${__dirname}/../../../dist/server`)
     },
     plugins: [
         new CopyPlugin([{

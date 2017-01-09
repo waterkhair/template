@@ -27,6 +27,7 @@
         "no-process-env": "off",
         "no-shadow": "off",
         "no-ternary": "off",
+        "no-underscore-dangle": "off",
         "no-var": "off",
         "object-curly-newline": [
             "error", {
