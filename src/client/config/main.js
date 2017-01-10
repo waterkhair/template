@@ -1,8 +1,10 @@
 // Main Configuration
-import App from './app';
-import Hapi from './hapi';
+import API from './api';
+import APP from './app';
+import HAPI from './hapi';
 
 export default {
-    App,
-    Hapi
+    API,
+    APP,
+    HAPI
 };

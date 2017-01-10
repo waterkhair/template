@@ -118,8 +118,9 @@
 
 	    // Routers
 	    hapiServer.route(_index_route2.default);
+	    hapiServer.route(_auth_route2.default.signIn);
 	    hapiServer.route(_auth_route2.default.signUp);
-	    hapiServer.route(_auth_route2.default.login);
+	    hapiServer.route(_auth_route2.default.users);
 	});
 
 	// Start Server
@@ -189,9 +190,11 @@
 	}), _joi2.default.object({
 	    password: _joi2.default.string().required(),
 	    username: _joi2.default.string().email().required()
-	})),
-	    createToken = function createToken(user) {
+	}));
+
+	var createToken = function createToken(user) {
 	    var scopes = null;
+
 	    if (user.admin) {
 	        scopes = 'admin';
 	    }
@@ -204,13 +207,16 @@
 	        algorithm: 'HS256',
 	        expiresIn: '1h'
 	    });
-	},
-	    createUserSchema = _joi2.default.object({
+	};
+
+	var createUserSchema = _joi2.default.object({
 	    email: _joi2.default.string().email().required(),
+	    name: _joi2.default.string().required(),
 	    password: _joi2.default.string().required(),
 	    username: _joi2.default.string().alphanum().min(_main2.default.AUTH.USER.USERNAME_MIN_CHARS).max(_main2.default.AUTH.USER.USERNAME_MAX_CHARS).required()
-	}),
-	    hashPassword = function hashPassword(password, callback) {
+	});
+
+	var hashPassword = function hashPassword(password, callback) {
 	    _bcryptjs2.default.genSalt(_main2.default.AUTH.SALT_NUMBER, function (err, salt) {
 	        if (err) {
 	            throw err;
@@ -219,8 +225,9 @@
 	            callback(err, hash);
 	        });
 	    });
-	},
-	    verifyCredentials = function verifyCredentials(req, res) {
+	};
+
+	var verifyCredentials = function verifyCredentials(req, res) {
 	    _user2.default.findOne({
 	        $or: [{
 	            email: req.payload.email
@@ -246,8 +253,9 @@
 	            res(_boom2.default.badRequest('Incorrect username or email!'));
 	        }
 	    });
-	},
-	    verifyUniqueUser = function verifyUniqueUser(req, res) {
+	};
+
+	var verifyUniqueUser = function verifyUniqueUser(req, res) {
 	    _user2.default.findOne({
 	        $or: [{
 	            email: req.payload.email
@@ -271,11 +279,17 @@
 	};
 
 	exports.default = {
-	    login: {
+	    signIn: {
 	        config: {
 	            handler: function handler(req, reply) {
 	                reply({
-	                    idToken: createToken(req.pre.user)
+	                    token: createToken(req.pre.user),
+	                    user: {
+	                        admin: req.pre.user.admin,
+	                        email: req.pre.user.email,
+	                        name: req.pre.user.name,
+	                        username: req.pre.user.username
+	                    }
 	                }).code(_http_status_codes2.default.SUCCESS_201_CREATED);
 	            },
 	            pre: [{
@@ -287,15 +301,16 @@
 	            }
 	        },
 	        method: 'POST',
-	        path: '/auth/authenticate'
+	        path: '/auth/sign-in'
 	    },
 	    signUp: {
 	        config: {
 	            handler: function handler(req, reply) {
 	                var user = new _user2.default();
-	                user.email = req.payload.email;
-	                user.username = req.payload.username;
 	                user.admin = false;
+	                user.email = req.payload.email;
+	                user.name = req.payload.name;
+	                user.username = req.payload.username;
 	                hashPassword(req.payload.password, function (err, hash) {
 	                    if (err) {
 	                        throw _boom2.default.badRequest(err);
@@ -306,7 +321,13 @@
 	                            throw _boom2.default.badRequest(err);
 	                        }
 	                        reply({
-	                            idToken: createToken(user)
+	                            token: createToken(user),
+	                            user: {
+	                                admin: user.admin,
+	                                email: user.email,
+	                                name: user.name,
+	                                username: user.username
+	                            }
 	                        }).code(_http_status_codes2.default.SUCCESS_201_CREATED);
 	                    });
 	                });
@@ -319,8 +340,7 @@
 	            }
 	        },
 	        method: 'POST',
-	        path: '/auth/signup'
-
+	        path: '/auth/sign-up'
 	    },
 	    users: {
 	        config: {
@@ -425,7 +445,14 @@
 	exports.default = {
 	    CONNECTION: {
 	        host: host,
-	        port: port
+	        port: port,
+	        routes: {
+	            cors: {
+	                additionalHeaders: ['cache-control', 'x-requested-with'],
+	                headers: ['Content-Type'],
+	                origin: ['http://localhost:8080']
+	            }
+	        }
 	    },
 	    GOOD_OPTIONS: {
 	        ops: {
@@ -601,6 +628,10 @@
 	        index: {
 	            unique: true
 	        },
+	        required: true,
+	        type: String
+	    },
+	    name: {
 	        required: true,
 	        type: String
 	    },

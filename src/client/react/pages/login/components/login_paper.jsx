@@ -12,7 +12,7 @@ class LoginPaper extends React.Component {
         super(props);
 
         this.state = {
-            value: 'login'
+            value: 'sign-in'
         };
 
         this.onTabChange = this.handleTabChange.bind(this);
@@ -38,29 +38,36 @@ class LoginPaper extends React.Component {
                     value={this.state.value}>
                     <Tab
                         className="col-xs"
-                        label="Login"
-                        value="login">
+                        label="Sign In"
+                        value="sign-in">
                         <form
-                            action={this.props.onLogin}
-                            className="login-form">
+                            onSubmit={(event) => {
+                                event.preventDefault();
+                                this.props.onSignIn(event.target.username.value, event.target.password.value);
+                            }}
+                            className="sign-in-form">
                             <TextField
                                 fullWidth={true}
                                 hintText="Username"
                                 floatingLabelText="Username"
+                                name="username"
                                 type="text" />
                             <TextField
                                 className="col-xsd"
                                 floatingLabelText="Password"
                                 fullWidth={true}
                                 hintText="Password"
+                                name="password"
                                 type="password" />
                             <Checkbox
-                                className="login-checkbox"
-                                label="Remember Me" />
+                                className="sign-in-checkbox"
+                                label="Remember Me"
+                                name="rememberme" />
                             <RaisedButton
-                                className="login-button"
+                                className="sign-in-button"
                                 fullWidth={true}
                                 label="Login"
+                                type="submit"
                                 primary={true} />
                         </form>
                     </Tab>
@@ -69,33 +76,41 @@ class LoginPaper extends React.Component {
                         label="Sign Up"
                         value="sign-up">
                         <form
-                            action={this.props.onSignIn}
-                            className="login-form">
+                            onSubmit={(event) => {
+                                event.preventDefault();
+                                this.props.onSignUp(event.target.email.value, event.target.name.value, event.target.username.value, event.target.password.value);
+                            }}
+                            className="sign-up-form">
                             <TextField
                                 hintText="Email"
                                 floatingLabelText="Email"
                                 fullWidth={true}
+                                name="email"
                                 type="text" />
                             <TextField
                                 hintText="Name"
                                 floatingLabelText="Name"
                                 fullWidth={true}
+                                name="name"
                                 type="text" />
                             <TextField
                                 hintText="Username"
                                 floatingLabelText="Username"
                                 fullWidth={true}
+                                name="username"
                                 type="text" />
                             <TextField
                                 className="col-xsd"
                                 hintText="Password"
                                 floatingLabelText="Password"
                                 fullWidth={true}
+                                name="password"
                                 type="password" />
                             <RaisedButton
-                                className="login-button"
+                                className="sign-up-button"
                                 fullWidth={true}
                                 label="Sing Up"
+                                type="submit"
                                 primary={true} />
                         </form>
                     </Tab>

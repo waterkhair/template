@@ -9,7 +9,19 @@ const apiKey = 12345,
 export default {
     CONNECTION: {
         host,
-        port
+        port,
+        routes: {
+            cors: {
+                additionalHeaders: [
+                    'cache-control',
+                    'x-requested-with'
+                ],
+                headers: [
+                    'Content-Type'
+                ],
+                origin: ['http://localhost:8080']
+            }
+        }
     },
     GOOD_OPTIONS: {
         ops: {

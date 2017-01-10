@@ -1,19 +1,27 @@
 // Modules
+import LoginPage from '../pages/login/login_page';
 import React from 'react';
-import appConfig from '../../config/app';
+import {connect} from 'react-redux';
 
-const style = {
-    padding: 50
-};
-
-export default class DefaultLayout extends React.Component {
+class DefaultLayout extends React.Component {
     render() {
         return (
             <div
-                className="row center-xs"
-                style={style}>
-                {this.props.children}
+                className="main-container row center-xs">
+                {
+                    this.props.sessionState.token === ''
+                        ? <LoginPage />
+                        : this.props.children
+                }
             </div>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        sessionState: state.session
+    };
+};
+
+export default connect(mapStateToProps)(DefaultLayout);

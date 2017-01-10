@@ -63,45 +63,45 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _css_route = __webpack_require__(6);
+	var _css_route = __webpack_require__(7);
 
 	var _css_route2 = _interopRequireDefault(_css_route);
 
-	var _fonts_route = __webpack_require__(8);
+	var _fonts_route = __webpack_require__(9);
 
 	var _fonts_route2 = _interopRequireDefault(_fonts_route);
 
-	var _good_plugin = __webpack_require__(9);
+	var _good_plugin = __webpack_require__(10);
 
 	var _good_plugin2 = _interopRequireDefault(_good_plugin);
 
-	var _hapi = __webpack_require__(11);
+	var _hapi = __webpack_require__(12);
 
 	var _hapi2 = _interopRequireDefault(_hapi);
 
-	var _index_route = __webpack_require__(12);
+	var _index_route = __webpack_require__(13);
 
 	var _index_route2 = _interopRequireDefault(_index_route);
 
-	var _inert_plugin = __webpack_require__(14);
+	var _inert_plugin = __webpack_require__(15);
 
 	var _inert_plugin2 = _interopRequireDefault(_inert_plugin);
 
-	var _scripts_route = __webpack_require__(16);
+	var _scripts_route = __webpack_require__(17);
 
 	var _scripts_route2 = _interopRequireDefault(_scripts_route);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Folders
-	if (!(0, _fs.existsSync)('../../dist/client/logs')) {
-	    (0, _fs.mkdirSync)('../../dist/client/logs');
+	if (!(0, _fs.existsSync)('../../dist/client/' + _main2.default.HAPI.LOGS_PATH)) {
+	    (0, _fs.mkdirSync)('../../dist/client/' + _main2.default.HAPI.LOGS_PATH);
 	}
 
 	// Hapi
 	// Modules
 	var hapiServer = new _hapi2.default.Server();
-	hapiServer.connection(_main2.default.Hapi.connection);
+	hapiServer.connection(_main2.default.HAPI.CONNECTION);
 
 	// PlugIns
 	hapiServer.register(_good_plugin2.default, function (err) {
@@ -147,21 +147,25 @@
 	    value: true
 	});
 
-	var _app = __webpack_require__(4);
+	var _api = __webpack_require__(4);
+
+	var _api2 = _interopRequireDefault(_api);
+
+	var _app = __webpack_require__(5);
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _hapi = __webpack_require__(5);
+	var _hapi = __webpack_require__(6);
 
 	var _hapi2 = _interopRequireDefault(_hapi);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// Main Configuration
 	exports.default = {
-	    App: _app2.default,
-	    Hapi: _hapi2.default
-	};
+	    API: _api2.default,
+	    APP: _app2.default,
+	    HAPI: _hapi2.default
+	}; // Main Configuration
 
 /***/ },
 /* 4 */
@@ -172,14 +176,28 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	// App Configuration
+	// API Configuration
 	exports.default = {
-	    description: 'Template for new projects using MongoDB, Express, React and NodeJS.',
-	    title: 'Template'
+	    HOST: 'http://localhost:3000'
 	};
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	// App Configuration
+	exports.default = {
+	    DESCRIPTION: 'Template for new projects using MongoDB, Express, React and NodeJS.',
+	    TITLE: 'Template'
+	};
+
+/***/ },
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -196,11 +214,11 @@
 	    port = 8080;
 
 	exports.default = {
-	    connection: {
+	    CONNECTION: {
 	        host: host,
 	        port: port
 	    },
-	    goodOptions: {
+	    GOOD_OPTIONS: {
 	        ops: {
 	            interval: interval
 	        },
@@ -251,11 +269,11 @@
 	            }]
 	        }
 	    },
-	    logsPath: logsPath
+	    LOGS_PATH: logsPath
 	};
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -264,7 +282,7 @@
 	    value: true
 	});
 
-	var _path = __webpack_require__(7);
+	var _path = __webpack_require__(8);
 
 	var _path2 = _interopRequireDefault(_path);
 
@@ -281,13 +299,13 @@
 	}; // Modules
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -296,7 +314,7 @@
 	    value: true
 	});
 
-	var _path = __webpack_require__(7);
+	var _path = __webpack_require__(8);
 
 	var _path2 = _interopRequireDefault(_path);
 
@@ -313,7 +331,7 @@
 	}; // Modules
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -326,7 +344,7 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _good = __webpack_require__(10);
+	var _good = __webpack_require__(11);
 
 	var _good2 = _interopRequireDefault(_good);
 
@@ -334,24 +352,24 @@
 
 	// Modules
 	exports.default = {
-	    options: _main2.default.Hapi.goodOptions,
+	    options: _main2.default.HAPI.GOOD_OPTIONS,
 	    register: _good2.default
 	};
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	module.exports = require("good");
 
 /***/ },
 /* 11 */
 /***/ function(module, exports) {
 
-	module.exports = require("hapi");
+	module.exports = require("good");
 
 /***/ },
 /* 12 */
+/***/ function(module, exports) {
+
+	module.exports = require("hapi");
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -364,7 +382,7 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _index = __webpack_require__(13);
+	var _index = __webpack_require__(14);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -374,7 +392,8 @@
 	exports.default = {
 	    handler: function handler(req, reply) {
 	        reply((0, _index2.default)({
-	            app: _main2.default.App
+	            API: _main2.default.API,
+	            APP: _main2.default.APP
 	        }));
 	    },
 	    method: 'GET',
@@ -382,7 +401,7 @@
 	};
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -392,11 +411,11 @@
 	});
 
 	exports.default = function (config) {
-	    return "<!DOCTYPE html>\n    <html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n        <title>" + config.app.title + "</title>\n        <meta name=\"description\" content=\"" + config.app.description + "\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1\">\n        <link href=\"https://fonts.googleapis.com/css?family=Roboto:300,400,500\" rel=\"stylesheet\">\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/styles.css\">\n        <link rel=\"shortcut icon\" href=\"\">\n    </head>\n    <body>\n        <div id=\"app\"></div>\n        <script>\n            window.config = " + JSON.stringify(config) + "\n        </script>\n        <script src=\"/scripts/vendor.js\"></script>\n        <script src=\"/scripts/bundle.js\"></script>\n    </body>\n    </html>";
+	    return "<!DOCTYPE html>\n    <html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n        <title>" + config.APP.TITLE + "</title>\n        <meta name=\"description\" content=\"" + config.APP.DESCRIPTION + "\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1\">\n        <link href=\"https://fonts.googleapis.com/css?family=Roboto:300,400,500\" rel=\"stylesheet\">\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/styles.css\">\n        <link rel=\"shortcut icon\" href=\"\">\n    </head>\n    <body>\n        <div id=\"app\"></div>\n        <script>\n            window.config = " + JSON.stringify(config) + "\n        </script>\n        <script src=\"/scripts/vendor.js\"></script>\n        <script src=\"/scripts/bundle.js\"></script>\n    </body>\n    </html>";
 	};
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -405,7 +424,7 @@
 	    value: true
 	});
 
-	var _inert = __webpack_require__(15);
+	var _inert = __webpack_require__(16);
 
 	var _inert2 = _interopRequireDefault(_inert);
 
@@ -416,13 +435,13 @@
 	}; // Modules
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	module.exports = require("inert");
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -431,7 +450,7 @@
 	    value: true
 	});
 
-	var _path = __webpack_require__(7);
+	var _path = __webpack_require__(8);
 
 	var _path2 = _interopRequireDefault(_path);
 

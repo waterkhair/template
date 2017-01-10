@@ -1,29 +1,32 @@
-import actions from '../actions/session';
+// Modules
+import ACTION_TYPES from '../../const/action_types';
 
 const INITIAL_STATE = {
-        session: {
-            displayName: '',
+        token: '',
+        user: {
+            admin: false,
             email: '',
+            name: '',
             username: ''
-        },
-        token: ''
+        }
     },
     initialState = () => INITIAL_STATE;
 
 export default (state = initialState(), action) => {
     switch (action.type) {
-    case actions.ACTION_TYPE.LOG_IN_SUCCESS:
-    case actions.ACTION_TYPE.REGISTER_USER_SUCCESS:
+    case ACTION_TYPES.SIGN_IN_SUCCESS:
+    case ACTION_TYPES.SIGN_UP_SUCCESS:
         return {
             ...state,
-            session: {
-                displayName: action.session.displayName,
-                email: action.session.email,
-                username: action.session.username
-            },
-            token: action.token
+            token: action.token,
+            user: {
+                admin: action.user.admin,
+                email: action.user.email,
+                name: action.user.name,
+                username: action.user.username
+            }
         };
-    case actions.ACTION_TYPE.LOG_OUT_SUCCESS:
+    case ACTION_TYPES.SIGN_OUT_SUCCESS:
         return initialState();
     default:
         return state;

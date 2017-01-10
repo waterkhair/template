@@ -38,8 +38,9 @@ hapiServer.register(HapiAuthJwt, (err) => {
 
     // Routers
     hapiServer.route(IndexRoute);
+    hapiServer.route(AuthRoute.signIn);
     hapiServer.route(AuthRoute.signUp);
-    hapiServer.route(AuthRoute.login);
+    hapiServer.route(AuthRoute.users);
 });
 
 // Start Server

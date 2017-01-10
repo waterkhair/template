@@ -10,13 +10,13 @@ import InertPlugin from './plugins/inert_plugin';
 import ScriptsRoute from './routes/scripts_route';
 
 // Folders
-if (!existsSync('../../dist/client/logs')) {
-    mkdirSync('../../dist/client/logs');
+if (!existsSync(`../../dist/client/${Config.HAPI.LOGS_PATH}`)) {
+    mkdirSync(`../../dist/client/${Config.HAPI.LOGS_PATH}`);
 }
 
 // Hapi
 const hapiServer = new Hapi.Server();
-hapiServer.connection(Config.Hapi.connection);
+hapiServer.connection(Config.HAPI.CONNECTION);
 
 // PlugIns
 hapiServer.register(GoodPlugin, (err) => {

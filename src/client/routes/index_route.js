@@ -5,7 +5,8 @@ import index from '../content/index';
 export default {
     handler: (req, reply) => {
         reply(index({
-            app: Config.App
+            API: Config.API,
+            APP: Config.APP
         }));
     },
     method: 'GET',

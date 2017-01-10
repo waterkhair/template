@@ -3,57 +3,66 @@ import 'rxjs/add/observable/dom/ajax';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import ACTION_TYPES from '../../const/action_types';
 import {Observable} from 'rxjs/Observable';
 import actions from '../actions/session';
 import {combineEpics} from 'redux-observable';
 
-const logIn = (action$) => action$
-    .ofType(actions.ACTION_TYPE.LOG_IN)
+const signIn = (action$) => action$
+    .ofType(ACTION_TYPES.SIGN_IN)
         .switchMap((action) => {
-            Observable.ajax
-                .post(`${window.config.apiUrl}/auth/local/login'`, {
+            const signInUrl = `${window.config.API.HOST}/auth/sign-in`;
+
+            return Observable.ajax
+                .post(signInUrl, {
                     password: action.password,
                     username: action.username
                 }, {
                     'Content-Type': 'application/json'
                 })
-                .map(actions.logInSuccess)
+                .map(actions.signInSuccess)
                 .catch((error) => {
                     throw error;
                 });
-        }),
-    logOut = (action$) => action$
-        .ofType(actions.ACTION_TYPE.LOG_OUT)
+        });
+
+const signOut = (action$) => action$
+        .ofType(ACTION_TYPES.SIGN_OUT)
         .switchMap(() => {
-            Observable.ajax
-                .get(`${window.config.apiUrl}/auth/logout`, {
+            const signOutUrl = `${window.config.API.HOST}/auth/sign-out`;
+
+            return Observable.ajax
+                .get(signOutUrl, {
                     'Content-Type': 'application/json'
                 })
-                .map(actions.logOutSuccess)
+                .map(actions.signOutSuccess)
                 .catch((error) => {
                     throw error;
                 });
-        }),
-    registerUser = (action$) => action$
-        .ofType(actions.ACTION_TYPE.REGISTER_USER)
+        });
+
+const signUp = (action$) => action$
+        .ofType(ACTION_TYPES.SIGN_UP)
         .switchMap((action) => {
-            Observable.ajax
-                .post(`${window.config.apiUrl}/auth/local`, {
-                    displayName: action.displayName,
+            const signUpUrl = `${window.config.API.HOST}/auth/sign-up`;
+
+            return Observable.ajax
+                .post(signUpUrl, {
                     email: action.email,
+                    name: action.name,
                     password: action.password,
                     username: action.username
                 }, {
                     'Content-Type': 'application/json'
                 })
-                .map(actions.registerUserSuccess)
+                .map(actions.signUpSuccess)
                 .catch((error) => {
                     throw error;
                 });
         });
 
 export default combineEpics(
-    logIn,
-    logOut,
-    registerUser
+    signIn,
+    signOut,
+    signUp
 );
