@@ -19350,7 +19350,7 @@
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
 	            if (this.props.sessionState.user && this.props.sessionState.user.name) {
-	                _reactRouter.browserHistory.push('/');
+	                _reactRouter.browserHistory.goBack();
 	            }
 	        }
 	    }, {

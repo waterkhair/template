@@ -10,7 +10,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 class HomePage extends React.Component {
     componentDidUpdate() {
         if (this.props.sessionState.user && this.props.sessionState.user.name) {
-            browserHistory.push('/');
+            browserHistory.goBack();
         }
     }
 
