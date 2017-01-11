@@ -1,5 +1,4 @@
 // Modules
-import LoginPage from '../pages/login/login_page';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -8,11 +7,7 @@ class DefaultLayout extends React.Component {
         return (
             <div
                 className="main-container row center-xs">
-                {
-                    this.props.sessionState.token === ''
-                        ? <LoginPage />
-                        : this.props.children
-                }
+                {this.props.children}
             </div>
         );
     }

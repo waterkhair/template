@@ -27,10 +27,7 @@ class LoginPaper extends React.Component {
     render() {
         return (
             <Paper
-                className="col-xs-10 col-sm-8 col-md-6 col-lg-4"
-                style={{
-                    minWidth: 300
-                }}
+                className="login-paper col-xs-10 col-sm-8 col-md-6 col-lg-4"
                 zDepth={3}>
                 <Tabs
                     className="row"

@@ -864,8 +864,19 @@ body {
   background-color: #fff;
 }
 
-.main-container {
+/* APP */
+#app {
   padding: 50px;
+}
+
+/* DEFAULT LAYOUT */
+.page-paper {
+  min-width: 300px;
+  padding-bottom: 10px;
+}
+
+.login-paper {
+  min-width: 300px;
 }
 
 /* AUTH */

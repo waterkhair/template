@@ -6,6 +6,7 @@ import AboutPage from './pages/about/about_page';
 import DefaultLayout from './layouts/default';
 import ErrorPage from './pages/error/error_page';
 import HomePage from './pages/home/home_page';
+import LoggedLayout from './layouts/logged';
 import LoginPage from './pages/login/login_page';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Provider} from 'react-redux';
@@ -27,10 +28,12 @@ render(
         <MuiThemeProvider muiTheme={getMuiTheme()}>
             <Router history={browserHistory}>
                 <Route path="/" component={DefaultLayout}>
-                    <IndexRoute name="Home" component={HomePage} />
-                    <Route name="About" path="/about" component={AboutPage} />
-                    <Route name="Error" path="/error" component={ErrorPage} />
-                    <Route path="/login" component={LoginPage} />
+                    <Route name="Login" path="/login" component={LoginPage} />
+                    <Route component={LoggedLayout}>
+                        <IndexRoute name="Home" component={HomePage} />
+                        <Route name="About" path="/about" component={AboutPage} />
+                        <Route name="Error" path="/error" component={ErrorPage} />
+                    </Route>
                 </Route>
             </Router>
         </MuiThemeProvider>

@@ -3,13 +3,14 @@ import LoginPaper from './components/login_paper';
 import React from 'react';
 import SessionActions from '../../../redux/actions/session';
 import {bindActionCreators} from 'redux';
+import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class HomePage extends React.Component {
-    componentWillUpdate() {
+    componentDidUpdate() {
         if (this.props.sessionState.user && this.props.sessionState.user.name) {
-            alert(this.props.sessionState.user.name);
+            browserHistory.push('/');
         }
     }
 
