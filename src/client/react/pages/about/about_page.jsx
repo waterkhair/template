@@ -9,9 +9,7 @@ class HomePage extends React.Component {
             <Paper
                 className="page-paper col-xs-10 col-sm-8 col-md-6 col-lg-4"
                 zDepth={3}>
-                <h1 style={{
-                    color: this.props.muiTheme.palette.textColor
-                }}>
+                <h1>
                     About
                 </h1>
             </Paper>

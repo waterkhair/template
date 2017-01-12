@@ -1,7 +1,7 @@
 // Modules
 import Path from 'path';
 
-export default {
+const CssRoute = {
     handler: {
         directory: {
             path: Path.resolve('../../dist/client/content/css')
@@ -10,3 +10,5 @@ export default {
     method: 'GET',
     path: '/css/{path*}'
 };
+
+export default CssRoute;

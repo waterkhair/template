@@ -1,7 +1,7 @@
 // Modules
 import Path from 'path';
 
-export default {
+const ScriptsRoute = {
     handler: {
         directory: {
             path: Path.resolve('../../dist/client/content/scripts')
@@ -10,3 +10,5 @@ export default {
     method: 'GET',
     path: '/scripts/{path*}'
 };
+
+export default ScriptsRoute;

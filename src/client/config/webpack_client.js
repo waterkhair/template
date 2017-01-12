@@ -51,6 +51,10 @@ module.exports = {
             test: /\.js$/
         }]
     },
+    node: {
+        dns: 'empty',
+        net: 'empty'
+    },
     output: {
         filename: '[name].js',
         path: Path.resolve(`${__dirname}/../../../dist/client/content`)

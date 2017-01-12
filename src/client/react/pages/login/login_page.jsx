@@ -1,5 +1,5 @@
 // Modules
-import LoginPaper from './components/login_paper';
+import LoginPaper from './containers/login_paper';
 import React from 'react';
 import SessionActions from '../../../redux/actions/session';
 import {bindActionCreators} from 'redux';
@@ -7,10 +7,10 @@ import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
-class HomePage extends React.Component {
+class LoginPage extends React.Component {
     componentDidUpdate() {
-        if (this.props.sessionState.user && this.props.sessionState.user.name) {
-            browserHistory.goBack();
+        if (this.props.sessionState.user.scope === 'user' || this.props.sessionState.user.scope === 'admin') {
+            browserHistory.push(this.props.sessionState.navigation.previousUrl);
         }
     }
 
@@ -24,17 +24,16 @@ class HomePage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
+    const mappedState = {
         sessionState: state.session
     };
+
+    return mappedState;
 };
 
-const matchDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        signIn: SessionActions.signIn,
-        signUp: SessionActions.signUp
-    },
-    dispatch);
-};
+const matchDispatchToProps = (dispatch) => bindActionCreators({
+    signIn: SessionActions.signIn,
+    signUp: SessionActions.signUp
+}, dispatch);
 
-export default connect(mapStateToProps, matchDispatchToProps)(muiThemeable()(HomePage));
+export default connect(mapStateToProps, matchDispatchToProps)(muiThemeable()(LoginPage));

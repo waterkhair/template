@@ -1,7 +1,7 @@
 // Modules
 import Path from 'path';
 
-export default {
+const FontsRoute = {
     handler: {
         directory: {
             path: Path.resolve('../../dist/client/content/fonts')
@@ -10,3 +10,5 @@ export default {
     method: 'GET',
     path: '/font/{path*}'
 };
+
+export default FontsRoute;

@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/waterkhair/template#readme",
   "dependencies": {
+    "boom": "4.2.0",
     "flexboxgrid": "6.3.1",
     "good": "7.1.0",
     "good-console": "6.2.0",
@@ -35,6 +36,7 @@
     "good-squeeze": "5.0.1",
     "hapi": "16.1.0",
     "inert": "4.1.0",
+    "jsonwebtoken": "7.2.1",
     "material-ui": "0.16.6",
     "react": "15.4.2",
     "react-dom": "15.4.2",

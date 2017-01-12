@@ -1,11 +1,14 @@
 // Modules
 import React from 'react';
+import SessionActions from '../../redux/actions/session';
+import {bindActionCreators} from 'redux';
 import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 
 class DefaultLayout extends React.Component {
     componentDidMount() {
         if (this.props.sessionState.token === '') {
+            this.props.setPreviousUrl(this.props.location.pathname);
             browserHistory.push('/login');
         }
     }
@@ -20,9 +23,15 @@ class DefaultLayout extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
+    const mappedState = {
         sessionState: state.session
     };
+
+    return mappedState;
 };
 
-export default connect(mapStateToProps)(DefaultLayout);
+const matchDispatchToProps = (dispatch) => bindActionCreators({
+    setPreviousUrl: SessionActions.setPreviousUrl
+}, dispatch);
+
+export default connect(mapStateToProps, matchDispatchToProps)(DefaultLayout);

@@ -2,7 +2,7 @@
 import Config from '../config/main';
 import index from '../content/index';
 
-export default {
+const IndexRoute = {
     handler: (req, reply) => {
         reply(index({
             API: Config.API,
@@ -12,3 +12,5 @@ export default {
     method: 'GET',
     path: '/{path*}'
 };
+
+export default IndexRoute;

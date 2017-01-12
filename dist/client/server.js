@@ -63,33 +63,33 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _css_route = __webpack_require__(7);
+	var _css = __webpack_require__(7);
 
-	var _css_route2 = _interopRequireDefault(_css_route);
+	var _css2 = _interopRequireDefault(_css);
 
-	var _fonts_route = __webpack_require__(9);
+	var _fonts = __webpack_require__(9);
 
-	var _fonts_route2 = _interopRequireDefault(_fonts_route);
+	var _fonts2 = _interopRequireDefault(_fonts);
 
-	var _good_plugin = __webpack_require__(10);
+	var _good = __webpack_require__(10);
 
-	var _good_plugin2 = _interopRequireDefault(_good_plugin);
+	var _good2 = _interopRequireDefault(_good);
 
 	var _hapi = __webpack_require__(12);
 
 	var _hapi2 = _interopRequireDefault(_hapi);
 
-	var _index_route = __webpack_require__(13);
+	var _index = __webpack_require__(13);
 
-	var _index_route2 = _interopRequireDefault(_index_route);
+	var _index2 = _interopRequireDefault(_index);
 
-	var _inert_plugin = __webpack_require__(15);
+	var _inert = __webpack_require__(15);
 
-	var _inert_plugin2 = _interopRequireDefault(_inert_plugin);
+	var _inert2 = _interopRequireDefault(_inert);
 
-	var _scripts_route = __webpack_require__(17);
+	var _scripts = __webpack_require__(17);
 
-	var _scripts_route2 = _interopRequireDefault(_scripts_route);
+	var _scripts2 = _interopRequireDefault(_scripts);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -104,22 +104,22 @@
 	hapiServer.connection(_main2.default.HAPI.CONNECTION);
 
 	// PlugIns
-	hapiServer.register(_good_plugin2.default, function (err) {
+	hapiServer.register(_good2.default, function (err) {
 	    if (err) {
 	        throw err;
 	    }
 	});
-	hapiServer.register(_inert_plugin2.default, function (err) {
+	hapiServer.register(_inert2.default, function (err) {
 	    if (err) {
 	        throw err;
 	    }
 	});
 
 	// Routers
-	hapiServer.route(_css_route2.default);
-	hapiServer.route(_fonts_route2.default);
-	hapiServer.route(_index_route2.default);
-	hapiServer.route(_scripts_route2.default);
+	hapiServer.route(_css2.default);
+	hapiServer.route(_fonts2.default);
+	hapiServer.route(_index2.default);
+	hapiServer.route(_scripts2.default);
 
 	// Start Server
 	hapiServer.start(function (err) {
@@ -288,7 +288,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = {
+	var CssRoute = {
 	    handler: {
 	        directory: {
 	            path: _path2.default.resolve('../../dist/client/content/css')
@@ -297,6 +297,7 @@
 	    method: 'GET',
 	    path: '/css/{path*}'
 	}; // Modules
+	exports.default = CssRoute;
 
 /***/ },
 /* 8 */
@@ -320,7 +321,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = {
+	var FontsRoute = {
 	    handler: {
 	        directory: {
 	            path: _path2.default.resolve('../../dist/client/content/fonts')
@@ -329,6 +330,7 @@
 	    method: 'GET',
 	    path: '/font/{path*}'
 	}; // Modules
+	exports.default = FontsRoute;
 
 /***/ },
 /* 10 */
@@ -389,7 +391,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Modules
-	exports.default = {
+	var IndexRoute = {
 	    handler: function handler(req, reply) {
 	        reply((0, _index2.default)({
 	            API: _main2.default.API,
@@ -399,6 +401,8 @@
 	    method: 'GET',
 	    path: '/{path*}'
 	};
+
+	exports.default = IndexRoute;
 
 /***/ },
 /* 14 */
@@ -456,7 +460,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = {
+	var ScriptsRoute = {
 	    handler: {
 	        directory: {
 	            path: _path2.default.resolve('../../dist/client/content/scripts')
@@ -465,6 +469,7 @@
 	    method: 'GET',
 	    path: '/scripts/{path*}'
 	}; // Modules
+	exports.default = ScriptsRoute;
 
 /***/ }
 /******/ ]);

@@ -1,6 +1,11 @@
 // Mmdules
 import ACTION_TYPES from '../../const/action_types';
 
+const setPreviousUrl = (previousUrl) => ({
+    previousUrl,
+    type: ACTION_TYPES.SET_PREVIOUS_URL
+});
+
 const signIn = (username, password) => ({
     password,
     type: ACTION_TYPES.SIGN_IN,
@@ -9,8 +14,7 @@ const signIn = (username, password) => ({
 
 const signInSuccess = (response) => ({
     token: response.response.token,
-    type: ACTION_TYPES.SIGN_IN_SUCCESS,
-    user: response.response.user
+    type: ACTION_TYPES.SIGN_IN_SUCCESS
 });
 
 const signOut = () => ({
@@ -31,11 +35,11 @@ const signUp = (email, name, username, password) => ({
 
 const signUpSuccess = (response) => ({
     token: response.response.token,
-    type: ACTION_TYPES.SIGN_UP_SUCCESS,
-    user: response.response.user
+    type: ACTION_TYPES.SIGN_UP_SUCCESS
 });
 
 export default {
+    setPreviousUrl,
     signIn,
     signInSuccess,
     signOut,

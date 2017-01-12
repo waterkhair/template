@@ -37,14 +37,7 @@
         "no-shadow": "off",
         "no-ternary": "off",
         "no-var": "off",
-        "object-curly-newline": [
-            "error", {
-                "ObjectExpression": "always",
-                "ObjectPattern": {
-                    "multiline": true
-                }
-            }
-        ],
+        "object-curly-newline": "off",
         "one-var": "off",
         "padded-blocks": [
             "error",

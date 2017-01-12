@@ -59,31 +59,31 @@
 
 	var _fs = __webpack_require__(2);
 
-	var _auth_route = __webpack_require__(3);
+	var _auth = __webpack_require__(3);
 
-	var _auth_route2 = _interopRequireDefault(_auth_route);
+	var _auth2 = _interopRequireDefault(_auth);
 
-	var _main = __webpack_require__(6);
+	var _main = __webpack_require__(7);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _good_plugin = __webpack_require__(15);
+	var _good = __webpack_require__(18);
 
-	var _good_plugin2 = _interopRequireDefault(_good_plugin);
+	var _good2 = _interopRequireDefault(_good);
 
-	var _hapi = __webpack_require__(17);
+	var _hapi = __webpack_require__(20);
 
 	var _hapi2 = _interopRequireDefault(_hapi);
 
-	var _hapiAuthJwt = __webpack_require__(18);
+	var _hapiAuthJwt = __webpack_require__(21);
 
 	var _hapiAuthJwt2 = _interopRequireDefault(_hapiAuthJwt);
 
-	var _index_route = __webpack_require__(19);
+	var _index = __webpack_require__(22);
 
-	var _index_route2 = _interopRequireDefault(_index_route);
+	var _index2 = _interopRequireDefault(_index);
 
-	var _mongoose = __webpack_require__(14);
+	var _mongoose = __webpack_require__(15);
 
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 
@@ -100,7 +100,7 @@
 	hapiServer.connection(_main2.default.HAPI.CONNECTION);
 
 	// PlugIns
-	hapiServer.register(_good_plugin2.default, function (err) {
+	hapiServer.register(_good2.default, function (err) {
 	    if (err) {
 	        throw err;
 	    }
@@ -110,17 +110,17 @@
 	        throw err;
 	    }
 	    hapiServer.auth.strategy('jwt', 'jwt', {
-	        key: 'secretkey',
+	        key: _main2.default.AUTH.SECRET_KEY,
 	        verifyOptions: {
 	            algorithsm: ['HS256']
 	        }
 	    });
 
 	    // Routers
-	    hapiServer.route(_index_route2.default);
-	    hapiServer.route(_auth_route2.default.signIn);
-	    hapiServer.route(_auth_route2.default.signUp);
-	    hapiServer.route(_auth_route2.default.users);
+	    hapiServer.route(_index2.default);
+	    hapiServer.route(_auth2.default.SignInRoute);
+	    hapiServer.route(_auth2.default.SignUpRoute);
+	    hapiServer.route(_auth2.default.GetUsersRoute);
 	});
 
 	// Start Server
@@ -154,77 +154,148 @@
 	    value: true
 	});
 
-	var _bcryptjs = __webpack_require__(4);
+	var _auth = __webpack_require__(4);
 
-	var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
+	var _auth2 = _interopRequireDefault(_auth);
 
-	var _boom = __webpack_require__(5);
+	var _auth3 = __webpack_require__(16);
 
-	var _boom2 = _interopRequireDefault(_boom);
+	var _auth4 = _interopRequireDefault(_auth3);
 
-	var _main = __webpack_require__(6);
+	var _main = __webpack_require__(7);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _http_status_codes = __webpack_require__(10);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SignInRoute = {
+	    config: {
+	        handler: _auth2.default.returnToken,
+	        pre: [{
+	            assign: 'user',
+	            method: _auth2.default.verifyCredentials
+	        }],
+	        validate: {
+	            payload: _auth4.default.authenticateSchema
+	        }
+	    },
+	    method: 'POST',
+	    path: _main2.default.AUTH.SIGN_IN_PATH
+	}; // Modules
+
+
+	var SignUpRoute = {
+	    config: {
+	        handler: _auth2.default.registerUser,
+	        pre: [{
+	            method: _auth2.default.verifyUniqueUser
+	        }],
+	        validate: {
+	            payload: _auth4.default.userSchema
+	        }
+	    },
+	    method: 'POST',
+	    path: _main2.default.AUTH.SIGN_UP_PATH
+	};
+
+	var GetUsersRoute = {
+	    config: {
+	        auth: {
+	            scope: ['admin'],
+	            strategy: 'jwt'
+	        },
+	        handler: _auth2.default.getUsers
+	    },
+	    method: 'GET',
+	    path: _main2.default.AUTH.GET_USERS_PATH
+	};
+
+	exports.default = {
+	    GetUsersRoute: GetUsersRoute,
+	    SignInRoute: SignInRoute,
+	    SignUpRoute: SignUpRoute
+	};
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _bcryptjs = __webpack_require__(5);
+
+	var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
+
+	var _boom = __webpack_require__(6);
+
+	var _boom2 = _interopRequireDefault(_boom);
+
+	var _main = __webpack_require__(7);
+
+	var _main2 = _interopRequireDefault(_main);
+
+	var _http_status_codes = __webpack_require__(11);
 
 	var _http_status_codes2 = _interopRequireDefault(_http_status_codes);
 
-	var _jsonwebtoken = __webpack_require__(11);
+	var _token = __webpack_require__(12);
 
-	var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+	var _token2 = _interopRequireDefault(_token);
 
-	var _joi = __webpack_require__(12);
-
-	var _joi2 = _interopRequireDefault(_joi);
-
-	var _user = __webpack_require__(13);
+	var _user = __webpack_require__(14);
 
 	var _user2 = _interopRequireDefault(_user);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var authenticateUserSchema = _joi2.default.alternatives().try(_joi2.default.object({
-	    password: _joi2.default.string().required(),
-	    username: _joi2.default.string().alphanum().min(_main2.default.AUTH.USER.USERNAME_MIN_CHARS).max(_main2.default.AUTH.USER.USERNAME_MAX_CHARS).required()
-	}), _joi2.default.object({
-	    password: _joi2.default.string().required(),
-	    username: _joi2.default.string().email().required()
-	}));
-
-	var createToken = function createToken(user) {
-	    var scopes = null;
-
-	    if (user.admin) {
-	        scopes = 'admin';
-	    }
-
-	    return _jsonwebtoken2.default.sign({
-	        id: user._id,
-	        scope: scopes,
-	        username: user.username
-	    }, _main2.default.AUTH.SECRET_KEY, {
-	        algorithm: 'HS256',
-	        expiresIn: '1h'
+	// Modules
+	var getUsers = function getUsers(req, reply) {
+	    _user2.default.find().select('-password -__v').exec(function (err, users) {
+	        if (err) {
+	            throw _boom2.default.badRequest(err);
+	        }
+	        if (!users.length) {
+	            throw _boom2.default.notFound('No users found!');
+	        }
+	        reply(users);
 	    });
 	};
 
-	var createUserSchema = _joi2.default.object({
-	    email: _joi2.default.string().email().required(),
-	    name: _joi2.default.string().required(),
-	    password: _joi2.default.string().required(),
-	    username: _joi2.default.string().alphanum().min(_main2.default.AUTH.USER.USERNAME_MIN_CHARS).max(_main2.default.AUTH.USER.USERNAME_MAX_CHARS).required()
-	});
+	var registerUser = function registerUser(req, reply) {
+	    var user = new _user2.default();
+	    user.admin = false;
+	    user.email = req.payload.email;
+	    user.name = req.payload.name;
+	    user.username = req.payload.username;
 
-	var hashPassword = function hashPassword(password, callback) {
 	    _bcryptjs2.default.genSalt(_main2.default.AUTH.SALT_NUMBER, function (err, salt) {
 	        if (err) {
 	            throw err;
 	        }
-	        _bcryptjs2.default.hash(password, salt, function (err, hash) {
-	            callback(err, hash);
+	        _bcryptjs2.default.hash(req.payload.password, salt, function (err, hash) {
+	            if (err) {
+	                throw _boom2.default.badRequest(err);
+	            }
+	            user.password = hash;
+	            user.save(function (err, user) {
+	                if (err) {
+	                    throw _boom2.default.badRequest(err);
+	                }
+	                reply({
+	                    token: _token2.default.createToken(user)
+	                }).code(_http_status_codes2.default.SUCCESS_201_CREATED);
+	            });
 	        });
 	    });
+	};
+
+	var returnToken = function returnToken(req, reply) {
+	    reply({
+	        token: _token2.default.createToken(req.pre.user) }).code(_http_status_codes2.default.SUCCESS_201_CREATED);
 	};
 
 	var verifyCredentials = function verifyCredentials(req, res) {
@@ -279,106 +350,27 @@
 	};
 
 	exports.default = {
-	    signIn: {
-	        config: {
-	            handler: function handler(req, reply) {
-	                reply({
-	                    token: createToken(req.pre.user),
-	                    user: {
-	                        admin: req.pre.user.admin,
-	                        email: req.pre.user.email,
-	                        name: req.pre.user.name,
-	                        username: req.pre.user.username
-	                    }
-	                }).code(_http_status_codes2.default.SUCCESS_201_CREATED);
-	            },
-	            pre: [{
-	                assign: 'user',
-	                method: verifyCredentials
-	            }],
-	            validate: {
-	                payload: authenticateUserSchema
-	            }
-	        },
-	        method: 'POST',
-	        path: '/auth/sign-in'
-	    },
-	    signUp: {
-	        config: {
-	            handler: function handler(req, reply) {
-	                var user = new _user2.default();
-	                user.admin = false;
-	                user.email = req.payload.email;
-	                user.name = req.payload.name;
-	                user.username = req.payload.username;
-	                hashPassword(req.payload.password, function (err, hash) {
-	                    if (err) {
-	                        throw _boom2.default.badRequest(err);
-	                    }
-	                    user.password = hash;
-	                    user.save(function (err, user) {
-	                        if (err) {
-	                            throw _boom2.default.badRequest(err);
-	                        }
-	                        reply({
-	                            token: createToken(user),
-	                            user: {
-	                                admin: user.admin,
-	                                email: user.email,
-	                                name: user.name,
-	                                username: user.username
-	                            }
-	                        }).code(_http_status_codes2.default.SUCCESS_201_CREATED);
-	                    });
-	                });
-	            },
-	            pre: [{
-	                method: verifyUniqueUser
-	            }],
-	            validate: {
-	                payload: createUserSchema
-	            }
-	        },
-	        method: 'POST',
-	        path: '/auth/sign-up'
-	    },
-	    users: {
-	        config: {
-	            auth: {
-	                scope: ['admin'],
-	                strategy: 'jwt'
-	            },
-	            handler: function handler(req, reply) {
-	                _user2.default.find().select('-password -__v').exec(function (err, users) {
-	                    if (err) {
-	                        throw _boom2.default.badRequest(err);
-	                    }
-	                    if (!users.length) {
-	                        throw _boom2.default.notFound('No users found!');
-	                    }
-	                    reply(users);
-	                });
-	            }
-	        },
-	        method: 'GET',
-	        path: '/auth/users'
-	    }
+	    getUsers: getUsers,
+	    registerUser: registerUser,
+	    returnToken: returnToken,
+	    verifyCredentials: verifyCredentials,
+	    verifyUniqueUser: verifyUniqueUser
 	};
-
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
-	module.exports = require("bcryptjs");
 
 /***/ },
 /* 5 */
 /***/ function(module, exports) {
 
-	module.exports = require("boom");
+	module.exports = require("bcryptjs");
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	module.exports = require("boom");
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -387,15 +379,15 @@
 	    value: true
 	});
 
-	var _auth = __webpack_require__(7);
+	var _auth = __webpack_require__(8);
 
 	var _auth2 = _interopRequireDefault(_auth);
 
-	var _hapi = __webpack_require__(8);
+	var _hapi = __webpack_require__(9);
 
 	var _hapi2 = _interopRequireDefault(_hapi);
 
-	var _mongo_db = __webpack_require__(9);
+	var _mongo_db = __webpack_require__(10);
 
 	var _mongo_db2 = _interopRequireDefault(_mongo_db);
 
@@ -408,7 +400,7 @@
 	}; // Main Configuration
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -417,8 +409,11 @@
 	    value: true
 	});
 	exports.default = {
+	    GET_USERS_PATH: '/auth/users',
 	    SALT_NUMBER: 10,
 	    SECRET_KEY: 'SECRET_KEY',
+	    SIGN_IN_PATH: '/auth/sign-in',
+	    SIGN_UP_PATH: '/auth/sign-up',
 	    USER: {
 	        USERNAME_MAX_CHARS: 30,
 	        USERNAME_MIN_CHARS: 2
@@ -426,7 +421,7 @@
 	};
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -509,7 +504,7 @@
 	};
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -522,7 +517,7 @@
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -592,19 +587,7 @@
 	};
 
 /***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	module.exports = require("jsonwebtoken");
-
-/***/ },
 /* 12 */
-/***/ function(module, exports) {
-
-	module.exports = require("joi");
-
-/***/ },
-/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -613,7 +596,52 @@
 	    value: true
 	});
 
-	var _mongoose = __webpack_require__(14);
+	var _main = __webpack_require__(7);
+
+	var _main2 = _interopRequireDefault(_main);
+
+	var _jsonwebtoken = __webpack_require__(13);
+
+	var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// Modules
+	var createToken = function createToken(user) {
+	    var scopes = user.admin ? 'admin' : 'user';
+
+	    return _jsonwebtoken2.default.sign({
+	        email: user.email,
+	        name: user.name,
+	        scope: scopes,
+	        username: user.username
+	    }, _main2.default.AUTH.SECRET_KEY, {
+	        algorithm: 'HS256',
+	        expiresIn: '1h'
+	    });
+	};
+
+	exports.default = {
+	    createToken: createToken
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = require("jsonwebtoken");
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _mongoose = __webpack_require__(15);
 
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 
@@ -649,13 +677,13 @@
 	})); // Modules
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = require("mongoose");
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -664,11 +692,58 @@
 	    value: true
 	});
 
-	var _main = __webpack_require__(6);
+	var _main = __webpack_require__(7);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _good = __webpack_require__(16);
+	var _joi = __webpack_require__(17);
+
+	var _joi2 = _interopRequireDefault(_joi);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// Modules
+	var authenticateSchema = _joi2.default.alternatives().try(_joi2.default.object({
+	    password: _joi2.default.string().required(),
+	    username: _joi2.default.string().alphanum().min(_main2.default.AUTH.USER.USERNAME_MIN_CHARS).max(_main2.default.AUTH.USER.USERNAME_MAX_CHARS).required()
+	}), _joi2.default.object({
+	    password: _joi2.default.string().required(),
+	    username: _joi2.default.string().email().required()
+	}));
+
+	var userSchema = _joi2.default.object({
+	    email: _joi2.default.string().email().required(),
+	    name: _joi2.default.string().required(),
+	    password: _joi2.default.string().required(),
+	    username: _joi2.default.string().alphanum().min(_main2.default.AUTH.USER.USERNAME_MIN_CHARS).max(_main2.default.AUTH.USER.USERNAME_MAX_CHARS).required()
+	});
+
+	exports.default = {
+	    authenticateSchema: authenticateSchema,
+	    userSchema: userSchema
+	};
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	module.exports = require("joi");
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _main = __webpack_require__(7);
+
+	var _main2 = _interopRequireDefault(_main);
+
+	var _good = __webpack_require__(19);
 
 	var _good2 = _interopRequireDefault(_good);
 
@@ -681,25 +756,25 @@
 	};
 
 /***/ },
-/* 16 */
+/* 19 */
 /***/ function(module, exports) {
 
 	module.exports = require("good");
 
 /***/ },
-/* 17 */
+/* 20 */
 /***/ function(module, exports) {
 
 	module.exports = require("hapi");
 
 /***/ },
-/* 18 */
+/* 21 */
 /***/ function(module, exports) {
 
 	module.exports = require("hapi-auth-jwt");
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -707,13 +782,15 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = {
+	var IndexRoute = {
 	    handler: function handler(req, reply) {
 	        reply('Hello from server side!');
 	    },
 	    method: 'GET',
 	    path: '/'
 	};
+
+	exports.default = IndexRoute;
 
 /***/ }
 /******/ ]);

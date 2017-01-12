@@ -1,13 +1,13 @@
 // Modules
 import {existsSync, mkdirSync} from 'fs';
 import Config from './config/main';
-import CssRoute from './routes/css_route';
-import FontsRoute from './routes/fonts_route';
-import GoodPlugin from './plugins/good_plugin';
+import CssRoute from './routes/css';
+import FontsRoute from './routes/fonts';
+import GoodPlugin from './plugins/good';
 import Hapi from 'hapi';
-import IndexRoute from './routes/index_route';
-import InertPlugin from './plugins/inert_plugin';
-import ScriptsRoute from './routes/scripts_route';
+import IndexRoute from './routes/index';
+import InertPlugin from './plugins/inert';
+import ScriptsRoute from './routes/scripts';
 
 // Folders
 if (!existsSync(`../../dist/client/${Config.HAPI.LOGS_PATH}`)) {
