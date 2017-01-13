@@ -20,9 +20,11 @@ class HomePage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
+    const mappedState = {
         sessionState: state.session
     };
+
+    return mappedState;
 };
 
 export default connect(mapStateToProps)(muiThemeable()(HomePage));

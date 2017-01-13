@@ -48,6 +48,8 @@
             "single"
         ],
         "quote-props": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
         "semi": [
             "error",
             "always"

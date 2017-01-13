@@ -12,6 +12,7 @@ class HomePage extends React.Component {
                 <h1>
                     About
                 </h1>
+                Hello {this.props.sessionState.user.name}!
             </Paper>
         );
     }

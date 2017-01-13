@@ -1,7 +1,7 @@
 // Modules
 import 'flexboxgrid';
+import {IndexRoute, Route, Router, browserHistory} from 'react-router';
 import {applyMiddleware, createStore} from 'redux';
-import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import AboutPage from './pages/about/about_page';
 import DefaultLayout from './layouts/default';
 import ErrorPage from './pages/error/error_page';

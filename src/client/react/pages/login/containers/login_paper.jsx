@@ -1,5 +1,5 @@
 // Modules
-import {Tabs, Tab} from 'material-ui/Tabs';
+import {Tab, Tabs} from 'material-ui/Tabs';
 import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
