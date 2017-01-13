@@ -5,6 +5,7 @@ import CssRoute from './routes/css';
 import FontsRoute from './routes/fonts';
 import GoodPlugin from './plugins/good';
 import Hapi from 'hapi';
+import ImagesRoute from './routes/images';
 import IndexRoute from './routes/index';
 import InertPlugin from './plugins/inert';
 import ScriptsRoute from './routes/scripts';
@@ -33,6 +34,7 @@ hapiServer.register(InertPlugin, (err) => {
 // Routers
 hapiServer.route(CssRoute);
 hapiServer.route(FontsRoute);
+hapiServer.route(ImagesRoute);
 hapiServer.route(IndexRoute);
 hapiServer.route(ScriptsRoute);
 

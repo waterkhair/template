@@ -16,7 +16,9 @@ const getUsers = (req, reply) => {
             if (!users.length) {
                 throw Boom.notFound('No users found!');
             }
-            reply(users);
+            reply({
+                users
+            });
         });
 };
 

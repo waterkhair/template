@@ -17,6 +17,7 @@ export default {
                     'x-requested-with'
                 ],
                 headers: [
+                    'Authorization',
                     'Content-Type'
                 ],
                 origin: ['http://localhost:8080']

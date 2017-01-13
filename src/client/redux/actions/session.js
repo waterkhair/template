@@ -12,8 +12,8 @@ const signIn = (username, password) => ({
     username
 });
 
-const signInSuccess = (response) => ({
-    token: response.response.token,
+const signInSuccess = (res) => ({
+    token: res.response.token,
     type: ACTION_TYPES.SIGN_IN_SUCCESS
 });
 
@@ -33,8 +33,8 @@ const signUp = (email, name, username, password) => ({
     username
 });
 
-const signUpSuccess = (response) => ({
-    token: response.response.token,
+const signUpSuccess = (res) => ({
+    token: res.response.token,
     type: ACTION_TYPES.SIGN_UP_SUCCESS
 });
 

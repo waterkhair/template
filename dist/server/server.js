@@ -261,7 +261,9 @@
 	        if (!users.length) {
 	            throw _boom2.default.notFound('No users found!');
 	        }
-	        reply(users);
+	        reply({
+	            users: users
+	        });
 	    });
 	};
 
@@ -444,7 +446,7 @@
 	        routes: {
 	            cors: {
 	                additionalHeaders: ['cache-control', 'x-requested-with'],
-	                headers: ['Content-Type'],
+	                headers: ['Authorization', 'Content-Type'],
 	                origin: ['http://localhost:8080']
 	            }
 	        }

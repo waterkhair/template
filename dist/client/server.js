@@ -79,27 +79,31 @@
 
 	var _hapi2 = _interopRequireDefault(_hapi);
 
-	var _index = __webpack_require__(13);
+	var _images = __webpack_require__(13);
+
+	var _images2 = _interopRequireDefault(_images);
+
+	var _index = __webpack_require__(14);
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _inert = __webpack_require__(15);
+	var _inert = __webpack_require__(16);
 
 	var _inert2 = _interopRequireDefault(_inert);
 
-	var _scripts = __webpack_require__(17);
+	var _scripts = __webpack_require__(18);
 
 	var _scripts2 = _interopRequireDefault(_scripts);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// Folders
+	// Modules
 	if (!(0, _fs.existsSync)('../../dist/client/' + _main2.default.HAPI.LOGS_PATH)) {
 	    (0, _fs.mkdirSync)('../../dist/client/' + _main2.default.HAPI.LOGS_PATH);
 	}
 
 	// Hapi
-	// Modules
 	var hapiServer = new _hapi2.default.Server();
 	hapiServer.connection(_main2.default.HAPI.CONNECTION);
 
@@ -118,6 +122,7 @@
 	// Routers
 	hapiServer.route(_css2.default);
 	hapiServer.route(_fonts2.default);
+	hapiServer.route(_images2.default);
 	hapiServer.route(_index2.default);
 	hapiServer.route(_scripts2.default);
 
@@ -380,11 +385,38 @@
 	    value: true
 	});
 
+	var _path = __webpack_require__(8);
+
+	var _path2 = _interopRequireDefault(_path);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ImagesRoute = {
+	    handler: {
+	        directory: {
+	            path: _path2.default.resolve('../../dist/client/content/images')
+	        }
+	    },
+	    method: 'GET',
+	    path: '/images/{path*}'
+	}; // Modules
+	exports.default = ImagesRoute;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _main = __webpack_require__(3);
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _index = __webpack_require__(14);
+	var _index = __webpack_require__(15);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -405,7 +437,7 @@
 	exports.default = IndexRoute;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -419,7 +451,7 @@
 	};
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -428,7 +460,7 @@
 	    value: true
 	});
 
-	var _inert = __webpack_require__(16);
+	var _inert = __webpack_require__(17);
 
 	var _inert2 = _interopRequireDefault(_inert);
 
@@ -439,13 +471,13 @@
 	}; // Modules
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = require("inert");
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
