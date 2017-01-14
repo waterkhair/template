@@ -1,15 +1,12 @@
 // Modules
-import {IndexLink, Link} from 'react-router';
 import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
-import AppBar from 'material-ui/AppBar';
+import AdminMenu from './admin_menu';
 import Drawer from 'material-ui/Drawer';
-import GroupIcon from 'material-ui/svg-icons/social/group';
-import HelpIcon from 'material-ui/svg-icons/action/help';
-import HomeIcon from 'material-ui/svg-icons/action/home';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
-import MenuItem from 'material-ui/MenuItem';
 import React from 'react';
+import UserMenu from './user_menu';
+import {connect} from 'react-redux';
 
 class AppToolbar extends React.Component {
     constructor(props) {
@@ -38,7 +35,8 @@ class AppToolbar extends React.Component {
     render() {
         return (
             <Toolbar
-                className={`app-toolbar ${this.props.className ? this.props.className : ''}`}>
+                className={`app-toolbar ${this.props.className ? this.props.className : ''}`}
+                style={{backgroundColor: this.props.muiTheme.palette.primary1Color}}>
                 <ToolbarGroup
                     firstChild={true}>
                     <IconButton
@@ -50,39 +48,12 @@ class AppToolbar extends React.Component {
                         onRequestChange={this.onDrawerRequestChange}
                         open={this.state.drawerOpen}
                         width={200}>
-                        <AppBar
-                            title="Menu"
-                            showMenuIconButton={false} />
-                        <IndexLink
-                            onTouchTap={this.drawerToggle}
-                            style={{textDecoration: 'none'}}
-                            to="/">
-                            <MenuItem
-                                leftIcon={
-                                    <HomeIcon />
-                                }
-                                primaryText="Home" />
-                        </IndexLink>
-                        <Link
-                            onTouchTap={this.drawerToggle}
-                            style={{textDecoration: 'none'}}
-                            to="/about">
-                            <MenuItem
-                                leftIcon={
-                                    <HelpIcon />
-                                }
-                                primaryText="About" />
-                        </Link>
-                        <Link
-                            onTouchTap={this.drawerToggle}
-                            style={{textDecoration: 'none'}}
-                            to="/users">
-                            <MenuItem
-                                leftIcon={
-                                    <GroupIcon />
-                                }
-                                primaryText="Users" />
-                        </Link>
+                        <UserMenu
+                            drawerToggle={this.drawerToggle} />
+                        {this.props.sessionState.user.scope === 'admin'
+                            ? <AdminMenu
+                                  drawerToggle={this.drawerToggle} />
+                            : null}
                     </Drawer>
                 </ToolbarGroup>
             </Toolbar>
@@ -90,4 +61,12 @@ class AppToolbar extends React.Component {
     }
 }
 
-export default AppToolbar;
+const mapStateToProps = (state) => {
+    const mappedState = {
+        sessionState: state.session
+    };
+
+    return mappedState;
+};
+
+export default connect(mapStateToProps)(AppToolbar);

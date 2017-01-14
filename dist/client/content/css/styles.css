@@ -866,7 +866,7 @@ body {
 
 /* APP */
 #app {
-  padding: 50px;
+  padding: 0px;
 }
 
 /* DEFAULT LAYOUT */
@@ -880,6 +880,11 @@ body {
 
 .login-paper {
   min-width: 300px;
+}
+
+.page-container {
+  min-width: 300px;
+  padding-bottom: 10px;
 }
 
 /* AUTH */

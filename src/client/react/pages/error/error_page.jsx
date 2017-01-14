@@ -7,7 +7,7 @@ class HomePage extends React.Component {
     render() {
         return (
             <div
-                className={`page ${this.props.className ? this.props.className : ''}`}>
+                className="page-container">
                 <h1>
                     Error
                 </h1>

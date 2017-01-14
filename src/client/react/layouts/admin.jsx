@@ -7,9 +7,12 @@ import {connect} from 'react-redux';
 
 class AdminLayout extends React.Component {
     componentDidMount() {
-        if (this.props.sessionState.token === '' || this.props.sessionState.user.scope !== 'admin') {
+        if (this.props.sessionState.token === '') {
             this.props.setPreviousUrl(this.props.location.pathname);
             browserHistory.push('/login');
+        } else if (this.props.sessionState.user.scope !== 'admin') {
+            this.props.setPreviousUrl(this.props.location.pathname);
+            browserHistory.push('/');
         }
     }
 
