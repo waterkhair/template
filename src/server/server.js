@@ -9,8 +9,8 @@ import IndexRoute from './routes/index';
 import Mongoose from 'mongoose';
 
 // Folders
-if (!existsSync('../../dist/server/logs')) {
-    mkdirSync('../../dist/server/logs');
+if (!existsSync(`../../dist/server/${Config.HAPI.LOGS_FOLDER_NAME}`)) {
+    mkdirSync(`../../dist/server/${Config.HAPI.LOGS_FOLDER_NAME}`);
 }
 
 // Hapi

@@ -11,8 +11,8 @@ import InertPlugin from './plugins/inert';
 import ScriptsRoute from './routes/scripts';
 
 // Folders
-if (!existsSync(`../../dist/client/${Config.HAPI.LOGS_PATH}`)) {
-    mkdirSync(`../../dist/client/${Config.HAPI.LOGS_PATH}`);
+if (!existsSync(`../../dist/client/${Config.HAPI.LOGS_FOLDER_NAME}`)) {
+    mkdirSync(`../../dist/client/${Config.HAPI.LOGS_FOLDER_NAME}`);
 }
 
 // Hapi

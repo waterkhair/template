@@ -3,7 +3,8 @@ const apiKey = 12345,
     host = 'localhost',
     httpLogUrl = 'http://localhost:3000',
     interval = 1000,
-    logsPath = 'logs',
+    logsFolderName = 'logs',
+    opsLogsPathName = `../../dist/client/${logsFolderName}/ops.log`,
     port = 8080;
 
 export default {
@@ -40,7 +41,7 @@ export default {
                 name: 'SafeJson'
             }, {
                 args: [
-                    '../../dist/client/logs/ops.log'
+                    opsLogsPathName
                 ],
                 module: 'good-file'
             }],
@@ -66,5 +67,5 @@ export default {
             }]
         }
     },
-    LOGS_PATH: logsPath
+    LOGS_FOLDER_NAME: logsFolderName
 };

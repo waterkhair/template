@@ -99,8 +99,8 @@
 
 	// Folders
 	// Modules
-	if (!(0, _fs.existsSync)('../../dist/client/' + _main2.default.HAPI.LOGS_PATH)) {
-	    (0, _fs.mkdirSync)('../../dist/client/' + _main2.default.HAPI.LOGS_PATH);
+	if (!(0, _fs.existsSync)('../../dist/client/' + _main2.default.HAPI.LOGS_FOLDER_NAME)) {
+	    (0, _fs.mkdirSync)('../../dist/client/' + _main2.default.HAPI.LOGS_FOLDER_NAME);
 	}
 
 	// Hapi
@@ -215,7 +215,8 @@
 	    host = 'localhost',
 	    httpLogUrl = 'http://localhost:3000',
 	    interval = 1000,
-	    logsPath = 'logs',
+	    logsFolderName = 'logs',
+	    opsLogsPathName = '../../dist/client/' + logsFolderName + '/ops.log',
 	    port = 8080;
 
 	exports.default = {
@@ -251,7 +252,7 @@
 	                module: 'good-squeeze',
 	                name: 'SafeJson'
 	            }, {
-	                args: ['../../dist/client/logs/ops.log'],
+	                args: [opsLogsPathName],
 	                module: 'good-file'
 	            }],
 
@@ -274,7 +275,7 @@
 	            }]
 	        }
 	    },
-	    LOGS_PATH: logsPath
+	    LOGS_FOLDER_NAME: logsFolderName
 	};
 
 /***/ },
