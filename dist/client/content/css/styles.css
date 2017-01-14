@@ -870,10 +870,13 @@ body {
 }
 
 /* DEFAULT LAYOUT */
-.page-paper {
+.container {
+  padding: 0px 8px;
+};
+
+.app-toolbar {
   min-width: 300px;
-  padding-bottom: 10px;
-}
+};
 
 .login-paper {
   min-width: 300px;
