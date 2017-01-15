@@ -15,7 +15,7 @@ const SignInRoute = {
         }
     },
     method: 'POST',
-    path: Config.ROUTES.SESSION.SIGN_IN_ROUTE
+    path: Config.ROUTES.SESSION.SIGN_IN
 };
 
 const SignUpRoute = {
@@ -29,7 +29,7 @@ const SignUpRoute = {
         }
     },
     method: 'POST',
-    path: Config.ROUTES.SESSION.SIGN_UP_ROUTE
+    path: Config.ROUTES.SESSION.SIGN_UP
 };
 
 const UpdateProfileRoute = {
@@ -40,7 +40,7 @@ const UpdateProfileRoute = {
         }
     },
     method: 'PUT',
-    path: Config.ROUTES.SESSION.UPDATE_PROFILE_ROUTE
+    path: Config.ROUTES.SESSION.UPDATE_PROFILE
 };
 
 export default {
