@@ -11,7 +11,7 @@ import {combineEpics} from 'redux-observable';
 const signIn = (action$) => action$
     .ofType(ACTION_TYPES.SIGN_IN)
         .switchMap((action) => {
-            const signInUrl = `${window.config.API.HOST}/auth/sign-in`;
+            const signInUrl = `${window.config.API.HOST}/session/sign-in`;
 
             return Observable.ajax
                 .post(signInUrl, {
@@ -29,7 +29,7 @@ const signIn = (action$) => action$
 const signOut = (action$) => action$
         .ofType(ACTION_TYPES.SIGN_OUT)
         .switchMap(() => {
-            const signOutUrl = `${window.config.API.HOST}/auth/sign-out`;
+            const signOutUrl = `${window.config.API.HOST}/session/sign-out`;
 
             return Observable.ajax
                 .get(signOutUrl, {
@@ -44,7 +44,7 @@ const signOut = (action$) => action$
 const signUp = (action$) => action$
         .ofType(ACTION_TYPES.SIGN_UP)
         .switchMap((action) => {
-            const signUpUrl = `${window.config.API.HOST}/auth/sign-up`;
+            const signUpUrl = `${window.config.API.HOST}/session/sign-up`;
 
             return Observable.ajax
                 .post(signUpUrl, {
@@ -61,8 +61,25 @@ const signUp = (action$) => action$
                 });
         });
 
+const updateProfile = (action$) => action$
+        .ofType(ACTION_TYPES.UPDATE_PROFILE)
+        .switchMap((action) => {
+            const updateProfileUrl = `${window.config.API.HOST}/session/update-profile`;
+
+            return Observable.ajax
+                .put(updateProfileUrl, action.user, {
+                    'Authorization': `Bearer ${action.token}`,
+                    'Content-Type': 'application/json'
+                })
+                .map(actions.updateProfileSuccess)
+                .catch((error) => {
+                    throw error;
+                });
+        });
+
 export default combineEpics(
     signIn,
     signOut,
-    signUp
+    signUp,
+    updateProfile
 );

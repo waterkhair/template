@@ -1,4 +1,4 @@
-// Auth configuration
+// Session configuration
 module.exports = {
     SALT_NUMBER: 10,
     SECRET_KEY: 'SECRET_KEY',

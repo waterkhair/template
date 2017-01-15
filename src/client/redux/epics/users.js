@@ -11,7 +11,7 @@ import {combineEpics} from 'redux-observable';
 const getUsers = (action$) => action$
     .ofType(ACTION_TYPES.GET_USERS)
         .switchMap((action) => {
-            const getUsersUrl = `${window.config.API.HOST}/auth/users`;
+            const getUsersUrl = `${window.config.API.HOST}/session/users`;
 
             return Observable.ajax
                 .get(getUsersUrl, {
@@ -27,7 +27,7 @@ const getUsers = (action$) => action$
 const setUserRole = (action$) => action$
     .ofType(ACTION_TYPES.SET_USER_ROLE)
         .switchMap((action) => {
-            const setUserRoleUrl = `${window.config.API.HOST}/auth/set-user-role`;
+            const setUserRoleUrl = `${window.config.API.HOST}/session/set-user-role`;
 
             return Observable.ajax
                 .put(setUserRoleUrl, {

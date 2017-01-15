@@ -13,7 +13,7 @@ const registerUser = (req, reply) => {
     user.name = req.payload.name;
     user.username = req.payload.username;
 
-    BCryptJS.genSalt(Config.AUTH.SALT_NUMBER, (err, salt) => {
+    BCryptJS.genSalt(Config.SESSION.SALT_NUMBER, (err, salt) => {
         if (err) {
             throw err;
         }
@@ -36,9 +36,46 @@ const registerUser = (req, reply) => {
 
 const returnToken = (req, reply) => {
     reply({
-        token: TokenHelper.createToken(req.pre.user
-    )})
+        token: TokenHelper.createToken(req.pre.user)
+    })
     .code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
+};
+
+const updateProfile = (req, reply) => {
+    if (req.payload.password) {
+        BCryptJS.genSalt(Config.SESSION.SALT_NUMBER, (err, salt) => {
+            if (err) {
+                throw err;
+            }
+            BCryptJS.hash(req.payload.password, salt, (err, hash) => {
+                if (err) {
+                    throw Boom.badRequest(err);
+                }
+
+                User.findOneAndUpdate({username: req.payload.username}, Object.assign(req.payload, {password: hash}), {new: true}, (err, user) => {
+                    if (err) {
+                        throw Boom.badRequest(err);
+                    }
+
+                    reply({
+                        token: TokenHelper.createToken(user)
+                    })
+                    .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+                });
+            });
+        });
+    } else {
+        User.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, user) => {
+            if (err) {
+                throw Boom.badRequest(err);
+            }
+
+            reply({
+                token: TokenHelper.createToken(user)
+            })
+            .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+        });
+    }
 };
 
 const verifyCredentials = (req, res) => {
@@ -97,6 +134,7 @@ const verifyUniqueUser = (req, res) => {
 export default {
     registerUser,
     returnToken,
+    updateProfile,
     verifyCredentials,
     verifyUniqueUser
 };

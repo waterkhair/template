@@ -8,15 +8,15 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Client Server",
-            "program": "${workspaceRoot}/dist/client/server.js",
-            "cwd": "${workspaceRoot}/dist/client"
+            "program": "${workspaceRoot}/build/Release/client/server.js",
+            "cwd": "${workspaceRoot}/build/Release/client"
         },
         {
             "type": "node",
             "request": "launch",
             "name": "Launch Server",
-            "program": "${workspaceRoot}/dist/server/server.js",
-            "cwd": "${workspaceRoot}/dist/server"
+            "program": "${workspaceRoot}/build/Release/server/server.js",
+            "cwd": "${workspaceRoot}/build/Release/server"
         }
     ]
 }

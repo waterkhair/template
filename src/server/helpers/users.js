@@ -1,5 +1,6 @@
 // Modules
 import Boom from 'boom';
+import HTTP_STATUS_CODES from '../const/http_status_codes';
 import User from '../models/user';
 
 const getUsers = (req, reply) => {
@@ -14,7 +15,8 @@ const getUsers = (req, reply) => {
             }
             reply({
                 users
-            });
+            })
+            .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
         });
 };
 
@@ -29,7 +31,8 @@ const setUserRole = (req, reply) => {
                 admin: req.payload.admin,
                 username: req.payload.username
             }
-        });
+        })
+        .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
     });
 };
 

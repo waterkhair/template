@@ -12,8 +12,8 @@ const authenticateSchema = Joi
             username: Joi
                 .string()
                 .alphanum()
-                .min(Config.AUTH.USER.USERNAME_MIN_CHARS)
-                .max(Config.AUTH.USER.USERNAME_MAX_CHARS)
+                .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
+                .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
                 .required()
         }),
         Joi.object({
@@ -40,12 +40,29 @@ const userSchema = Joi.object({
     username: Joi
         .string()
         .alphanum()
-        .min(Config.AUTH.USER.USERNAME_MIN_CHARS)
-        .max(Config.AUTH.USER.USERNAME_MAX_CHARS)
+        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
+        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
+        .required()
+});
+
+const profileSchema = Joi.object({
+    email: Joi
+        .string()
+        .email(),
+    name: Joi
+        .string(),
+    password: Joi
+        .string(),
+    username: Joi
+        .string()
+        .alphanum()
+        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
+        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
         .required()
 });
 
 export default {
     authenticateSchema,
+    profileSchema,
     userSchema
 };

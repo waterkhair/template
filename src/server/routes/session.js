@@ -1,6 +1,6 @@
 // Modules
-import AuthHelper from '../helpers/auth';
-import AuthSchemas from '../schemas/auth';
+import AuthHelper from '../helpers/session';
+import AuthSchemas from '../schemas/session';
 import Config from '../config/main';
 
 const SignInRoute = {
@@ -15,7 +15,7 @@ const SignInRoute = {
         }
     },
     method: 'POST',
-    path: Config.ROUTES.AUTH.SIGN_IN_PATH
+    path: Config.ROUTES.SESSION.SIGN_IN_ROUTE
 };
 
 const SignUpRoute = {
@@ -29,10 +29,22 @@ const SignUpRoute = {
         }
     },
     method: 'POST',
-    path: Config.ROUTES.AUTH.SIGN_UP_PATH
+    path: Config.ROUTES.SESSION.SIGN_UP_ROUTE
+};
+
+const UpdateProfileRoute = {
+    config: {
+        handler: AuthHelper.updateProfile,
+        validate: {
+            payload: AuthSchemas.profileSchema
+        }
+    },
+    method: 'PUT',
+    path: Config.ROUTES.SESSION.UPDATE_PROFILE_ROUTE
 };
 
 export default {
     SignInRoute,
-    SignUpRoute
+    SignUpRoute,
+    UpdateProfileRoute
 };

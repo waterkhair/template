@@ -38,6 +38,18 @@ const signUpSuccess = (res) => ({
     type: ACTION_TYPES.SIGN_UP_SUCCESS
 });
 
+const updateProfile = (user, token) => ({
+    token,
+    type: ACTION_TYPES.UPDATE_PROFILE,
+    user
+});
+
+const updateProfileSuccess = (res) => ({
+    token: res.response.token,
+    type: ACTION_TYPES.UPDATE_PROFILE_SUCCESS,
+    user: res.response.user
+});
+
 export default {
     setPreviousUrl,
     signIn,
@@ -45,5 +57,7 @@ export default {
     signOut,
     signOutSuccess,
     signUp,
-    signUpSuccess
+    signUpSuccess,
+    updateProfile,
+    updateProfileSuccess
 };

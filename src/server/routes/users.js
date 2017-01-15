@@ -11,7 +11,7 @@ const GetUsersRoute = {
         handler: UsersHelper.getUsers
     },
     method: 'GET',
-    path: Config.ROUTES.USERS.GET_USERS_PATH
+    path: Config.ROUTES.USERS.GET_USERS_ROUTE
 };
 
 const SetUserRoleRoute = {
@@ -23,7 +23,7 @@ const SetUserRoleRoute = {
         handler: UsersHelper.setUserRole
     },
     method: 'PUT',
-    path: Config.ROUTES.USERS.SET_USER_ROLE_PATH
+    path: Config.ROUTES.USERS.SET_USER_ROLE_ROUTE
 };
 
 export default {

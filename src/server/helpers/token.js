@@ -11,7 +11,7 @@ const createToken = (user) => {
         scope: scopes,
         username: user.username
     },
-    Config.AUTH.SECRET_KEY, {
+    Config.SESSION.SECRET_KEY, {
         algorithm: 'HS256',
         expiresIn: '1h'
     });

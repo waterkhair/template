@@ -1,12 +1,12 @@
 // Modules
 import {existsSync, mkdirSync} from 'fs';
-import AuthRoutes from './routes/auth';
 import Config from './config/main';
 import GoodPlugin from './plugins/good';
 import Hapi from 'hapi';
 import HapiAuthJwt from 'hapi-auth-jwt';
 import IndexRoute from './routes/index';
 import Mongoose from 'mongoose';
+import SessionRoutes from './routes/session';
 import UsersRoutes from './routes/users';
 
 // Folders
@@ -29,7 +29,7 @@ hapiServer.register(HapiAuthJwt, (err) => {
         throw err;
     }
     hapiServer.auth.strategy('jwt', 'jwt', {
-        key: Config.AUTH.SECRET_KEY,
+        key: Config.SESSION.SECRET_KEY,
         verifyOptions: {
             algorithsm: ['HS256']
         }
@@ -37,8 +37,9 @@ hapiServer.register(HapiAuthJwt, (err) => {
 
     // Routers
     hapiServer.route(IndexRoute);
-    hapiServer.route(AuthRoutes.SignInRoute);
-    hapiServer.route(AuthRoutes.SignUpRoute);
+    hapiServer.route(SessionRoutes.SignInRoute);
+    hapiServer.route(SessionRoutes.SignUpRoute);
+    hapiServer.route(SessionRoutes.UpdateProfileRoute);
     hapiServer.route(UsersRoutes.GetUsersRoute);
     hapiServer.route(UsersRoutes.SetUserRoleRoute);
 });

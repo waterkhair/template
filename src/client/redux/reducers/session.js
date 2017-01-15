@@ -26,7 +26,8 @@ export default (state = initialState(), action) => {
             }
         };
     case ACTION_TYPES.SIGN_IN_SUCCESS:
-    case ACTION_TYPES.SIGN_UP_SUCCESS: {
+    case ACTION_TYPES.SIGN_UP_SUCCESS:
+    case ACTION_TYPES.UPDATE_PROFILE_SUCCESS: {
         const user = JWT.decode(action.token);
 
         return {
