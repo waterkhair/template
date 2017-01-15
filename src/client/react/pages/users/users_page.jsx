@@ -1,7 +1,7 @@
 // Modules
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
+import ChatBubbleIcon from 'material-ui/svg-icons/communication/chat-bubble';
 import React from 'react';
 import Subheader from 'material-ui/Subheader';
 import UserActions from '../../../redux/actions/users';
@@ -24,8 +24,12 @@ class UsersPage extends React.Component {
                 return <ListItem
                             key={index}
                             primaryText={user.name}
-                            leftAvatar={<Avatar src="images/ok-128.jpg" />}
-                            rightIcon={<CommunicationChatBubble />} />;
+                            leftAvatar={
+                                <Avatar src="images/user_avatar.png" />
+                            }
+                            rightIcon={
+                                <ChatBubbleIcon />
+                            } />;
             }
 
             return null;

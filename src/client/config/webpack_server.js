@@ -43,6 +43,9 @@ module.exports = {
             from: 'package.json',
             to: 'package.json',
             toType: 'file'
+        }, {
+            from: 'content/images/**/*',
+            to: ''
         }], {
             copyUnmodified: true
         })
