@@ -6,8 +6,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 class HomePage extends React.Component {
     render() {
         return (
-            <div
-                className="page-container">
+            <div>
                 <h1>
                     About
                 </h1>

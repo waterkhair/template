@@ -11,7 +11,21 @@ const getUsersSuccess = (res) => ({
     users: res.response.users
 });
 
+const setUserRole = (username, admin, token) => ({
+    admin,
+    token,
+    type: ACTION_TYPES.SET_USER_ROLE,
+    username
+});
+
+const setUserRoleSuccess = (res) => ({
+    type: ACTION_TYPES.SET_USER_ROLE_SUCCESS,
+    users: res.response.users
+});
+
 export default {
     getUsers,
-    getUsersSuccess
+    getUsersSuccess,
+    setUserRole,
+    setUserRoleSuccess
 };

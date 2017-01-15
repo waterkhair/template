@@ -20,7 +20,7 @@ class DefaultLayout extends React.Component {
                             className="col-xs-12 col-ms-12 col-md-12 col-lg-12" />
                     </div>
                     <div
-                        className="row">
+                        className="page-container row">
                         <div
                             className="col-xs-12 col-ms-12 col-md-12 col-lg-12">
                             {this.props.children}

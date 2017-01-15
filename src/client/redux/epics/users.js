@@ -24,6 +24,26 @@ const getUsers = (action$) => action$
                 });
         });
 
+const setUserRole = (action$) => action$
+    .ofType(ACTION_TYPES.SET_USER_ROLE)
+        .switchMap((action) => {
+            const setUserRoleUrl = `${window.config.API.HOST}/auth/set-user-role`;
+
+            return Observable.ajax
+                .put(setUserRoleUrl, {
+                    admin: action.admin,
+                    username: action.username
+                }, {
+                    'Authorization': `Bearer ${action.token}`,
+                    'Content-Type': 'application/json'
+                })
+                .map(actions.setUserRoleSuccess)
+                .catch((error) => {
+                    throw error;
+                });
+        });
+
 export default combineEpics(
-    getUsers
+    getUsers,
+    setUserRole
 );

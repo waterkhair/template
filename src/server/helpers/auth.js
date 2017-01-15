@@ -6,22 +6,6 @@ import HTTP_STATUS_CODES from '../const/http_status_codes';
 import TokenHelper from '../helpers/token';
 import User from '../models/user';
 
-const getUsers = (req, reply) => {
-    User.find()
-        .select('-password -__v')
-        .exec((err, users) => {
-            if (err) {
-                throw Boom.badRequest(err);
-            }
-            if (!users.length) {
-                throw Boom.notFound('No users found!');
-            }
-            reply({
-                users
-            });
-        });
-};
-
 const registerUser = (req, reply) => {
     const user = new User();
     user.admin = false;
@@ -111,7 +95,6 @@ const verifyUniqueUser = (req, res) => {
 };
 
 export default {
-    getUsers,
     registerUser,
     returnToken,
     verifyCredentials,

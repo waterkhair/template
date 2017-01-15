@@ -36,9 +36,10 @@ hapiServer.register(HapiAuthJwt, (err) => {
 
     // Routers
     hapiServer.route(IndexRoute);
+    hapiServer.route(AuthRoutes.GetUsersRoute);
+    hapiServer.route(AuthRoutes.SetUserRoleRoute);
     hapiServer.route(AuthRoutes.SignInRoute);
     hapiServer.route(AuthRoutes.SignUpRoute);
-    hapiServer.route(AuthRoutes.GetUsersRoute);
 });
 
 // Start Server

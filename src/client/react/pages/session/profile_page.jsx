@@ -3,12 +3,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
-class HomePage extends React.Component {
+class ProfilePage extends React.Component {
     render() {
         return (
             <div>
                 <h1>
-                    Error
+                    Profile
                 </h1>
                 Hello {this.props.sessionState.user.name}!
             </div>
@@ -24,4 +24,4 @@ const mapStateToProps = (state) => {
     return mappedState;
 };
 
-export default connect(mapStateToProps)(muiThemeable()(HomePage));
+export default connect(mapStateToProps)(muiThemeable()(ProfilePage));

@@ -30,6 +30,7 @@ export default (state = getInitialState(), action) => {
             users
         };
     }
+    case ACTION_TYPES.SET_USER_ROLE_SUCCESS:
     default:
         return state;
     }

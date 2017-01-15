@@ -8,10 +8,12 @@ import DefaultLayout from './layouts/default';
 import ErrorPage from './pages/error/error_page';
 import HomePage from './pages/home/home_page';
 import LoggedLayout from './layouts/logged';
-import LoginPage from './pages/login/login_page';
+import LoginPage from './pages/session/login_page';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import ProfilePage from './pages/session/profile_page';
 import {Provider} from 'react-redux';
 import React from 'react';
+import SettingsPage from './pages/session/settings_page';
 import UsersPage from './pages/users/users_page';
 import {createEpicMiddleware} from 'redux-observable';
 import epics from '../redux/epics/epics';
@@ -38,6 +40,8 @@ render(
                         <IndexRoute name="Home" component={HomePage} />
                         <Route name="About" path="/about" component={AboutPage} />
                         <Route name="Error" path="/error" component={ErrorPage} />
+                        <Route name="Profile" path="/profile" component={ProfilePage} />
+                        <Route name="Settings" path="/settings" component={SettingsPage} />
                     </Route>
                 </Route>
                 <Route name="Login" path="/login" component={LoginPage} />
