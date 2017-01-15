@@ -25,7 +25,10 @@ const setUserRole = (req, reply) => {
         }
 
         reply({
-            success: true
+            user: {
+                admin: req.payload.admin,
+                username: req.payload.username
+            }
         });
     });
 };

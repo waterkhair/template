@@ -20,7 +20,7 @@ const setUserRole = (username, admin, token) => ({
 
 const setUserRoleSuccess = (res) => ({
     type: ACTION_TYPES.SET_USER_ROLE_SUCCESS,
-    users: res.response.users
+    user: res.response.user
 });
 
 export default {

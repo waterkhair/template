@@ -25,6 +25,7 @@
         "multiline-ternary": "off",
         "newline-after-var": "off",
         "no-console": "off",
+        "no-plusplus": "off",
         "no-process-env": "off",
         "no-shadow": "off",
         "no-ternary": "off",
