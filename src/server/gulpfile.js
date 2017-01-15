@@ -1,20 +1,21 @@
 // Modules
-const gulp = require('gulp'),
-    requireDir = require('require-dir'),
-    runSequence = require('run-sequence');
+const Config = require('./config/main');
+const gulp = require('gulp');
+const requireDir = require('require-dir');
+const runSequence = require('run-sequence');
 
-requireDir('./tasks', {
+requireDir(Config.GULP.TASKS_PATH, {
     recursive: true
 });
 
 gulp.task('build', () => {
     runSequence(
-        'build-server'
+        Config.GULP.BUILD_SERVER_TASK_NAME
     );
 });
 
 gulp.task('start', () => {
     runSequence(
-        'start-server'
+        Config.GULP.START_SERVER_TASK_NAME
     );
 });

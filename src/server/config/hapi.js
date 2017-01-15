@@ -7,7 +7,7 @@ const logsFolderPath = '../../build/Release/server/logs';
 const opsLogsPathName = `${logsFolderPath}/ops.log`;
 const port = 3000;
 
-export default {
+module.exports = {
     CONNECTION: {
         host,
         port,

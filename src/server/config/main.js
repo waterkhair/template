@@ -1,10 +1,13 @@
-// Main Configuration
-import AUTH from './auth';
-import HAPI from './hapi';
-import MONGO_DB from './mongo_db';
+// Modules
+const AUTH = require('./auth');
+const GULP = require('./gulp');
+const HAPI = require('./hapi');
+const MONGO_DB = require('./mongo_db');
 
-export default {
+// Main configuration
+module.exports = {
     AUTH,
+    GULP,
     HAPI,
     MONGO_DB
 };

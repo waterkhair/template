@@ -1,10 +1,13 @@
-// Main Configuration
-import API from './api';
-import APP from './app';
-import HAPI from './hapi';
+// Modules
+const API = require('./api');
+const APP = require('./app');
+const GULP = require('./gulp');
+const HAPI = require('./hapi');
 
-export default {
+// Main configuration
+module.exports = {
     API,
     APP,
+    GULP,
     HAPI
 };
