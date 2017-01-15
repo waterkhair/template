@@ -3,11 +3,9 @@ import 'flexboxgrid';
 import {IndexRoute, Route, Router, browserHistory} from 'react-router';
 import {applyMiddleware, createStore} from 'redux';
 import AboutPage from './pages/about/about_page';
-import AdminLayout from './layouts/admin';
 import DefaultLayout from './layouts/default';
 import ErrorPage from './pages/error/error_page';
 import HomePage from './pages/home/home_page';
-import LoggedLayout from './layouts/logged';
 import LoginPage from './pages/session/login_page';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ProfilePage from './pages/session/profile_page';
@@ -21,28 +19,57 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import reducers from '../redux/reducers/reducers';
 import {render} from 'react-dom';
+import {syncHistoryWithStore} from 'react-router-redux';
 
 const store = createStore(reducers, applyMiddleware(createEpicMiddleware(epics)));
+const history = syncHistoryWithStore(browserHistory, store);
+
+const requireUserScope = (nextState, replace) => {
+    const sessionState = store.getState().session;
+
+    if (sessionState.token === '') {
+        replace({
+            pathname: '/login',
+            state: {
+                nextPathname: nextState.location.pathname
+            }
+        });
+    }
+};
+
+const requireAdminScope = (nextState, replaceState) => {
+    const sessionState = store.getState().session;
+
+    if (sessionState.token === '') {
+        replaceState({
+            pathname: '/login',
+            state: {
+                nextPathname: nextState.location.pathname
+            }
+        });
+    } else if (sessionState.user.scope !== 'admin') {
+        replaceState({
+            pathname: '/',
+            state: {
+                nextPathname: nextState.location.pathname
+            }
+        });
+    }
+};
 
 injectTapEventPlugin();
 
 render(
     <Provider store={store}>
         <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Router history={browserHistory}>
-                <Route component={AdminLayout}>
-                    <Route component={DefaultLayout}>
-                        <Route name="Users" path="/users" component={UsersPage} />
-                    </Route>
-                </Route>
-                <Route component={LoggedLayout}>
-                    <Route path="/" component={DefaultLayout}>
-                        <IndexRoute name="Home" component={HomePage} />
-                        <Route name="About" path="/about" component={AboutPage} />
-                        <Route name="Error" path="/error" component={ErrorPage} />
-                        <Route name="Profile" path="/profile" component={ProfilePage} />
-                        <Route name="Settings" path="/settings" component={SettingsPage} />
-                    </Route>
+            <Router history={history}>
+                <Route path="/" component={DefaultLayout} onEnter={requireUserScope}>
+                    <IndexRoute name="Home" component={HomePage} onEnter={requireUserScope} />
+                    <Route name="About" path="/about" component={AboutPage} onEnter={requireUserScope} />
+                    <Route name="Error" path="/error" component={ErrorPage} />
+                    <Route name="Profile" path="/profile" component={ProfilePage} onEnter={requireUserScope} />
+                    <Route name="Settings" path="/settings" component={SettingsPage} onEnter={requireUserScope} />
+                    <Route name="Users" path="/users" component={UsersPage} onEnter={requireAdminScope} />
                 </Route>
                 <Route name="Login" path="/login" component={LoginPage} />
             </Router>

@@ -7,6 +7,10 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class DefaultLayout extends React.Component {
     render() {
+        if (this.props.sessionState.token === '') {
+            return null;
+        }
+
         return (
             <div
                 className="row">
