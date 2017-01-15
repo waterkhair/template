@@ -107,6 +107,14 @@ const verifyCredentials = (req, res) => {
     });
 };
 
+const verifyProfileSession = (req, res) => {
+    if (req.auth.credentials.username === req.payload.username) {
+        res(req.payload);
+    } else {
+        res(Boom.badRequest('Incorrect profile update!'));
+    }
+};
+
 const verifyUniqueUser = (req, res) => {
     User.findOne({
         $or: [{
@@ -136,5 +144,6 @@ export default {
     returnToken,
     updateProfile,
     verifyCredentials,
+    verifyProfileSession,
     verifyUniqueUser
 };

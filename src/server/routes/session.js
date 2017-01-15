@@ -1,17 +1,17 @@
 // Modules
-import AuthHelper from '../helpers/session';
-import AuthSchemas from '../schemas/session';
 import Config from '../config/main';
+import SessionHelper from '../helpers/session';
+import SessionSchemas from '../schemas/session';
 
 const SignInRoute = {
     config: {
-        handler: AuthHelper.returnToken,
+        handler: SessionHelper.returnToken,
         pre: [{
             assign: 'user',
-            method: AuthHelper.verifyCredentials
+            method: SessionHelper.verifyCredentials
         }],
         validate: {
-            payload: AuthSchemas.authenticateSchema
+            payload: SessionSchemas.authenticateSchema
         }
     },
     method: 'POST',
@@ -20,12 +20,13 @@ const SignInRoute = {
 
 const SignUpRoute = {
     config: {
-        handler: AuthHelper.registerUser,
+        handler: SessionHelper.registerUser,
         pre: [{
-            method: AuthHelper.verifyUniqueUser
+            assign: 'user',
+            method: SessionHelper.verifyUniqueUser
         }],
         validate: {
-            payload: AuthSchemas.userSchema
+            payload: SessionSchemas.userSchema
         }
     },
     method: 'POST',
@@ -34,9 +35,16 @@ const SignUpRoute = {
 
 const UpdateProfileRoute = {
     config: {
-        handler: AuthHelper.updateProfile,
+        auth: {
+            scope: ['user', 'admin'],
+            strategy: 'jwt'
+        },
+        handler: SessionHelper.updateProfile,
+        pre: [{
+            method: SessionHelper.verifyProfileSession
+        }],
         validate: {
-            payload: AuthSchemas.profileSchema
+            payload: SessionSchemas.profileSchema
         }
     },
     method: 'PUT',
