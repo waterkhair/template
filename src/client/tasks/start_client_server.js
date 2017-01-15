@@ -1,21 +1,30 @@
 // Modules
-const Gulp = require('gulp'),
-    Path = require('path'),
-    gulpNodemon = require('gulp-nodemon');
+const Gulp = require('gulp');
+const Path = require('path');
+const gulpNodemon = require('gulp-nodemon');
 
-Gulp.task('start-client-server', () => {
+// Start Client configuration
+const startClientServerTaskName = 'start-client-server';
+const ext = 'js jsx css jpg png gif';
+const script = Path.resolve(`${__dirname}/../../../build/Release/client/server.js`);
+const tasks = [
+    'build-server',
+    'build-client'
+];
+const watch = [
+    Path.resolve(`${__dirname}/../**/*`)
+];
+
+
+// Start Client task
+Gulp.task(startClientServerTaskName, () => {
     gulpNodemon({
         env: {
             NODE_ENV: 'development'
         },
-        ext: 'js jsx css jpg png gif',
-        script: Path.resolve(`${__dirname}/../../../dist/client/server.js`),
-        tasks: [
-            'build-server',
-            'build-client'
-        ],
-        watch: [
-            Path.resolve(`${__dirname}/../**/*`)
-        ]
+        ext,
+        script,
+        tasks,
+        watch
     });
 });

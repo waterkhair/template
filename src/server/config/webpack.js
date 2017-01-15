@@ -1,11 +1,16 @@
-var CopyPlugin = require('copy-webpack-plugin'),
-    Path = require('path'),
-    webpackNodeExternals = require('webpack-node-externals');
+// Modules
+var CopyPlugin = require('copy-webpack-plugin');
+var Path = require('path');
+var webpackNodeExternals = require('webpack-node-externals');
+
+// Webpack Server configuration
+var inputPath = '/../server';
+var outputDestinationFolder = '/../../../build/Release/server';
 
 module.exports = {
     entry: {
         server: [
-            Path.resolve(`${__dirname}/../server`)
+            Path.resolve(Path.join(__dirname, inputPath))
         ]
     },
     externals: [
@@ -31,7 +36,7 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: Path.resolve(`${__dirname}/../../../dist/server`)
+        path: Path.resolve(Path.join(__dirname, outputDestinationFolder))
     },
     plugins: [
         new CopyPlugin([{

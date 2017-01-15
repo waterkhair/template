@@ -1,7 +1,7 @@
 // Modules
-const Gulp = require('gulp'),
-    WebpackClientConfig = require('../config/webpack_client'),
-    webpack = require('webpack');
+const Gulp = require('gulp');
+const WebpackClientConfig = require('../config/webpack_client');
+const webpack = require('webpack');
 
 Gulp.task('build-client', (callback) => {
     webpack(WebpackClientConfig, (err, stats) => {

@@ -1,14 +1,18 @@
 // Modules
 import Path from 'path';
 
+// Scripts configuration
+const fontsFilesPath = '../../build/Release/client/content/fonts';
+const fontsRoutePath = '/fonts/{path*}';
+
 const FontsRoute = {
     handler: {
         directory: {
-            path: Path.resolve('../../dist/client/content/fonts')
+            path: Path.resolve(fontsFilesPath)
         }
     },
     method: 'GET',
-    path: '/font/{path*}'
+    path: fontsRoutePath
 };
 
 export default FontsRoute;

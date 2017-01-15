@@ -1,11 +1,11 @@
 // HapiJS configuration
-const apiKey = 12345,
-    host = 'localhost',
-    httpLogUrl = 'http://localhost:3000',
-    interval = 1000,
-    logsFolderName = 'logs',
-    opsLogsPathName = `../../dist/client/${logsFolderName}/ops.log`,
-    port = 8080;
+const apiKey = 12345;
+const host = 'localhost';
+const httpLogUrl = 'http://localhost:3000';
+const interval = 1000;
+const logsFolderPath = '../../build/Release/client/logs';
+const opsLogsPathName = `${logsFolderPath}/ops.log`;
+const port = 8080;
 
 export default {
     CONNECTION: {
@@ -67,5 +67,5 @@ export default {
             }]
         }
     },
-    LOGS_FOLDER_NAME: logsFolderName
+    LOGS_FOLDER_PATH: logsFolderPath
 };

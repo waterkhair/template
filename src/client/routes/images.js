@@ -1,14 +1,18 @@
 // Modules
 import Path from 'path';
 
+// Scripts configuration
+const imagesFilesPath = '../../build/Release/client/content/images';
+const imagesRoutePath = '/images/{path*}';
+
 const ImagesRoute = {
     handler: {
         directory: {
-            path: Path.resolve('../../dist/client/content/images')
+            path: Path.resolve(imagesFilesPath)
         }
     },
     method: 'GET',
-    path: '/images/{path*}'
+    path: imagesRoutePath
 };
 
 export default ImagesRoute;
