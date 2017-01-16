@@ -44,7 +44,7 @@ class LoginPaper extends React.Component {
                                     event.preventDefault();
                                     this.props.onSignIn(event.target.username.value, event.target.password.value);
                                 }}
-                                className="sign-in-form">
+                                className="form">
                                 <TextField
                                     fullWidth={true}
                                     hintText="Username"
@@ -63,7 +63,7 @@ class LoginPaper extends React.Component {
                                     label="Remember Me"
                                     name="rememberme" />
                                 <RaisedButton
-                                    className="sign-in-button"
+                                    className="form-button"
                                     fullWidth={true}
                                     label="Login"
                                     type="submit"
@@ -79,7 +79,7 @@ class LoginPaper extends React.Component {
                                     event.preventDefault();
                                     this.props.onSignUp(event.target.email.value, event.target.name.value, event.target.username.value, event.target.password.value);
                                 }}
-                                className="sign-up-form">
+                                className="form">
                                 <TextField
                                     hintText="Email"
                                     floatingLabelText="Email"
@@ -106,7 +106,7 @@ class LoginPaper extends React.Component {
                                     name="password"
                                     type="password" />
                                 <RaisedButton
-                                    className="sign-up-button"
+                                    className="form-button"
                                     fullWidth={true}
                                     label="Sing Up"
                                     type="submit"

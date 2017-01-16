@@ -1,8 +1,7 @@
 // Modules
-import RaisedButton from 'material-ui/RaisedButton';
+import ProfileForm from './containers/profile_form';
 import React from 'react';
 import SessionActions from '../../../redux/actions/session';
-import TextField from 'material-ui/TextField';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import muiThemeable from 'material-ui/styles/muiThemeable';
@@ -80,47 +79,10 @@ class ProfilePage extends React.Component {
                 <h1>
                     Profile
                 </h1>
-                <form
-                    onSubmit={(event) => {
-                        event.preventDefault();
-                        this.onUpdateProfile(event);
-                    }}
-                    className="sign-up-form">
-                    <TextField
-                        defaultValue={this.props.sessionState.user.email}
-                        floatingLabelText="Email"
-                        fullWidth={true}
-                        name="email_update"
-                        onChange={() => this.onProfileEdited('email')}
-                        type="text" />
-                    <TextField
-                        defaultValue={this.props.sessionState.user.name}
-                        floatingLabelText="Name"
-                        fullWidth={true}
-                        name="name_update"
-                        onChange={() => this.onProfileEdited('name')}
-                        type="text" />
-                    <TextField
-                        defaultValue={this.props.sessionState.user.username}
-                        disabled={true}
-                        floatingLabelText="Username"
-                        fullWidth={true}
-                        name="username_update"
-                        type="text" />
-                    <TextField
-                        className="col-xsd"
-                        floatingLabelText="Password"
-                        fullWidth={true}
-                        name="password_update"
-                        onChange={() => this.onProfileEdited('password')}
-                        type="password" />
-                    <RaisedButton
-                        className="update-profile-button"
-                        fullWidth={true}
-                        label="Update"
-                        type="submit"
-                        primary={true} />
-                </form>
+                <ProfileForm
+                    onProfileEdited={this.onProfileEdited}
+                    onUpdateProfile={this.onUpdateProfile}
+                    user={this.props.sessionState.user} />
             </div>
         );
     }

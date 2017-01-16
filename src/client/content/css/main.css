@@ -21,22 +21,11 @@ body {
   padding-bottom: 10px;
 }
 
-/* AUTH */
-.sign-in-form {
+/* FORM */
+.form {
   padding: 10px
 }
 
-.sign-in-checkbox {
-  margin-top: 15px
-}
-
-.sign-in-button {
-  margin-top: 20px
-}
-
-.sign-up-form {
-  padding: 10px
-}
-.sign-up-button {
+.form-button {
   margin-top: 20px
 }
