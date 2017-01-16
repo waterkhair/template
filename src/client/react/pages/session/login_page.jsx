@@ -10,7 +10,7 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 class LoginPage extends React.Component {
     componentDidUpdate() {
         if (this.props.sessionState.user.scope === 'user' || this.props.sessionState.user.scope === 'admin') {
-            browserHistory.push(this.props.sessionState.navigation.previousUrl);
+            browserHistory.push(this.props.sessionState.navigation.loginLocation);
         }
     }
 

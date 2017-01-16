@@ -25,9 +25,15 @@ const store = createStore(reducers, applyMiddleware(createEpicMiddleware(epics))
 const history = syncHistoryWithStore(browserHistory, store);
 
 const requireUserScope = (nextState, replace) => {
-    const sessionState = store.getState().session;
+    let sessionState = store.getState().session;
 
     if (sessionState.token === '') {
+        sessionState = Object.assign(sessionState, {
+            navigation: {
+                loginLocation: nextState.location.pathname
+            }
+        });
+
         replace({
             pathname: '/login',
             state: {
@@ -38,9 +44,15 @@ const requireUserScope = (nextState, replace) => {
 };
 
 const requireAdminScope = (nextState, replaceState) => {
-    const sessionState = store.getState().session;
+    let sessionState = store.getState().session;
 
     if (sessionState.token === '') {
+        sessionState = Object.assign(sessionState, {
+            navigation: {
+                loginLocation: nextState.location.pathname
+            }
+        });
+
         replaceState({
             pathname: '/login',
             state: {

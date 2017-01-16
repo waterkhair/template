@@ -1,11 +1,6 @@
 // Modules
 import ACTION_TYPES from '../../const/action_types';
 
-const setPreviousUrl = (previousUrl) => ({
-    previousUrl,
-    type: ACTION_TYPES.SET_PREVIOUS_URL
-});
-
 const signIn = (username, password) => ({
     password,
     type: ACTION_TYPES.SIGN_IN,
@@ -51,7 +46,6 @@ const updateProfileSuccess = (res) => ({
 });
 
 export default {
-    setPreviousUrl,
     signIn,
     signInSuccess,
     signOut,

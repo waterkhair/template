@@ -39,7 +39,6 @@ class AppToolbar extends React.Component {
 
     signOutHandle() {
         this.props.signOutSuccess();
-        this.props.setPreviousUrl('/');
         browserHistory.push('/');
     }
 

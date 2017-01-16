@@ -4,7 +4,7 @@ import JWT from 'jsonwebtoken';
 
 const INITIAL_STATE = {
         navigation: {
-            previousUrl: ''
+            loginLocation: ''
         },
         token: '',
         user: {
@@ -18,13 +18,6 @@ const INITIAL_STATE = {
 
 export default (state = initialState(), action) => {
     switch (action.type) {
-    case ACTION_TYPES.SET_PREVIOUS_URL:
-        return {
-            ...state,
-            navigation: {
-                previousUrl: action.previousUrl
-            }
-        };
     case ACTION_TYPES.SIGN_IN_SUCCESS:
     case ACTION_TYPES.SIGN_UP_SUCCESS:
     case ACTION_TYPES.UPDATE_PROFILE_SUCCESS: {
