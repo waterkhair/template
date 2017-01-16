@@ -1,7 +1,6 @@
 // Modules
 import React from 'react';
 import {connect} from 'react-redux';
-import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class SettingsPage extends React.Component {
     render() {
@@ -24,4 +23,4 @@ const mapStateToProps = (state) => {
     return mappedState;
 };
 
-export default connect(mapStateToProps)(muiThemeable()(SettingsPage));
+export default connect(mapStateToProps)(SettingsPage);

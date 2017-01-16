@@ -2,6 +2,8 @@
 import AppToolbar from './containers/app_toolbar';
 import Paper from 'material-ui/Paper';
 import React from 'react';
+import SessionActions from '../../redux/actions/session';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
@@ -20,8 +22,10 @@ class DefaultLayout extends React.Component {
                     <div
                         className="row">
                         <AppToolbar
+                            className="col-xs-12 col-ms-12 col-md-12 col-lg-12"
                             muiTheme={this.props.muiTheme}
-                            className="col-xs-12 col-ms-12 col-md-12 col-lg-12" />
+                            signOutSuccess={this.props.signOutSuccess}
+                            user={this.props.sessionState.user} />
                     </div>
                     <div
                         className="page-container row">
@@ -44,4 +48,8 @@ const mapStateToProps = (state) => {
     return mappedState;
 };
 
-export default connect(mapStateToProps)(muiThemeable()(DefaultLayout));
+const matchDispatchToProps = (dispatch) => bindActionCreators({
+    signOutSuccess: SessionActions.signOutSuccess
+}, dispatch);
+
+export default muiThemeable()(connect(mapStateToProps, matchDispatchToProps)(DefaultLayout));

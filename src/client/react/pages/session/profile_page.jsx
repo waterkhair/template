@@ -4,7 +4,6 @@ import React from 'react';
 import SessionActions from '../../../redux/actions/session';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class ProfilePage extends React.Component {
     constructor(props) {
@@ -100,4 +99,4 @@ const matchDispatchToProps = (dispatch) => bindActionCreators({
     updateProfile: SessionActions.updateProfile
 }, dispatch);
 
-export default connect(mapStateToProps, matchDispatchToProps)(muiThemeable()(ProfilePage));
+export default connect(mapStateToProps, matchDispatchToProps)(ProfilePage);

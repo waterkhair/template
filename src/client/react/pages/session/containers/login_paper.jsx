@@ -5,7 +5,6 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
 import TextField from 'material-ui/TextField';
-import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class LoginPaper extends React.Component {
     constructor(props) {
@@ -120,4 +119,4 @@ class LoginPaper extends React.Component {
     }
 }
 
-export default muiThemeable()(LoginPaper);
+export default LoginPaper;

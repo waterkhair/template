@@ -5,12 +5,9 @@ import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import React from 'react';
-import SessionActions from '../../../redux/actions/session';
 import SessionMenu from './session_menu';
 import UserMenu from './user_menu';
-import {bindActionCreators} from 'redux';
 import {browserHistory} from 'react-router';
-import {connect} from 'react-redux';
 
 class AppToolbar extends React.Component {
     constructor(props) {
@@ -60,7 +57,7 @@ class AppToolbar extends React.Component {
                         width={200}>
                         <UserMenu
                             drawerToggle={this.drawerToggle} />
-                        {this.props.sessionState.user.scope === 'admin'
+                        {this.props.user.scope === 'admin'
                             ? <AdminMenu
                                   drawerToggle={this.drawerToggle} />
                             : null}
@@ -74,17 +71,4 @@ class AppToolbar extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    const mappedState = {
-        sessionState: state.session
-    };
-
-    return mappedState;
-};
-
-const matchDispatchToProps = (dispatch) => bindActionCreators({
-    setPreviousUrl: SessionActions.setPreviousUrl,
-    signOutSuccess: SessionActions.signOutSuccess
-}, dispatch);
-
-export default connect(mapStateToProps, matchDispatchToProps)(AppToolbar);
+export default AppToolbar;

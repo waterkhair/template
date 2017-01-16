@@ -5,7 +5,6 @@ import SessionActions from '../../../redux/actions/session';
 import {bindActionCreators} from 'redux';
 import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
-import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class LoginPage extends React.Component {
     componentDidUpdate() {
@@ -36,4 +35,4 @@ const matchDispatchToProps = (dispatch) => bindActionCreators({
     signUp: SessionActions.signUp
 }, dispatch);
 
-export default connect(mapStateToProps, matchDispatchToProps)(muiThemeable()(LoginPage));
+export default connect(mapStateToProps, matchDispatchToProps)(LoginPage);
