@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 
 class LoginPage extends React.Component {
     componentDidUpdate() {
-        if (this.props.sessionState.user.scope === 'user' || this.props.sessionState.user.scope === 'admin') {
+        if (this.props.sessionState.credentials.scope === 'user' || this.props.sessionState.credentials.scope === 'admin') {
             browserHistory.push(this.props.sessionState.navigation.loginLocation);
         }
     }

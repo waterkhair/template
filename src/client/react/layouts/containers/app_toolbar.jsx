@@ -57,7 +57,7 @@ class AppToolbar extends React.Component {
                         width={200}>
                         <UserMenu
                             drawerToggle={this.drawerToggle} />
-                        {this.props.user.scope === 'admin'
+                        {this.props.credentials.scope === 'admin'
                             ? <AdminMenu
                                   drawerToggle={this.drawerToggle} />
                             : null}

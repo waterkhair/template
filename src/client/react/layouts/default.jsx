@@ -25,7 +25,7 @@ class DefaultLayout extends React.Component {
                             className="col-xs-12 col-ms-12 col-md-12 col-lg-12"
                             muiTheme={this.props.muiTheme}
                             signOutSuccess={this.props.signOutSuccess}
-                            user={this.props.sessionState.user} />
+                            credentials={this.props.sessionState.credentials} />
                     </div>
                     <div
                         className="page-container row">

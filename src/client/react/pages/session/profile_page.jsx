@@ -81,7 +81,7 @@ class ProfilePage extends React.Component {
                 <ProfileForm
                     onProfileEdited={this.onProfileEdited}
                     onUpdateProfile={this.onUpdateProfile}
-                    user={this.props.sessionState.user} />
+                    user={this.props.sessionState.credentials} />
             </div>
         );
     }

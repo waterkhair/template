@@ -3,16 +3,16 @@ import ACTION_TYPES from '../../const/action_types';
 import JWT from 'jsonwebtoken';
 
 const INITIAL_STATE = {
-        navigation: {
-            loginLocation: ''
-        },
-        token: '',
-        user: {
+        credentials: {
             email: '',
             name: '',
             scope: '',
             username: ''
-        }
+        },
+        navigation: {
+            loginLocation: ''
+        },
+        token: ''
     },
     initialState = () => INITIAL_STATE;
 
@@ -21,17 +21,17 @@ export default (state = initialState(), action) => {
     case ACTION_TYPES.SIGN_IN_SUCCESS:
     case ACTION_TYPES.SIGN_UP_SUCCESS:
     case ACTION_TYPES.UPDATE_PROFILE_SUCCESS: {
-        const user = JWT.decode(action.token);
+        const credentials = JWT.decode(action.token);
 
         return {
             ...state,
-            token: action.token,
-            user: {
-                email: user.email,
-                name: user.name,
-                scope: user.scope,
-                username: user.username
-            }
+            credentials: {
+                email: credentials.email,
+                name: credentials.name,
+                scope: credentials.scope,
+                username: credentials.username
+            },
+            token: action.token
         };
     }
     case ACTION_TYPES.SIGN_OUT_SUCCESS:

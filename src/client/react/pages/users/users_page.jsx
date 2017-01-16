@@ -13,7 +13,7 @@ class UsersPage extends React.Component {
     constructor(props) {
         super(props);
 
-        if (this.props.sessionState.user.scope === 'admin') {
+        if (this.props.sessionState.credentials.scope === 'admin') {
             this.props.getUsers(this.props.sessionState.token);
         }
 
@@ -26,7 +26,7 @@ class UsersPage extends React.Component {
 
     getUsers() {
         return this.props.usersState.users.map((user, index) => {
-            if (user.username !== '' && user.username !== this.props.sessionState.user.username) {
+            if (user.username !== '' && user.username !== this.props.sessionState.credentials.username) {
                 return <ListItem
                             key={index}
                             primaryText={user.name}

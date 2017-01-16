@@ -59,7 +59,7 @@ const requireAdminScope = (nextState, replaceState) => {
                 nextPathname: nextState.location.pathname
             }
         });
-    } else if (sessionState.user.scope !== 'admin') {
+    } else if (sessionState.credentials.scope !== 'admin') {
         replaceState({
             pathname: '/',
             state: {

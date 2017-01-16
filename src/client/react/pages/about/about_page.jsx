@@ -9,7 +9,7 @@ class HomePage extends React.Component {
                 <h1>
                     About
                 </h1>
-                Hello {this.props.sessionState.user.name}!
+                Hello {this.props.sessionState.credentials.name}!
             </div>
         );
     }
