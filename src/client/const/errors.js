@@ -1,0 +1,14 @@
+export default {
+    CODES: {
+        GET_USERS_ERROR: 'GET_USERS_ERROR',
+        SET_USER_ROLE_ERROR: 'SET_USER_ROLE_ERROR',
+        SIGN_IN_ERROR: 'SIGN_IN_ERROR',
+        SIGN_OUT_ERROR: 'SIGN_OUT_ERROR',
+        SIGN_UP_ERROR: 'SIGN_UP_ERROR',
+        UPDATE_PROFILE_ERROR: 'UPDATE_PROFILE_ERROR'
+    },
+    TYPES: {
+        SESSION: 'SESSION',
+        USERS: 'USERS'
+    }
+};

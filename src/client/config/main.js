@@ -1,6 +1,7 @@
 // Modules
 const API = require('./api');
 const APP = require('./app');
+const ERRORS = require('./errors');
 const GULP = require('./gulp');
 const HAPI = require('./hapi');
 
@@ -8,6 +9,7 @@ const HAPI = require('./hapi');
 module.exports = {
     API,
     APP,
+    ERRORS,
     GULP,
     HAPI
 };

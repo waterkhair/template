@@ -1,5 +1,7 @@
 // Modules
 import AppToolbar from './containers/app_toolbar';
+import ErrorsActions from '../../redux/actions/errors';
+import ErrorsSnackbar from './containers/errors_snackbar';
 import Paper from 'material-ui/Paper';
 import React from 'react';
 import SessionActions from '../../redux/actions/session';
@@ -8,6 +10,16 @@ import {connect} from 'react-redux';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class DefaultLayout extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.removeError = this.removeErrorHandle.bind(this);
+    }
+
+    removeErrorHandle() {
+        this.props.removeError(this.props.errorsState.errors[0].code);
+    }
+
     render() {
         if (this.props.sessionState.token === '') {
             window.location.reload(false);
@@ -34,6 +46,9 @@ class DefaultLayout extends React.Component {
                             {this.props.children}
                         </div>
                     </div>
+                    <ErrorsSnackbar
+                        errors={this.props.errorsState.errors}
+                        removeError={this.removeError} />
                 </Paper>
             </div>
         );
@@ -42,6 +57,7 @@ class DefaultLayout extends React.Component {
 
 const mapStateToProps = (state) => {
     const mappedState = {
+        errorsState: state.errors,
         sessionState: state.session
     };
 
@@ -49,6 +65,7 @@ const mapStateToProps = (state) => {
 };
 
 const matchDispatchToProps = (dispatch) => bindActionCreators({
+    removeError: ErrorsActions.removeError,
     signOutSuccess: SessionActions.signOutSuccess
 }, dispatch);
 

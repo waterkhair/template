@@ -1,4 +1,4 @@
-// Mmdules
+// Modules
 import ACTION_TYPES from '../../const/action_types';
 
 const getUsers = (token) => ({
