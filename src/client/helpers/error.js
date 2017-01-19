@@ -4,7 +4,7 @@ import Config from '../config/main';
 import {Observable} from 'rxjs/Observable';
 
 const ajaxErrorHandler = (code, errorType, xhr, type) => {
-    const message = xhr.response && xhr.response.message ? xhr.response.message : 'Oops! Something wrong happen...';
+    const message = xhr.response && xhr.response.message ? xhr.response.message : Config.ERRORS.GENERAL_ERROR_MESSAGE;
 
     return Observable.of({
         code,
