@@ -71,4 +71,11 @@ class AppToolbar extends React.Component {
     }
 }
 
+AppToolbar.propTypes = {
+    className: React.PropTypes.string,
+    credentials: React.PropTypes.object.isRequired,
+    muiTheme: React.PropTypes.object.isRequired,
+    signOutSuccess: React.PropTypes.func.isRequired
+};
+
 export default AppToolbar;

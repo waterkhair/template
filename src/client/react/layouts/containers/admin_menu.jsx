@@ -25,4 +25,8 @@ class AdminMenu extends React.Component {
     }
 }
 
+AdminMenu.propTypes = {
+    drawerToggle: React.PropTypes.func.isRequired
+};
+
 export default AdminMenu;

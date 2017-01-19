@@ -36,4 +36,8 @@ class UserMenu extends React.Component {
     }
 }
 
+UserMenu.propTypes = {
+    drawerToggle: React.PropTypes.func.isRequired
+};
+
 export default UserMenu;

@@ -9,6 +9,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
+const FIRST_INDEX = 0;
+
 class DefaultLayout extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ class DefaultLayout extends React.Component {
     }
 
     removeErrorHandle() {
-        this.props.removeError(this.props.errorsState.errors[0].code);
+        this.props.removeError(this.props.errorsState.errors[FIRST_INDEX].code);
     }
 
     render() {
@@ -54,6 +56,10 @@ class DefaultLayout extends React.Component {
         );
     }
 }
+
+DefaultLayout.propTypes = {
+    muiTheme: React.PropTypes.object.isRequired
+};
 
 const mapStateToProps = (state) => {
     const mappedState = {

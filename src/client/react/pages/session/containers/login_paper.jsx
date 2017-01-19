@@ -119,4 +119,9 @@ class LoginPaper extends React.Component {
     }
 }
 
+LoginPaper.propTypes = {
+    onSignIn: React.PropTypes.func.isRequired,
+    onSignUp: React.PropTypes.func.isRequired
+};
+
 export default LoginPaper;

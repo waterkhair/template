@@ -26,4 +26,9 @@ class ErrorsSnackbar extends React.Component {
     }
 }
 
+ErrorsSnackbar.propTypes = {
+    errors: React.PropTypes.array.isRequired,
+    removeError: React.PropTypes.func.isRequired
+};
+
 export default ErrorsSnackbar;

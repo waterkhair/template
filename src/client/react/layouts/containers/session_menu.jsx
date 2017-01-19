@@ -46,4 +46,9 @@ class SessionMenu extends React.Component {
     }
 }
 
+SessionMenu.propTypes = {
+    drawerToggle: React.PropTypes.func.isRequired,
+    signOut: React.PropTypes.func.isRequired
+};
+
 export default SessionMenu;
