@@ -21,7 +21,6 @@ class ErrorsSnackbar extends React.Component {
                     message={this.props.errors.length > FIRST_INDEX ? this.props.errors[FIRST_INDEX].message : ''}
                     autoHideDuration={this.props.errors.length > FIRST_INDEX ? this.props.errors[FIRST_INDEX].milliseconds : FIRST_INDEX}
                     onRequestClose={this.props.removeError} />
-                {this.getErrors()}
             </div>
         );
     }

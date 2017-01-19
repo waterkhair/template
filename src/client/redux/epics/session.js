@@ -10,6 +10,7 @@ import ERRORS from '../../const/errors';
 import {Observable} from 'rxjs/Observable';
 import SessionActions from '../actions/session';
 import {combineEpics} from 'redux-observable';
+import errorHelper from '../../helpers/error';
 
 const signIn = (action$) => action$
     .ofType(ACTION_TYPES.SIGN_IN)
@@ -22,13 +23,12 @@ const signIn = (action$) => action$
                     'Content-Type': 'application/json'
                 })
                 .map(SessionActions.signInSuccess)
-                .catch((err) => Observable.of({
-                    code: ERRORS.CODES.SIGN_IN_ERROR,
-                    errorType: ERRORS.TYPES.SESSION,
-                    message: err.xhr.response.message,
-                    milliseconds: Config.ERRORS.MILLISECONDS,
-                    type: ACTION_TYPES.ADD_ERROR
-                }))
+                .catch((err) =>
+                    errorHelper.ajaxErrorHandler(
+                        ERRORS.CODES.SIGN_IN_ERROR,
+                        ERRORS.TYPES.SESSION,
+                        err.xhr,
+                        ACTION_TYPES.ADD_ERROR))
         );
 
 const signOut = (action$) => action$
@@ -39,13 +39,12 @@ const signOut = (action$) => action$
                     'Content-Type': 'application/json'
                 })
                 .map(SessionActions.signOutSuccess)
-                .catch((err) => Observable.of({
-                    code: ERRORS.CODES.SIGN_OUT_ERROR,
-                    errorType: ERRORS.TYPES.SESSION,
-                    message: err.xhr.response.message,
-                    milliseconds: Config.ERRORS.MILLISECONDS,
-                    type: ACTION_TYPES.ADD_ERROR
-                }))
+                .catch((err) =>
+                    errorHelper.ajaxErrorHandler(
+                        ERRORS.CODES.SIGN_OUT_ERROR,
+                        ERRORS.TYPES.SESSION,
+                        err.xhr,
+                        ACTION_TYPES.ADD_ERROR))
         );
 
 const signUp = (action$) => action$
@@ -61,13 +60,12 @@ const signUp = (action$) => action$
                     'Content-Type': 'application/json'
                 })
                 .map(SessionActions.signUpSuccess)
-                .catch((err) => Observable.of({
-                    code: ERRORS.CODES.SIGN_UP_ERROR,
-                    errorType: ERRORS.TYPES.SESSION,
-                    message: err.xhr.response.message,
-                    milliseconds: Config.ERRORS.MILLISECONDS,
-                    type: ACTION_TYPES.ADD_ERROR
-                }))
+                .catch((err) =>
+                    errorHelper.ajaxErrorHandler(
+                        ERRORS.CODES.SIGN_UP_ERROR,
+                        ERRORS.TYPES.SESSION,
+                        err.xhr,
+                        ACTION_TYPES.ADD_ERROR))
         );
 
 const updateProfile = (action$) => action$
@@ -79,13 +77,12 @@ const updateProfile = (action$) => action$
                     'Content-Type': 'application/json'
                 })
                 .map(SessionActions.updateProfileSuccess)
-                .catch((err) => Observable.of({
-                    code: ERRORS.CODES.UPDATE_PROFILE_ERROR,
-                    errorType: ERRORS.TYPES.SESSION,
-                    message: err.xhr.response.message,
-                    milliseconds: Config.ERRORS.MILLISECONDS,
-                    type: ACTION_TYPES.ADD_ERROR
-                }))
+                .catch((err) =>
+                    errorHelper.ajaxErrorHandler(
+                        ERRORS.CODES.UPDATE_PROFILE_ERROR,
+                        ERRORS.TYPES.SESSION,
+                        err.xhr,
+                        ACTION_TYPES.ADD_ERROR))
         );
 
 export default combineEpics(

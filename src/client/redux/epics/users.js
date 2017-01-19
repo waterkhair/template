@@ -10,6 +10,7 @@ import ERRORS from '../../const/errors';
 import {Observable} from 'rxjs/Observable';
 import UsersActions from '../actions/users';
 import {combineEpics} from 'redux-observable';
+import errorHelper from '../../helpers/error';
 
 const getUsers = (action$) => action$
     .ofType(ACTION_TYPES.GET_USERS)
@@ -20,13 +21,13 @@ const getUsers = (action$) => action$
                     'Content-Type': 'application/json'
                 })
                 .map(UsersActions.getUsersSuccess)
-                .catch((err) => Observable.of({
-                    code: ERRORS.CODES.GET_USERS_ERROR,
-                    errorType: ERRORS.TYPES.USERS,
-                    message: err.xhr.response.message,
-                    milliseconds: Config.ERRORS.MILLISECONDS,
-                    type: ACTION_TYPES.ADD_ERROR
-                }))
+                .catch((err) =>
+                    errorHelper.ajaxErrorHandler(
+                        ERRORS.CODES.GET_USERS_ERROR,
+                        ERRORS.TYPES.USERS,
+                        err.xhr,
+                        Config.ERRORS.MILLISECONDS,
+                        ACTION_TYPES.ADD_ERROR))
         );
 
 const setUserRole = (action$) => action$
@@ -41,13 +42,13 @@ const setUserRole = (action$) => action$
                     'Content-Type': 'application/json'
                 })
                 .map(UsersActions.setUserRoleSuccess)
-                .catch((err) => Observable.of({
-                    code: ERRORS.CODES.SET_USER_ROLE_ERROR,
-                    errorType: ERRORS.TYPES.USERS,
-                    message: err.xhr.response.message,
-                    milliseconds: Config.ERRORS.MILLISECONDS,
-                    type: ACTION_TYPES.ADD_ERROR
-                }))
+                .catch((err) =>
+                    errorHelper.ajaxErrorHandler(
+                        ERRORS.CODES.SET_USER_ROLE_ERROR,
+                        ERRORS.TYPES.USERS,
+                        err.xhr,
+                        Config.ERRORS.MILLISECONDS,
+                        ACTION_TYPES.ADD_ERROR))
         );
 
 export default combineEpics(
