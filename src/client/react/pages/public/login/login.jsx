@@ -1,9 +1,9 @@
 // Modules
-import ErrorsActions from '../../../redux/actions/errors';
-import ErrorsSnackbar from '../../layouts/containers/errors_snackbar';
+import ErrorsActions from '../../../../redux/actions/errors';
+import ErrorsSnackbar from '../../../layouts/containers/errors_snackbar';
 import LoginPaper from './containers/login_paper';
 import React from 'react';
-import SessionActions from '../../../redux/actions/session';
+import SessionActions from '../../../../redux/actions/session';
 import {bindActionCreators} from 'redux';
 import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';

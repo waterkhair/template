@@ -1,7 +1,7 @@
 // Modules
 import ProfileForm from './containers/profile_form';
 import React from 'react';
-import SessionActions from '../../../redux/actions/session';
+import SessionActions from '../../../../redux/actions/session';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 

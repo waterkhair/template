@@ -2,17 +2,17 @@
 import 'flexboxgrid';
 import {IndexRoute, Route, Router, browserHistory} from 'react-router';
 import {applyMiddleware, createStore} from 'redux';
-import AboutPage from './pages/about/about_page';
+import AboutPage from './pages/auth/about/about';
 import DefaultLayout from './layouts/default';
-import ErrorPage from './pages/error/error_page';
-import HomePage from './pages/home/home_page';
-import LoginPage from './pages/session/login_page';
+import ErrorPage from './pages/public/error/error';
+import HomePage from './pages/auth/home/home';
+import LoginPage from './pages/public/login/login';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import ProfilePage from './pages/session/profile_page';
+import ProfilePage from './pages/auth/session/profile';
 import {Provider} from 'react-redux';
 import React from 'react';
-import SettingsPage from './pages/session/settings_page';
-import UsersPage from './pages/users/users_page';
+import SettingsPage from './pages/auth/session/settings';
+import UsersPage from './pages/admin/users/users';
 import {createEpicMiddleware} from 'redux-observable';
 import epics from '../redux/epics/epics';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -76,13 +76,13 @@ render(
         <MuiThemeProvider muiTheme={getMuiTheme()}>
             <Router history={history}>
                 <Route path="/" component={DefaultLayout} onEnter={requireUserScope}>
-                    <IndexRoute name="Home" component={HomePage} onEnter={requireUserScope} />
-                    <Route name="About" path="/about" component={AboutPage} onEnter={requireUserScope} />
-                    <Route name="Error" path="/error" component={ErrorPage} />
-                    <Route name="Profile" path="/profile" component={ProfilePage} onEnter={requireUserScope} />
-                    <Route name="Settings" path="/settings" component={SettingsPage} onEnter={requireUserScope} />
+                    <IndexRoute name="Home" component={HomePage} />
+                    <Route name="About" path="/about" component={AboutPage} />
+                    <Route name="Profile" path="/profile" component={ProfilePage} />
+                    <Route name="Settings" path="/settings" component={SettingsPage} />
                     <Route name="Users" path="/users" component={UsersPage} onEnter={requireAdminScope} />
                 </Route>
+                <Route name="Error" path="/error" component={ErrorPage} />
                 <Route name="Login" path="/login" component={LoginPage} />
             </Router>
         </MuiThemeProvider>

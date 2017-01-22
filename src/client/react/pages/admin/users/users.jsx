@@ -4,7 +4,7 @@ import Avatar from 'material-ui/Avatar';
 import React from 'react';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
-import UserActions from '../../../redux/actions/users';
+import UserActions from '../../../../redux/actions/users';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import muiThemeable from 'material-ui/styles/muiThemeable';

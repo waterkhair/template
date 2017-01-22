@@ -1,7 +1,7 @@
 // Modules
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import React from 'react';
-import SessionActions from '../../../redux/actions/session';
+import SessionActions from '../../../../redux/actions/session';
 import Subheader from 'material-ui/Subheader';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
