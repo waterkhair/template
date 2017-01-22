@@ -85,9 +85,27 @@ const updateProfile = (action$) => action$
                         ACTION_TYPES.ADD_ERROR))
         );
 
+const updateSettings = (action$) => action$
+        .ofType(ACTION_TYPES.UPDATE_SETTINGS)
+        .switchMap((action) =>
+            Observable.ajax
+                .put(Config.API.ROUTES.SESSION.UPDATE_SETTINGS, action.settings, {
+                    'Authorization': `Bearer ${action.token}`,
+                    'Content-Type': 'application/json'
+                })
+                .map(SessionActions.updateSettingsSuccess)
+                .catch((err) =>
+                    errorHelper.ajaxErrorHandler(
+                        ERRORS.CODES.UPDATE_SETTINGS_ERROR,
+                        ERRORS.TYPES.SESSION,
+                        err.xhr,
+                        ACTION_TYPES.ADD_ERROR))
+        );
+
 export default combineEpics(
     signIn,
     signOut,
     signUp,
-    updateProfile
+    updateProfile,
+    updateSettings
 );

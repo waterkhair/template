@@ -41,8 +41,18 @@ const updateProfile = (user, token) => ({
 
 const updateProfileSuccess = (res) => ({
     token: res.response.token,
-    type: ACTION_TYPES.UPDATE_PROFILE_SUCCESS,
-    user: res.response.user
+    type: ACTION_TYPES.UPDATE_PROFILE_SUCCESS
+});
+
+const updateSettings = (settings, token) => ({
+    settings,
+    token,
+    type: ACTION_TYPES.UPDATE_SETTINGS
+});
+
+const updateSettingsSuccess = (res) => ({
+    settings: res.response.settings,
+    type: ACTION_TYPES.UPDATE_SETTINGS_SUCCESS
 });
 
 export default {
@@ -53,5 +63,7 @@ export default {
     signUp,
     signUpSuccess,
     updateProfile,
-    updateProfileSuccess
+    updateProfileSuccess,
+    updateSettings,
+    updateSettingsSuccess
 };

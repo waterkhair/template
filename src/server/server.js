@@ -40,6 +40,7 @@ hapiServer.register(HapiAuthJwt, (err) => {
     hapiServer.route(SessionRoutes.SignInRoute);
     hapiServer.route(SessionRoutes.SignUpRoute);
     hapiServer.route(SessionRoutes.UpdateProfileRoute);
+    hapiServer.route(SessionRoutes.UpdateSettingsRoute);
     hapiServer.route(UsersRoutes.GetUsersRoute);
     hapiServer.route(UsersRoutes.SetUserRoleRoute);
 });

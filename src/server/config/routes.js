@@ -3,7 +3,8 @@ module.exports = {
     SESSION: {
         SIGN_IN: '/session/sign-in',
         SIGN_UP: '/session/sign-up',
-        UPDATE_PROFILE: '/session/update-profile'
+        UPDATE_PROFILE: '/session/update-profile',
+        UPDATE_SETTINGS: '/session/update-settings'
     },
     USERS: {
         GET_USERS: '/session/users',

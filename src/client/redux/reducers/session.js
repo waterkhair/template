@@ -12,6 +12,9 @@ const INITIAL_STATE = {
         navigation: {
             loginLocation: ''
         },
+        settings: {
+            theme: ''
+        },
         token: ''
     },
     initialState = () => INITIAL_STATE;
@@ -31,11 +34,17 @@ export default (state = initialState(), action) => {
                 scope: credentials.scope,
                 username: credentials.username
             },
+            settings: credentials.settings ? credentials.settings : state.credentials.settings,
             token: action.token
         };
     }
     case ACTION_TYPES.SIGN_OUT_SUCCESS:
         return initialState();
+    case ACTION_TYPES.UPDATE_SETTINGS_SUCCESS:
+        return {
+            ...state,
+            settings: action.settings
+        };
     default:
         return state;
     }

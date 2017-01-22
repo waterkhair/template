@@ -9,6 +9,9 @@ const SignInRoute = {
         pre: [{
             assign: 'user',
             method: SessionHelper.verifyCredentials
+        }, {
+            assign: 'settings',
+            method: SessionHelper.getSettings
         }],
         validate: {
             payload: SessionSchemas.authenticateSchema
@@ -51,8 +54,24 @@ const UpdateProfileRoute = {
     path: Config.ROUTES.SESSION.UPDATE_PROFILE
 };
 
+const UpdateSettingsRoute = {
+    config: {
+        auth: {
+            scope: ['user', 'admin'],
+            strategy: 'jwt'
+        },
+        handler: SessionHelper.updateSettings,
+        pre: [{
+            method: SessionHelper.verifyProfileSession
+        }]
+    },
+    method: 'PUT',
+    path: Config.ROUTES.SESSION.UPDATE_SETTINGS
+};
+
 export default {
     SignInRoute,
     SignUpRoute,
-    UpdateProfileRoute
+    UpdateProfileRoute,
+    UpdateSettingsRoute
 };

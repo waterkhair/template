@@ -6,7 +6,8 @@ module.exports = {
         SESSION: {
             SIGN_IN: `${host}/session/sign-in`,
             SIGN_UP: `${host}/session/sign-up`,
-            UPDATE_PROFILE: `${host}/session/update-profile`
+            UPDATE_PROFILE: `${host}/session/update-profile`,
+            UPDATE_SETTINGS: `${host}/session/update-settings`
         },
         USERS: {
             GET_USERS: `${host}/session/users`,

@@ -3,8 +3,19 @@ import BCryptJS from 'bcryptjs';
 import Boom from 'boom';
 import Config from '../config/main';
 import HTTP_STATUS_CODES from '../const/http_status_codes';
+import Settings from '../models/settings';
 import TokenHelper from '../helpers/token';
 import User from '../models/user';
+
+const getSettings = (req, reply) => {
+    Settings.findOne({username: req.payload.username}, (err, settings) => {
+        if (err) {
+            reply(Boom.badRequest(err));
+        }
+
+        reply({theme: settings.theme});
+    });
+};
 
 const registerUser = (req, reply) => {
     const user = new User();
@@ -17,18 +28,30 @@ const registerUser = (req, reply) => {
         if (err) {
             throw err;
         }
+
         BCryptJS.hash(req.payload.password, salt, (err, hash) => {
             if (err) {
                 throw Boom.badRequest(err);
             }
+
             user.password = hash;
             user.save((err, user) => {
                 if (err) {
                     throw Boom.badRequest(err);
                 }
-                reply({
-                    token: TokenHelper.createToken(user)
-                }).code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
+
+                const settings = new Settings();
+                settings.theme = 'light';
+                settings.username = user.username;
+                settings.save((err, settings) => {
+                    if (err) {
+                        throw Boom.badRequest(err);
+                    }
+
+                    reply({
+                        token: TokenHelper.createToken(user, {settings: {theme: settings.theme}})
+                    }).code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
+                });
             });
         });
     });
@@ -36,7 +59,7 @@ const registerUser = (req, reply) => {
 
 const returnToken = (req, reply) => {
     reply({
-        token: TokenHelper.createToken(req.pre.user)
+        token: TokenHelper.createToken(req.pre.user, req.pre.settings)
     })
     .code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
 };
@@ -47,6 +70,7 @@ const updateProfile = (req, reply) => {
             if (err) {
                 throw err;
             }
+
             BCryptJS.hash(req.payload.password, salt, (err, hash) => {
                 if (err) {
                     throw Boom.badRequest(err);
@@ -78,7 +102,20 @@ const updateProfile = (req, reply) => {
     }
 };
 
-const verifyCredentials = (req, res) => {
+const updateSettings = (req, reply) => {
+    Settings.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, settings) => {
+        if (err) {
+            throw Boom.badRequest(err);
+        }
+
+        reply({
+            settings
+        })
+        .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+    });
+};
+
+const verifyCredentials = (req, reply) => {
     User.findOne({
         $or: [{
             email: req.payload.email
@@ -88,34 +125,36 @@ const verifyCredentials = (req, res) => {
     },
     (err, user) => {
         if (err) {
-            res(Boom.badRequest(err));
+            reply(Boom.badRequest(err));
         }
+
         if (user) {
             BCryptJS.compare(req.payload.password, user.password, (err, isValid) => {
                 if (err) {
-                    res(Boom.badRequest(err));
+                    reply(Boom.badRequest(err));
                 }
+
                 if (isValid) {
-                    res(user);
+                    reply(user);
                 } else {
-                    res(Boom.badRequest('Incorrect password!'));
+                    reply(Boom.badRequest('Incorrect password!'));
                 }
             });
         } else {
-            res(Boom.badRequest('Incorrect username or email!'));
+            reply(Boom.badRequest('Incorrect username or email!'));
         }
     });
 };
 
-const verifyProfileSession = (req, res) => {
+const verifyProfileSession = (req, reply) => {
     if (req.auth.credentials.username === req.payload.username) {
-        res(req.payload);
+        reply(req.payload);
     } else {
-        res(Boom.badRequest('Incorrect profile update!'));
+        reply(Boom.badRequest('Incorrect profile update!'));
     }
 };
 
-const verifyUniqueUser = (req, res) => {
+const verifyUniqueUser = (req, reply) => {
     User.findOne({
         $or: [{
             email: req.payload.email
@@ -127,22 +166,26 @@ const verifyUniqueUser = (req, res) => {
         if (err) {
             throw Boom.badRequest(err);
         }
+
         if (user) {
             if (user.username === req.payload.username) {
-                res(Boom.badRequest('Username taken'));
+                reply(Boom.badRequest('Username taken'));
             }
+
             if (user.email === req.payload.email) {
-                res(Boom.badRequest('Email taken'));
+                reply(Boom.badRequest('Email taken'));
             }
         }
-        res(req.payload);
+        reply(req.payload);
     });
 };
 
 export default {
+    getSettings,
     registerUser,
     returnToken,
     updateProfile,
+    updateSettings,
     verifyCredentials,
     verifyProfileSession,
     verifyUniqueUser

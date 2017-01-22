@@ -7,6 +7,8 @@ import React from 'react';
 import SessionActions from '../../redux/actions/session';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
 const FIRST_INDEX = 0;
@@ -16,6 +18,14 @@ class DefaultLayout extends React.Component {
         super(props);
 
         this.removeError = this.removeErrorHandle.bind(this);
+    }
+
+    getChildContext() {
+        const currentTheme = this.props.sessionState.settings.theme === 'dark' ? getMuiTheme(darkBaseTheme) : getMuiTheme();
+
+        return {
+            muiTheme: currentTheme
+        };
     }
 
     removeErrorHandle() {
@@ -57,7 +67,7 @@ class DefaultLayout extends React.Component {
     }
 }
 
-DefaultLayout.propTypes = {
+DefaultLayout.childContextTypes = {
     muiTheme: React.PropTypes.object.isRequired
 };
 
