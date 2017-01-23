@@ -7,7 +7,6 @@ import 'rxjs/add/operator/switchMap';
 import ACTION_TYPES from '../../const/action_types';
 import Config from '../../config/main';
 import ERRORS from '../../const/errors';
-import JWT from 'jsonwebtoken';
 import {Observable} from 'rxjs/Observable';
 import SessionActions from '../actions/session';
 import {combineEpics} from 'redux-observable';
@@ -15,13 +14,8 @@ import errorHelper from '../../helpers/error';
 
 const getSettings = (action$) => action$
     .ofType(ACTION_TYPES.GET_SETTINGS)
-        .switchMap((action) => {
-            const token = JWT.decode(action.token);
-
-            return Observable.ajax
-                .post(window.config.API.ROUTES.SESSION.GET_SETTINGS, {
-                    username: token.username
-                }, {
+        .switchMap((action) => Observable.ajax
+                .get(window.config.API.ROUTES.SESSION.GET_SETTINGS, {
                     'Authorization': `Bearer ${action.token}`,
                     'Content-Type': 'application/json'
                 })
@@ -31,8 +25,8 @@ const getSettings = (action$) => action$
                         ERRORS.CODES.GET_SETTINGS_ERROR,
                         ERRORS.TYPES.SESSION,
                         err.xhr,
-                        ACTION_TYPES.ADD_ERROR));
-        });
+                        ACTION_TYPES.ADD_ERROR))
+        );
 
 const signIn = (action$) => action$
     .ofType(ACTION_TYPES.SIGN_IN)

@@ -1,7 +1,5 @@
 // Modules
 import Config from '../config/main';
-import SessionHelper from '../helpers/session';
-import SessionSchemas from '../schemas/session';
 import SettingsHelper from '../helpers/settings';
 import SettingsSchemas from '../schemas/settings';
 
@@ -11,15 +9,9 @@ const GetSettingsRoute = {
             scope: ['user', 'admin'],
             strategy: 'jwt'
         },
-        handler: SettingsHelper.getSettings,
-        pre: [{
-            method: SessionHelper.verifySession
-        }],
-        validate: {
-            payload: SessionSchemas.sessionSchema
-        }
+        handler: SettingsHelper.getSettings
     },
-    method: 'POST',
+    method: 'GET',
     path: Config.ROUTES.SESSION.GET_SETTINGS
 };
 
@@ -30,9 +22,6 @@ const UpdateSettingsRoute = {
             strategy: 'jwt'
         },
         handler: SettingsHelper.updateSettings,
-        pre: [{
-            method: SessionHelper.verifySession
-        }],
         validate: {
             payload: SettingsSchemas.updateSettingsSchema
         }

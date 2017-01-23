@@ -41,9 +41,6 @@ const UpdateProfileRoute = {
             strategy: 'jwt'
         },
         handler: SessionHelper.updateProfile,
-        pre: [{
-            method: SessionHelper.verifySession
-        }],
         validate: {
             payload: UsersSchemas.updateUserSchema
         }

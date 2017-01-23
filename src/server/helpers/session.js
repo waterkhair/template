@@ -66,54 +66,45 @@ const registerUser = (req, reply) => {
 };
 
 const updateProfile = (req, reply) => {
-    if (req.payload.password) {
-        BCryptJS.genSalt(Config.SESSION.SALT_NUMBER, (err, salt) => {
-            if (err) {
-                throw err;
-            }
-
-            BCryptJS.hash(req.payload.password, salt, (err, hash) => {
+    if (req.auth.credentials.username === req.payload.username) {
+        if (req.payload.password) {
+            BCryptJS.genSalt(Config.SESSION.SALT_NUMBER, (err, salt) => {
                 if (err) {
-                    throw Boom.badRequest(err);
+                    throw err;
                 }
 
-                User.findOneAndUpdate({username: req.payload.username}, Object.assign(req.payload, {password: hash}), {new: true}, (err, user) => {
+                BCryptJS.hash(req.payload.password, salt, (err, hash) => {
                     if (err) {
                         throw Boom.badRequest(err);
                     }
 
-                    reply({
-                        token: createToken(user)
-                    })
-                    .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+                    User.findOneAndUpdate({username: req.payload.username}, Object.assign(req.payload, {password: hash}), {new: true}, (err, user) => {
+                        if (err) {
+                            throw Boom.badRequest(err);
+                        }
+
+                        reply({
+                            token: createToken(user)
+                        })
+                        .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+                    });
                 });
             });
-        });
-    } else {
-        User.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, user) => {
-            if (err) {
-                throw Boom.badRequest(err);
-            }
+        } else {
+            User.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, user) => {
+                if (err) {
+                    throw Boom.badRequest(err);
+                }
 
-            reply({
-                token: createToken(user)
-            })
-            .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
-        });
-    }
-};
-
-const updateSettings = (req, reply) => {
-    Settings.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, settings) => {
-        if (err) {
-            throw Boom.badRequest(err);
+                reply({
+                    token: createToken(user)
+                })
+                .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+            });
         }
-
-        reply({
-            settings
-        })
-        .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
-    });
+    } else {
+        reply(Boom.badRequest('Incorrect profile update!'));
+    }
 };
 
 const verifyCredentials = (req, reply) => {
@@ -147,15 +138,6 @@ const verifyCredentials = (req, reply) => {
     });
 };
 
-const verifySession = (req, reply) => {
-    console.log(req.payload);
-    if (req.auth.credentials.username === req.payload.username) {
-        reply(req.payload);
-    } else {
-        reply(Boom.badRequest('Incorrect profile update!'));
-    }
-};
-
 const verifyUniqueUser = (req, reply) => {
     User.findOne({
         $or: [{
@@ -186,8 +168,6 @@ export default {
     getToken,
     registerUser,
     updateProfile,
-    updateSettings,
     verifyCredentials,
-    verifySession,
     verifyUniqueUser
 };
