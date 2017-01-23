@@ -1,9 +1,17 @@
-const IndexRoute = {
-    handler: (req, reply) => {
-        reply('Hello from server!');
-    },
-    method: 'GET',
-    path: '/'
-};
+// Modules
+import HomeRoutes from './home';
+import SessionRoutes from './session';
+import SettingsRoutes from './settings';
+import UsersRoutes from './users';
 
-export default IndexRoute;
+export default [
+    HomeRoutes.HomeRoute,
+    SessionRoutes.GetProfileRoute,
+    SessionRoutes.SignInRoute,
+    SessionRoutes.SignUpRoute,
+    SessionRoutes.UpdateProfileRoute,
+    SettingsRoutes.GetSettingsRoute,
+    SettingsRoutes.UpdateSettingsRoute,
+    UsersRoutes.GetUsersRoute,
+    UsersRoutes.SetUserRoleRoute
+];

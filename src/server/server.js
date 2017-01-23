@@ -4,11 +4,8 @@ import Config from './config/main';
 import GoodPlugin from './plugins/good';
 import Hapi from 'hapi';
 import HapiAuthJwt from 'hapi-auth-jwt';
-import IndexRoute from './routes/index';
 import Mongoose from 'mongoose';
-import SessionRoutes from './routes/session';
-import SettingsRoutes from './routes/settings';
-import UsersRoutes from './routes/users';
+import Routes from './routes/index';
 
 // Folders
 if (!existsSync(Config.HAPI.LOGS_FOLDER_PATH)) {
@@ -20,12 +17,7 @@ const hapiServer = new Hapi.Server();
 hapiServer.connection(Config.HAPI.CONNECTION);
 
 // PlugIns
-hapiServer.register(GoodPlugin, (err) => {
-    if (err) {
-        throw err;
-    }
-});
-hapiServer.register(HapiAuthJwt, (err) => {// eslint-disable-line
+hapiServer.register([GoodPlugin, HapiAuthJwt], (err) => {
     if (err) {
         throw err;
     }
@@ -37,15 +29,7 @@ hapiServer.register(HapiAuthJwt, (err) => {// eslint-disable-line
     });
 
     // Routers
-    hapiServer.route(IndexRoute);
-    hapiServer.route(SessionRoutes.GetProfileRoute);
-    hapiServer.route(SessionRoutes.SignInRoute);
-    hapiServer.route(SessionRoutes.SignUpRoute);
-    hapiServer.route(SessionRoutes.UpdateProfileRoute);
-    hapiServer.route(SettingsRoutes.UpdateSettingsRoute);
-    hapiServer.route(SettingsRoutes.GetSettingsRoute);
-    hapiServer.route(UsersRoutes.GetUsersRoute);
-    hapiServer.route(UsersRoutes.SetUserRoleRoute);
+    hapiServer.route(Routes);
 });
 
 // Start Server

@@ -7,10 +7,9 @@ import JWT from 'jsonwebtoken';
 import Settings from '../models/settings';
 import User from '../models/user';
 
-const createToken = (user, settings) => JWT.sign({
+const createToken = (user) => JWT.sign({
     isAuthenticated: true,
     scope: user.admin ? 'admin' : 'user',
-    settings,
     username: user.username
 },
 Config.SESSION.SECRET_KEY, {
@@ -38,7 +37,7 @@ const getProfile = (req, reply) => {
 
 const getToken = (req, reply) => {
     reply({
-        token: createToken(req.pre.user, req.pre.settings)
+        token: createToken(req.pre.user)
     })
     .code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
 };
@@ -69,13 +68,13 @@ const registerUser = (req, reply) => {
                 const settings = new Settings();
                 settings.theme = 'light';
                 settings.username = user.username;
-                settings.save((err, settings) => {
+                settings.save((err) => {
                     if (err) {
                         throw Boom.badRequest(err);
                     }
 
                     reply({
-                        token: createToken(user, {settings: {theme: settings.theme}})
+                        token: createToken(user)
                     }).code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
                 });
             });
