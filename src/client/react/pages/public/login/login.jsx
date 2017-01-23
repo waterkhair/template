@@ -18,9 +18,8 @@ class LoginPage extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.props.sessionState.credentials.isAuthenticated) {
+        if (this.props.sessionState.isAuthenticated) {
             this.props.getSettings(this.props.sessionState.token);
-            this.props.getProfile(this.props.sessionState.token);
             browserHistory.push(this.props.sessionState.navigation.loginLocation);
         }
     }
@@ -54,7 +53,6 @@ const mapStateToProps = (state) => {
 };
 
 const matchDispatchToProps = (dispatch) => bindActionCreators({
-    getProfile: SessionActions.getProfile,
     getSettings: SessionActions.getSettings,
     removeError: ErrorsActions.removeError,
     signIn: SessionActions.signIn,

@@ -7,37 +7,20 @@ import JWT from 'jsonwebtoken';
 import Settings from '../models/settings';
 import User from '../models/user';
 
-const createToken = (user) => JWT.sign({
-    isAuthenticated: true,
-    scope: user.admin ? 'admin' : 'user',
-    username: user.username
+const createToken = (credentials) => JWT.sign({
+    email: credentials.email,
+    name: credentials.name,
+    scope: credentials.admin ? 'admin' : 'user',
+    username: credentials.username
 },
 Config.SESSION.SECRET_KEY, {
     algorithm: 'HS256',
     expiresIn: '1h'
 });
 
-const getProfile = (req, reply) => {
-    User.findOne({username: req.payload.username})
-        .select('-_id -password -__v')
-        .exec((err, user) => {
-            if (err) {
-                reply(Boom.badRequest(err));
-            }
-
-            reply({
-                profile: {
-                    email: user.email,
-                    name: user.name
-                }
-            })
-            .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
-        });
-};
-
 const getToken = (req, reply) => {
     reply({
-        token: createToken(req.pre.user)
+        token: createToken(req.pre.credentials)
     })
     .code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
 };
@@ -200,7 +183,6 @@ const verifyUniqueUser = (req, reply) => {
 };
 
 export default {
-    getProfile,
     getToken,
     registerUser,
     updateProfile,

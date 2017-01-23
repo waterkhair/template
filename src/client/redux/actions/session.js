@@ -1,16 +1,6 @@
 // Modules
 import ACTION_TYPES from '../../const/action_types';
 
-const getProfile = (token) => ({
-    token,
-    type: ACTION_TYPES.GET_PROFILE
-});
-
-const getProfileSuccess = (res) => ({
-    profile: res.response.profile,
-    type: ACTION_TYPES.GET_PROFILE_SUCCESS
-});
-
 const getSettings = (token) => ({
     token,
     type: ACTION_TYPES.GET_SETTINGS
@@ -76,8 +66,6 @@ const updateSettingsSuccess = (res) => ({
 });
 
 export default {
-    getProfile,
-    getProfileSuccess,
     getSettings,
     getSettingsSuccess,
     signIn,

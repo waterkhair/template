@@ -6,7 +6,6 @@ import UsersRoutes from './users';
 
 export default [
     HomeRoutes.HomeRoute,
-    SessionRoutes.GetProfileRoute,
     SessionRoutes.SignInRoute,
     SessionRoutes.SignUpRoute,
     SessionRoutes.UpdateProfileRoute,

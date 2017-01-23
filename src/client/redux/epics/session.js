@@ -13,27 +13,6 @@ import SessionActions from '../actions/session';
 import {combineEpics} from 'redux-observable';
 import errorHelper from '../../helpers/error';
 
-const getProfile = (action$) => action$
-    .ofType(ACTION_TYPES.GET_PROFILE)
-        .switchMap((action) => {
-            const token = JWT.decode(action.token);
-
-            return Observable.ajax
-                .post(window.config.API.ROUTES.SESSION.GET_PROFILE, {
-                    username: token.username
-                }, {
-                    'Authorization': `Bearer ${action.token}`,
-                    'Content-Type': 'application/json'
-                })
-                .map(SessionActions.getProfileSuccess)
-                .catch((err) =>
-                    errorHelper.ajaxErrorHandler(
-                        ERRORS.CODES.GET_PROFILE_ERROR,
-                        ERRORS.TYPES.SESSION,
-                        err.xhr,
-                        ACTION_TYPES.ADD_ERROR));
-        });
-
 const getSettings = (action$) => action$
     .ofType(ACTION_TYPES.GET_SETTINGS)
         .switchMap((action) => {
@@ -146,7 +125,6 @@ const updateSettings = (action$) => action$
         );
 
 export default combineEpics(
-    getProfile,
     getSettings,
     signIn,
     signOut,

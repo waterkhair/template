@@ -4,29 +4,11 @@ import SessionHelper from '../helpers/session';
 import SessionSchemas from '../schemas/session';
 import UsersSchemas from '../schemas/users';
 
-const GetProfileRoute = {
-    config: {
-        auth: {
-            scope: ['user', 'admin'],
-            strategy: 'jwt'
-        },
-        handler: SessionHelper.getProfile,
-        pre: [{
-            method: SessionHelper.verifySession
-        }],
-        validate: {
-            payload: SessionSchemas.sessionSchema
-        }
-    },
-    method: 'POST',
-    path: Config.ROUTES.SESSION.GET_PROFILE
-};
-
 const SignInRoute = {
     config: {
         handler: SessionHelper.getToken,
         pre: [{
-            assign: 'user',
+            assign: 'credentials',
             method: SessionHelper.verifyCredentials
         }],
         validate: {
@@ -71,7 +53,6 @@ const UpdateProfileRoute = {
 };
 
 export default {
-    GetProfileRoute,
     SignInRoute,
     SignUpRoute,
     UpdateProfileRoute
