@@ -7,10 +7,53 @@ import 'rxjs/add/operator/switchMap';
 import ACTION_TYPES from '../../const/action_types';
 import Config from '../../config/main';
 import ERRORS from '../../const/errors';
+import JWT from 'jsonwebtoken';
 import {Observable} from 'rxjs/Observable';
 import SessionActions from '../actions/session';
 import {combineEpics} from 'redux-observable';
 import errorHelper from '../../helpers/error';
+
+const getProfile = (action$) => action$
+    .ofType(ACTION_TYPES.GET_PROFILE)
+        .switchMap((action) => {
+            const token = JWT.decode(action.token);
+
+            return Observable.ajax
+                .post(window.config.API.ROUTES.SESSION.GET_PROFILE, {
+                    username: token.username
+                }, {
+                    'Authorization': `Bearer ${action.token}`,
+                    'Content-Type': 'application/json'
+                })
+                .map(SessionActions.getProfileSuccess)
+                .catch((err) =>
+                    errorHelper.ajaxErrorHandler(
+                        ERRORS.CODES.GET_PROFILE_ERROR,
+                        ERRORS.TYPES.SESSION,
+                        err.xhr,
+                        ACTION_TYPES.ADD_ERROR));
+        });
+
+const getSettings = (action$) => action$
+    .ofType(ACTION_TYPES.GET_SETTINGS)
+        .switchMap((action) => {
+            const token = JWT.decode(action.token);
+
+            return Observable.ajax
+                .post(window.config.API.ROUTES.SESSION.GET_SETTINGS, {
+                    username: token.username
+                }, {
+                    'Authorization': `Bearer ${action.token}`,
+                    'Content-Type': 'application/json'
+                })
+                .map(SessionActions.getSettingsSuccess)
+                .catch((err) =>
+                    errorHelper.ajaxErrorHandler(
+                        ERRORS.CODES.GET_SETTINGS_ERROR,
+                        ERRORS.TYPES.SESSION,
+                        err.xhr,
+                        ACTION_TYPES.ADD_ERROR));
+        });
 
 const signIn = (action$) => action$
     .ofType(ACTION_TYPES.SIGN_IN)
@@ -72,7 +115,7 @@ const updateProfile = (action$) => action$
         .ofType(ACTION_TYPES.UPDATE_PROFILE)
         .switchMap((action) =>
             Observable.ajax
-                .put(Config.API.ROUTES.SESSION.UPDATE_PROFILE, action.user, {
+                .put(Config.API.ROUTES.SESSION.UPDATE_PROFILE, action.profile, {
                     'Authorization': `Bearer ${action.token}`,
                     'Content-Type': 'application/json'
                 })
@@ -103,6 +146,8 @@ const updateSettings = (action$) => action$
         );
 
 export default combineEpics(
+    getProfile,
+    getSettings,
     signIn,
     signOut,
     signUp,

@@ -3,18 +3,44 @@ import BCryptJS from 'bcryptjs';
 import Boom from 'boom';
 import Config from '../config/main';
 import HTTP_STATUS_CODES from '../const/http_status_codes';
+import JWT from 'jsonwebtoken';
 import Settings from '../models/settings';
-import TokenHelper from '../helpers/token';
 import User from '../models/user';
 
-const getSettings = (req, reply) => {
-    Settings.findOne({username: req.payload.username}, (err, settings) => {
-        if (err) {
-            reply(Boom.badRequest(err));
-        }
+const createToken = (user, settings) => JWT.sign({
+    isAuthenticated: true,
+    scope: user.admin ? 'admin' : 'user',
+    settings,
+    username: user.username
+},
+Config.SESSION.SECRET_KEY, {
+    algorithm: 'HS256',
+    expiresIn: '1h'
+});
 
-        reply({theme: settings.theme});
-    });
+const getProfile = (req, reply) => {
+    User.findOne({username: req.payload.username})
+        .select('-_id -password -__v')
+        .exec((err, user) => {
+            if (err) {
+                reply(Boom.badRequest(err));
+            }
+
+            reply({
+                profile: {
+                    email: user.email,
+                    name: user.name
+                }
+            })
+            .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
+        });
+};
+
+const getToken = (req, reply) => {
+    reply({
+        token: createToken(req.pre.user, req.pre.settings)
+    })
+    .code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
 };
 
 const registerUser = (req, reply) => {
@@ -49,19 +75,12 @@ const registerUser = (req, reply) => {
                     }
 
                     reply({
-                        token: TokenHelper.createToken(user, {settings: {theme: settings.theme}})
+                        token: createToken(user, {settings: {theme: settings.theme}})
                     }).code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
                 });
             });
         });
     });
-};
-
-const returnToken = (req, reply) => {
-    reply({
-        token: TokenHelper.createToken(req.pre.user, req.pre.settings)
-    })
-    .code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
 };
 
 const updateProfile = (req, reply) => {
@@ -82,7 +101,7 @@ const updateProfile = (req, reply) => {
                     }
 
                     reply({
-                        token: TokenHelper.createToken(user)
+                        token: createToken(user)
                     })
                     .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
                 });
@@ -95,7 +114,7 @@ const updateProfile = (req, reply) => {
             }
 
             reply({
-                token: TokenHelper.createToken(user)
+                token: createToken(user)
             })
             .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
         });
@@ -146,7 +165,8 @@ const verifyCredentials = (req, reply) => {
     });
 };
 
-const verifyProfileSession = (req, reply) => {
+const verifySession = (req, reply) => {
+    console.log(req.payload);
     if (req.auth.credentials.username === req.payload.username) {
         reply(req.payload);
     } else {
@@ -181,12 +201,12 @@ const verifyUniqueUser = (req, reply) => {
 };
 
 export default {
-    getSettings,
+    getProfile,
+    getToken,
     registerUser,
-    returnToken,
     updateProfile,
     updateSettings,
     verifyCredentials,
-    verifyProfileSession,
+    verifySession,
     verifyUniqueUser
 };

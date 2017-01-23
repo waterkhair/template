@@ -27,7 +27,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 const requireUserScope = (nextState, replace) => {
     let sessionState = store.getState().session;
 
-    if (sessionState.token === '') {
+    if (!sessionState.credentials.isAuthenticated) {
         sessionState = Object.assign(sessionState, {
             navigation: {
                 loginLocation: nextState.location.pathname
@@ -46,7 +46,7 @@ const requireUserScope = (nextState, replace) => {
 const requireAdminScope = (nextState, replaceState) => {
     let sessionState = store.getState().session;
 
-    if (sessionState.token === '') {
+    if (!sessionState.credentials.isAuthenticated) {
         sessionState = Object.assign(sessionState, {
             navigation: {
                 loginLocation: nextState.location.pathname

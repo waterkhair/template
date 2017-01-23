@@ -33,7 +33,7 @@ class DefaultLayout extends React.Component {
     }
 
     render() {
-        if (this.props.sessionState.token === '') {
+        if (!this.props.sessionState.credentials.isAuthenticated) {
             window.location.reload(false);
         }
 

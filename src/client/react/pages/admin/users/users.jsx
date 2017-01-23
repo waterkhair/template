@@ -13,10 +13,7 @@ class UsersPage extends React.Component {
     constructor(props) {
         super(props);
 
-        if (this.props.sessionState.credentials.scope === 'admin') {
-            this.props.getUsers(this.props.sessionState.token);
-        }
-
+        this.props.getUsers(this.props.sessionState.token);
         this.onUserAdminToggle = this.onUserAdminToggleHandle.bind(this);
     }
 

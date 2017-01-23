@@ -1,6 +1,6 @@
 const IndexRoute = {
     handler: (req, reply) => {
-        reply('Hello from server side!');
+        reply('Hello from server!');
     },
     method: 'GET',
     path: '/'

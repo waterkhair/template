@@ -2,16 +2,32 @@
 import Config from '../config/main';
 import SessionHelper from '../helpers/session';
 import SessionSchemas from '../schemas/session';
+import UsersSchemas from '../schemas/users';
+
+const GetProfileRoute = {
+    config: {
+        auth: {
+            scope: ['user', 'admin'],
+            strategy: 'jwt'
+        },
+        handler: SessionHelper.getProfile,
+        pre: [{
+            method: SessionHelper.verifySession
+        }],
+        validate: {
+            payload: SessionSchemas.sessionSchema
+        }
+    },
+    method: 'POST',
+    path: Config.ROUTES.SESSION.GET_PROFILE
+};
 
 const SignInRoute = {
     config: {
-        handler: SessionHelper.returnToken,
+        handler: SessionHelper.getToken,
         pre: [{
             assign: 'user',
             method: SessionHelper.verifyCredentials
-        }, {
-            assign: 'settings',
-            method: SessionHelper.getSettings
         }],
         validate: {
             payload: SessionSchemas.authenticateSchema
@@ -29,7 +45,7 @@ const SignUpRoute = {
             method: SessionHelper.verifyUniqueUser
         }],
         validate: {
-            payload: SessionSchemas.userSchema
+            payload: UsersSchemas.createUserSchema
         }
     },
     method: 'POST',
@@ -44,34 +60,19 @@ const UpdateProfileRoute = {
         },
         handler: SessionHelper.updateProfile,
         pre: [{
-            method: SessionHelper.verifyProfileSession
+            method: SessionHelper.verifySession
         }],
         validate: {
-            payload: SessionSchemas.profileSchema
+            payload: UsersSchemas.updateUserSchema
         }
     },
     method: 'PUT',
     path: Config.ROUTES.SESSION.UPDATE_PROFILE
 };
 
-const UpdateSettingsRoute = {
-    config: {
-        auth: {
-            scope: ['user', 'admin'],
-            strategy: 'jwt'
-        },
-        handler: SessionHelper.updateSettings,
-        pre: [{
-            method: SessionHelper.verifyProfileSession
-        }]
-    },
-    method: 'PUT',
-    path: Config.ROUTES.SESSION.UPDATE_SETTINGS
-};
-
 export default {
+    GetProfileRoute,
     SignInRoute,
     SignUpRoute,
-    UpdateProfileRoute,
-    UpdateSettingsRoute
+    UpdateProfileRoute
 };

@@ -7,6 +7,7 @@ import HapiAuthJwt from 'hapi-auth-jwt';
 import IndexRoute from './routes/index';
 import Mongoose from 'mongoose';
 import SessionRoutes from './routes/session';
+import SettingsRoutes from './routes/settings';
 import UsersRoutes from './routes/users';
 
 // Folders
@@ -24,7 +25,7 @@ hapiServer.register(GoodPlugin, (err) => {
         throw err;
     }
 });
-hapiServer.register(HapiAuthJwt, (err) => {
+hapiServer.register(HapiAuthJwt, (err) => {// eslint-disable-line
     if (err) {
         throw err;
     }
@@ -37,10 +38,12 @@ hapiServer.register(HapiAuthJwt, (err) => {
 
     // Routers
     hapiServer.route(IndexRoute);
+    hapiServer.route(SessionRoutes.GetProfileRoute);
     hapiServer.route(SessionRoutes.SignInRoute);
     hapiServer.route(SessionRoutes.SignUpRoute);
     hapiServer.route(SessionRoutes.UpdateProfileRoute);
-    hapiServer.route(SessionRoutes.UpdateSettingsRoute);
+    hapiServer.route(SettingsRoutes.UpdateSettingsRoute);
+    hapiServer.route(SettingsRoutes.GetSettingsRoute);
     hapiServer.route(UsersRoutes.GetUsersRoute);
     hapiServer.route(UsersRoutes.SetUserRoleRoute);
 });

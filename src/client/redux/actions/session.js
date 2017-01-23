@@ -1,6 +1,26 @@
 // Modules
 import ACTION_TYPES from '../../const/action_types';
 
+const getProfile = (token) => ({
+    token,
+    type: ACTION_TYPES.GET_PROFILE
+});
+
+const getProfileSuccess = (res) => ({
+    profile: res.response.profile,
+    type: ACTION_TYPES.GET_PROFILE_SUCCESS
+});
+
+const getSettings = (token) => ({
+    token,
+    type: ACTION_TYPES.GET_SETTINGS
+});
+
+const getSettingsSuccess = (res) => ({
+    settings: res.response.settings,
+    type: ACTION_TYPES.GET_SETTINGS_SUCCESS
+});
+
 const signIn = (username, password) => ({
     password,
     type: ACTION_TYPES.SIGN_IN,
@@ -33,10 +53,10 @@ const signUpSuccess = (res) => ({
     type: ACTION_TYPES.SIGN_UP_SUCCESS
 });
 
-const updateProfile = (user, token) => ({
+const updateProfile = (profile, token) => ({
+    profile,
     token,
-    type: ACTION_TYPES.UPDATE_PROFILE,
-    user
+    type: ACTION_TYPES.UPDATE_PROFILE
 });
 
 const updateProfileSuccess = (res) => ({
@@ -56,6 +76,10 @@ const updateSettingsSuccess = (res) => ({
 });
 
 export default {
+    getProfile,
+    getProfileSuccess,
+    getSettings,
+    getSettingsSuccess,
     signIn,
     signInSuccess,
     signOut,

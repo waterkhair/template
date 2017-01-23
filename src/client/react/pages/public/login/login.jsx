@@ -18,7 +18,9 @@ class LoginPage extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.props.sessionState.credentials.scope === 'user' || this.props.sessionState.credentials.scope === 'admin') {
+        if (this.props.sessionState.credentials.isAuthenticated) {
+            this.props.getSettings(this.props.sessionState.token);
+            this.props.getProfile(this.props.sessionState.token);
             browserHistory.push(this.props.sessionState.navigation.loginLocation);
         }
     }
@@ -31,6 +33,7 @@ class LoginPage extends React.Component {
         return (
             <div>
                 <LoginPaper
+                    token={this.props.sessionState.token}
                     onSignIn={this.props.signIn}
                     onSignUp={this.props.signUp} />
                 <ErrorsSnackbar
@@ -51,6 +54,8 @@ const mapStateToProps = (state) => {
 };
 
 const matchDispatchToProps = (dispatch) => bindActionCreators({
+    getProfile: SessionActions.getProfile,
+    getSettings: SessionActions.getSettings,
     removeError: ErrorsActions.removeError,
     signIn: SessionActions.signIn,
     signUp: SessionActions.signUp

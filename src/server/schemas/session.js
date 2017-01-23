@@ -26,45 +26,7 @@ const authenticateSchema = Joi
                 .required()
         }));
 
-const profileSchema = Joi.object({
-    email: Joi
-        .string()
-        .email(),
-    name: Joi
-        .string(),
-    password: Joi
-        .string(),
-    username: Joi
-        .string()
-        .alphanum()
-        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
-        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
-        .required()
-});
-
-const settingsSchema = Joi.object({
-    theme: Joi
-        .string()
-        .required(),
-    username: Joi
-        .string()
-        .alphanum()
-        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
-        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
-        .required()
-});
-
-const userSchema = Joi.object({
-    email: Joi
-        .string()
-        .email()
-        .required(),
-    name: Joi
-        .string()
-        .required(),
-    password: Joi
-        .string()
-        .required(),
+const sessionSchema = Joi.object({
     username: Joi
         .string()
         .alphanum()
@@ -75,7 +37,5 @@ const userSchema = Joi.object({
 
 export default {
     authenticateSchema,
-    profileSchema,
-    settingsSchema,
-    userSchema
+    sessionSchema
 };
