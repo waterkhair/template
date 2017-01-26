@@ -1,5 +1,4 @@
 // Errors configuration
 module.exports = {
-    GENERAL_ERROR_MESSAGE: 'Oops! Something wrong happen...',
-    MILLISECONDS: 2000
+    GENERAL_ERROR_MESSAGE: 'Oops! Something wrong happen...'
 };

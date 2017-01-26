@@ -1,12 +1,12 @@
 // Modules
 import {combineReducers} from 'redux';
-import errors from './errors';
+import notifications from './notifications';
 import {routerReducer} from 'react-router-redux';
 import session from './session';
 import users from './users';
 
 const reducers = combineReducers({
-    errors,
+    notifications,
     routing: routerReducer,
     session,
     users

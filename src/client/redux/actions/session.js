@@ -3,66 +3,66 @@ import ACTION_TYPES from '../../const/action_types';
 
 const getSettings = (token) => ({
     token,
-    type: ACTION_TYPES.GET_SETTINGS
+    type: ACTION_TYPES.SESSION.GET_SETTINGS
 });
 
 const getSettingsSuccess = (res) => ({
     settings: res.response.settings,
-    type: ACTION_TYPES.GET_SETTINGS_SUCCESS
+    type: ACTION_TYPES.SESSION.GET_SETTINGS_SUCCESS
 });
 
 const signIn = (username, password) => ({
     password,
-    type: ACTION_TYPES.SIGN_IN,
+    type: ACTION_TYPES.SESSION.SIGN_IN,
     username
 });
 
 const signInSuccess = (res) => ({
     token: res.response.token,
-    type: ACTION_TYPES.SIGN_IN_SUCCESS
+    type: ACTION_TYPES.SESSION.SIGN_IN_SUCCESS
 });
 
 const signOut = () => ({
-    type: ACTION_TYPES.SIGN_OUT
+    type: ACTION_TYPES.SESSION.SIGN_OUT
 });
 
 const signOutSuccess = () => ({
-    type: ACTION_TYPES.SIGN_OUT_SUCCESS
+    type: ACTION_TYPES.SESSION.SIGN_OUT_SUCCESS
 });
 
 const signUp = (email, name, username, password) => ({
     email,
     name,
     password,
-    type: ACTION_TYPES.SIGN_UP,
+    type: ACTION_TYPES.SESSION.SIGN_UP,
     username
 });
 
 const signUpSuccess = (res) => ({
     token: res.response.token,
-    type: ACTION_TYPES.SIGN_UP_SUCCESS
+    type: ACTION_TYPES.SESSION.SIGN_UP_SUCCESS
 });
 
 const updateProfile = (profile, token) => ({
     profile,
     token,
-    type: ACTION_TYPES.UPDATE_PROFILE
+    type: ACTION_TYPES.SESSION.UPDATE_PROFILE
 });
 
 const updateProfileSuccess = (res) => ({
     token: res.response.token,
-    type: ACTION_TYPES.UPDATE_PROFILE_SUCCESS
+    type: ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS
 });
 
 const updateSettings = (settings, token) => ({
     settings,
     token,
-    type: ACTION_TYPES.UPDATE_SETTINGS
+    type: ACTION_TYPES.SESSION.UPDATE_SETTINGS
 });
 
 const updateSettingsSuccess = (res) => ({
     settings: res.response.settings,
-    type: ACTION_TYPES.UPDATE_SETTINGS_SUCCESS
+    type: ACTION_TYPES.SESSION.UPDATE_SETTINGS_SUCCESS
 });
 
 export default {

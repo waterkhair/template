@@ -16,7 +16,7 @@ const getInitialState = () => Object.assign({}, {
 
 export default (state = getInitialState(), action) => {
     switch (action.type) {
-    case ACTION_TYPES.GET_USERS_SUCCESS: {
+    case ACTION_TYPES.USERS.GET_USERS_SUCCESS: {
         const users = [];
 
         action.users.forEach((user) => {
@@ -33,7 +33,7 @@ export default (state = getInitialState(), action) => {
             users
         };
     }
-    case ACTION_TYPES.SET_USER_ROLE_SUCCESS: {
+    case ACTION_TYPES.USERS.SET_USER_ROLE_SUCCESS: {
         let userIndex = 0;
 
         for (let iteration = 0; iteration < state.users.length; iteration++) {

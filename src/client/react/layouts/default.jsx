@@ -1,7 +1,7 @@
 // Modules
 import AppToolbar from './containers/app_toolbar';
-import ErrorsActions from '../../redux/actions/errors';
-import ErrorsSnackbar from './containers/errors_snackbar';
+import NotificationsActions from '../../redux/actions/notifications';
+import NotificationsSnackbar from './containers/notifications_snackbar';
 import Paper from 'material-ui/Paper';
 import React from 'react';
 import SessionActions from '../../redux/actions/session';
@@ -17,7 +17,7 @@ class DefaultLayout extends React.Component {
     constructor(props) {
         super(props);
 
-        this.removeError = this.removeErrorHandle.bind(this);
+        this.removeNotification = this.removeNotificationHandler.bind(this);
     }
 
     getChildContext() {
@@ -28,8 +28,8 @@ class DefaultLayout extends React.Component {
         };
     }
 
-    removeErrorHandle() {
-        this.props.removeError(this.props.errorsState.errors[FIRST_INDEX].code);
+    removeNotificationHandler() {
+        this.props.removeNotification(this.props.notificationsState.notifications[FIRST_INDEX].code);
     }
 
     render() {
@@ -58,9 +58,9 @@ class DefaultLayout extends React.Component {
                             {this.props.children}
                         </div>
                     </div>
-                    <ErrorsSnackbar
-                        errors={this.props.errorsState.errors}
-                        removeError={this.removeError} />
+                    <NotificationsSnackbar
+                        notifications={this.props.notificationsState.notifications}
+                        removeNotification={this.removeNotification} />
                 </Paper>
             </div>
         );
@@ -73,7 +73,7 @@ DefaultLayout.childContextTypes = {
 
 const mapStateToProps = (state) => {
     const mappedState = {
-        errorsState: state.errors,
+        notificationsState: state.notifications,
         sessionState: state.session
     };
 
@@ -81,7 +81,7 @@ const mapStateToProps = (state) => {
 };
 
 const matchDispatchToProps = (dispatch) => bindActionCreators({
-    removeError: ErrorsActions.removeError,
+    removeNotification: NotificationsActions.removeNotification,
     signOutSuccess: SessionActions.signOutSuccess
 }, dispatch);
 

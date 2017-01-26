@@ -22,14 +22,14 @@ const INITIAL_STATE = {
 
 export default (state = initialState(), action) => {
     switch (action.type) {
-    case ACTION_TYPES.GET_SETTINGS_SUCCESS:
-    case ACTION_TYPES.UPDATE_SETTINGS_SUCCESS:
+    case ACTION_TYPES.SESSION.GET_SETTINGS_SUCCESS:
+    case ACTION_TYPES.SESSION.UPDATE_SETTINGS_SUCCESS:
         return {
             ...state,
             settings: action.settings
         };
-    case ACTION_TYPES.SIGN_IN_SUCCESS:
-    case ACTION_TYPES.SIGN_UP_SUCCESS: {
+    case ACTION_TYPES.SESSION.SIGN_IN_SUCCESS:
+    case ACTION_TYPES.SESSION.SIGN_UP_SUCCESS: {
         const token = JWT.decode(action.token);
 
         return {
@@ -44,7 +44,7 @@ export default (state = initialState(), action) => {
             token: action.token
         };
     }
-    case ACTION_TYPES.UPDATE_PROFILE_SUCCESS: {
+    case ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS: {
         const token = JWT.decode(action.token);
 
         return {
@@ -57,7 +57,7 @@ export default (state = initialState(), action) => {
             }
         };
     }
-    case ACTION_TYPES.SIGN_OUT_SUCCESS:
+    case ACTION_TYPES.SESSION.SIGN_OUT_SUCCESS:
         return initialState();
     default:
         return state;

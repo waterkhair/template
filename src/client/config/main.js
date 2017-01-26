@@ -4,6 +4,7 @@ const APP = require('./app');
 const ERRORS = require('./errors');
 const GULP = require('./gulp');
 const HAPI = require('./hapi');
+const NOTIFICATIONS = require('./notifications');
 
 // Main configuration
 module.exports = {
@@ -11,5 +12,6 @@ module.exports = {
     APP,
     ERRORS,
     GULP,
-    HAPI
+    HAPI,
+    NOTIFICATIONS
 };

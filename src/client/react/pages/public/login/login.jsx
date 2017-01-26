@@ -1,7 +1,7 @@
 // Modules
-import ErrorsActions from '../../../../redux/actions/errors';
-import ErrorsSnackbar from '../../../layouts/containers/errors_snackbar';
 import LoginPaper from './containers/login_paper';
+import NotificationsActions from '../../../../redux/actions/notifications';
+import NotificationsSnackbar from '../../../layouts/containers/notifications_snackbar';
 import React from 'react';
 import SessionActions from '../../../../redux/actions/session';
 import {bindActionCreators} from 'redux';
@@ -14,7 +14,7 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.removeError = this.removeErrorHandle.bind(this);
+        this.removeNotification = this.removeNotificationHandler.bind(this);
     }
 
     componentDidUpdate() {
@@ -24,8 +24,8 @@ class LoginPage extends React.Component {
         }
     }
 
-    removeErrorHandle() {
-        this.props.removeError(this.props.errorsState.errors[FIRST_INDEX].code);
+    removeNotificationHandler() {
+        this.props.removeNotification(this.props.notificationsState.notifications[FIRST_INDEX].code);
     }
 
     render() {
@@ -35,9 +35,9 @@ class LoginPage extends React.Component {
                     token={this.props.sessionState.token}
                     onSignIn={this.props.signIn}
                     onSignUp={this.props.signUp} />
-                <ErrorsSnackbar
-                    errors={this.props.errorsState.errors}
-                    removeError={this.removeError} />
+                <NotificationsSnackbar
+                    notifications={this.props.notificationsState.notifications}
+                    removeNotification={this.removeNotification} />
             </div>
         );
     }
@@ -45,7 +45,7 @@ class LoginPage extends React.Component {
 
 const mapStateToProps = (state) => {
     const mappedState = {
-        errorsState: state.errors,
+        notificationsState: state.notifications,
         sessionState: state.session
     };
 
@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
 
 const matchDispatchToProps = (dispatch) => bindActionCreators({
     getSettings: SessionActions.getSettings,
-    removeError: ErrorsActions.removeError,
+    removeNotification: NotificationsActions.removeNotification,
     signIn: SessionActions.signIn,
     signUp: SessionActions.signUp
 }, dispatch);
