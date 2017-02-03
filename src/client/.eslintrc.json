@@ -22,10 +22,7 @@
             "error",
             4
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
+        "linebreak-style": "off",
         "max-len": "off",
         "max-params": [
             "error",
