@@ -42,8 +42,7 @@ class AppToolbar extends React.Component {
     render() {
         return (
             <Toolbar
-                className={`app-toolbar ${this.props.className ? this.props.className : ''}`}
-                style={{backgroundColor: this.props.muiTheme.palette.primary1Color}}>
+                className={`app-toolbar ${this.props.className ? this.props.className : ''}`}>
                 <ToolbarGroup
                     firstChild={true}>
                     <IconButton

@@ -34,8 +34,7 @@ class UsersPage extends React.Component {
                                 <Toggle
                                     className="admin-toggle"
                                     defaultToggled={user.admin}
-                                    onToggle={() => this.onUserAdminToggle(user.username, !user.admin)}
-                                    style={{width: 45}} />
+                                    onToggle={() => this.onUserAdminToggle(user.username, !user.admin)} />
                             } />;
             }
 
@@ -51,7 +50,7 @@ class UsersPage extends React.Component {
                     Users
                 </h1>
                 <List
-                    style={{textAlign: 'left'}}>
+                    className="align-left">
                     <Subheader>Users</Subheader>
                     {this.getUsers()}
                 </List>

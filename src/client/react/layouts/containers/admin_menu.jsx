@@ -11,8 +11,8 @@ class AdminMenu extends React.Component {
             <div>
                 <Subheader>Administration</Subheader>
                 <Link
+                    className="no-text-decoration"
                     onTouchTap={this.props.drawerToggle}
-                    style={{textDecoration: 'none'}}
                     to="/users">
                     <MenuItem
                         leftIcon={

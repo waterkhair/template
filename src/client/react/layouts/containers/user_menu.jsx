@@ -12,8 +12,8 @@ class UserMenu extends React.Component {
             <div>
                 <Subheader>Menu</Subheader>
                 <IndexLink
+                    className="no-text-decoration"
                     onTouchTap={this.props.drawerToggle}
-                    style={{textDecoration: 'none'}}
                     to="/">
                     <MenuItem
                         leftIcon={
@@ -22,8 +22,8 @@ class UserMenu extends React.Component {
                         primaryText="Home" />
                 </IndexLink>
                 <Link
+                    className="no-text-decoration"
                     onTouchTap={this.props.drawerToggle}
-                    style={{textDecoration: 'none'}}
                     to="/about">
                     <MenuItem
                         leftIcon={

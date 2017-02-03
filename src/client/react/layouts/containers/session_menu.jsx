@@ -13,8 +13,8 @@ class SessionMenu extends React.Component {
             <div>
                 <Subheader>Session</Subheader>
                 <Link
+                    className="no-text-decoration"
                     onTouchTap={this.props.drawerToggle}
-                    style={{textDecoration: 'none'}}
                     to="/profile">
                     <MenuItem
                         leftIcon={
@@ -23,8 +23,8 @@ class SessionMenu extends React.Component {
                         primaryText="Profile" />
                 </Link>
                 <Link
+                    className="no-text-decoration"
                     onTouchTap={this.props.drawerToggle}
-                    style={{textDecoration: 'none'}}
                     to="/settings">
                     <MenuItem
                         leftIcon={
@@ -33,8 +33,8 @@ class SessionMenu extends React.Component {
                         primaryText="Settings" />
                 </Link>
                 <Link
-                    onTouchTap={this.props.signOut}
-                    style={{textDecoration: 'none'}}>
+                    className="no-text-decoration"
+                    onTouchTap={this.props.signOut}>
                     <MenuItem
                         leftIcon={
                             <PowerSettingsNewIcon />

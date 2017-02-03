@@ -3,7 +3,16 @@ html {
 }
 
 body {
-  background-color: #fff;
+  background-color: #CFD8DC;
+}
+
+/* GENERICS */
+.align-left {
+  text-align: left;
+}
+
+.no-text-decoration {
+  text-decoration: none;
 }
 
 /* APP */
@@ -28,4 +37,9 @@ body {
 
 .form-button {
   margin-top: 20px
+}
+
+/* ADMIN PAGE */
+.admin-toggle {
+  width: 45px !important;
 }
