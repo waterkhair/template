@@ -21,7 +21,7 @@ const getSettings = (action$) => action$
     .switchMap((action) =>
         Observable.ajax
             .get(window.config.API.ROUTES.SESSION.GET_SETTINGS, createRequestHeader(action.token))
-            .map((res) => SessionActions.getSettingsSuccess({settings: res.response.settings}))
+            .map((res) => SessionActions.getSettingsSuccess(res.response.payload))
             .catch(createErrorNotification(ERRORS.CODES.GET_SETTINGS_ERROR, ERRORS.TYPES.SESSION))
     );
 
@@ -32,7 +32,7 @@ const signIn = (action$) => action$
             .post(window.config.API.ROUTES.SESSION.SIGN_IN, action.data, createRequestHeader())
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.signInSuccess({token: res.response.token})),
+                    Observable.of(SessionActions.signInSuccess(res.response.payload)),
                     createNotification(ACTION_TYPES.SESSION.SIGN_IN_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Logged in'))
             )
             .catch(createErrorNotification(ERRORS.CODES.SIGN_IN_ERROR, ERRORS.TYPES.SESSION))
@@ -45,7 +45,7 @@ const signOut = (action$) => action$
             .get(window.config.API.ROUTES.SESSION.SIGN_OUT, createRequestHeader())
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.signOutSuccess({res})),
+                    Observable.of(SessionActions.signOutSuccess(res.response.payload)),
                     createNotification(ACTION_TYPES.SESSION.SIGN_OUT_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Logged out'))
             )
             .catch(createErrorNotification(ERRORS.CODES.SIGN_OUT_ERROR, ERRORS.TYPES.SESSION))
@@ -58,7 +58,7 @@ const signUp = (action$) => action$
             .post(window.config.API.ROUTES.SESSION.SIGN_UP, action.data, createRequestHeader())
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.signUpSuccess({token: res.response.token})),
+                    Observable.of(SessionActions.signUpSuccess(res.response.payload)),
                     createNotification(ACTION_TYPES.SESSION.SIGN_UP_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Signed up'))
             )
             .catch(createErrorNotification(ERRORS.CODES.SIGN_UP_ERROR, ERRORS.TYPES.SESSION))
@@ -71,7 +71,7 @@ const updateProfile = (action$) => action$
             .put(Config.API.ROUTES.SESSION.UPDATE_PROFILE, action.data, createRequestHeader(action.token))
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.updateProfileSuccess({token: res.response.token})),
+                    Observable.of(SessionActions.updateProfileSuccess(res.response.payload)),
                     createNotification(ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Updated'))
             )
             .catch(createErrorNotification(ERRORS.CODES.UPDATE_PROFILE_ERROR, ERRORS.TYPES.SESSION))
@@ -84,7 +84,7 @@ const updateSettings = (action$) => action$
             .put(Config.API.ROUTES.SESSION.UPDATE_SETTINGS, action.data, createRequestHeader(action.token))
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.updateSettingsSuccess({settings: res.response.settings})),
+                    Observable.of(SessionActions.updateSettingsSuccess(res.response.payload)),
                     createNotification(ACTION_TYPES.SESSION.UPDATE_SETTINGS_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Updated!'))
             )
             .catch(createErrorNotification(ERRORS.CODES.UPDATE_SETTINGS_ERROR, ERRORS.TYPES.SESSION))

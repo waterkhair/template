@@ -14,7 +14,9 @@ const getUsers = (req, reply) => {
                 throw Boom.notFound('No users found!');
             }
             reply({
-                users
+                payload: {
+                    users
+                }
             })
             .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
         });
@@ -27,9 +29,11 @@ const setUserRole = (req, reply) => {
         }
 
         reply({
-            user: {
-                admin: req.payload.admin,
-                username: req.payload.username
+            payload: {
+                user: {
+                    admin: req.payload.admin,
+                    username: req.payload.username
+                }
             }
         })
         .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);

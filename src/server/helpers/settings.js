@@ -10,8 +10,10 @@ const getSettings = (req, reply) => {
         }
 
         reply({
-            settings: {
-                theme: settings.theme
+            payload: {
+                settings: {
+                    theme: settings.theme
+                }
             }
         })
         .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
@@ -26,8 +28,10 @@ const updateSettings = (req, reply) => {
             }
 
             reply({
-                settings: {
-                    theme: settings.theme
+                payload: {
+                    settings: {
+                        theme: settings.theme
+                    }
                 }
             })
             .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);

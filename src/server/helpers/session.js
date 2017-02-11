@@ -20,7 +20,9 @@ Config.SESSION.SECRET_KEY, {
 
 const getToken = (req, reply) => {
     reply({
-        token: createToken(req.pre.credentials)
+        payload: {
+            token: createToken(req.pre.credentials)
+        }
     })
     .code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
 };
@@ -57,7 +59,9 @@ const registerUser = (req, reply) => {
                     }
 
                     reply({
-                        token: createToken(user)
+                        payload: {
+                            token: createToken(user)
+                        }
                     }).code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
                 });
             });
@@ -84,7 +88,9 @@ const updateProfile = (req, reply) => {
                         }
 
                         reply({
-                            token: createToken(user)
+                            payload: {
+                                token: createToken(user)
+                            }
                         })
                         .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
                     });
@@ -97,7 +103,9 @@ const updateProfile = (req, reply) => {
                 }
 
                 reply({
-                    token: createToken(user)
+                    payload: {
+                        token: createToken(user)
+                    }
                 })
                 .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
             });

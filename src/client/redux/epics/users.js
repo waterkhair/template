@@ -19,7 +19,7 @@ const getUsers = (action$) => action$
     .switchMap((action) =>
         Observable.ajax
             .get(Config.API.ROUTES.USERS.GET_USERS, createRequestHeader(action.token))
-            .map((res) => UsersActions.getUsersSuccess({users: res.response.users}))
+            .map((res) => UsersActions.getUsersSuccess(res.response.payload))
             .catch(createErrorNotification(ERRORS.CODES.GET_USERS_ERROR, ERRORS.TYPES.USERS))
     );
 
@@ -30,7 +30,7 @@ const setUserRole = (action$) => action$
             .put(Config.API.ROUTES.USERS.SET_USER_ROLE, action.data, createRequestHeader(action.token))
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(UsersActions.setUserRoleSuccess({user: res.response.user})),
+                    Observable.of(UsersActions.setUserRoleSuccess(res.response.payload)),
                     createNotification(ACTION_TYPES.SESSION.SIGN_IN_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Updated'))
             )
             .catch(createErrorNotification(ERRORS.CODES.SET_USER_ROLE_ERROR, ERRORS.TYPES.USERS))
