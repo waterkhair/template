@@ -1,15 +1,30 @@
 // Modules
 import Config from '../config/main';
+import HeaderSchemas from '../schemas/header';
 import UsersHelper from '../helpers/users';
 import UsersSchemas from '../schemas/users';
 
 const GetUsersRoute = {
     config: {
         auth: {
-            scope: ['admin'],
+            scope: [
+                'admin'
+            ],
             strategy: 'jwt'
         },
-        handler: UsersHelper.getUsers
+        handler: UsersHelper.getUsers,
+        plugins: {
+            'hapi-swagger': {
+                payloadType: 'form'
+            }
+        },
+        tags: [
+            'api',
+            'users'
+        ],
+        validate: {
+            headers: HeaderSchemas.authorizatedHeaderSchema
+        }
     },
     method: 'GET',
     path: Config.ROUTES.USERS.GET_USERS
@@ -18,11 +33,23 @@ const GetUsersRoute = {
 const SetUserRoleRoute = {
     config: {
         auth: {
-            scope: ['admin'],
+            scope: [
+                'admin'
+            ],
             strategy: 'jwt'
         },
         handler: UsersHelper.setUserRole,
+        plugins: {
+            'hapi-swagger': {
+                payloadType: 'form'
+            }
+        },
+        tags: [
+            'api',
+            'users'
+        ],
         validate: {
+            headers: HeaderSchemas.authorizatedHeaderSchema,
             payload: UsersSchemas.setUserRoleSchema
         }
     },

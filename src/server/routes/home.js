@@ -1,6 +1,25 @@
+// Modules
+import HeaderSchemas from '../schemas/header';
+
 const HomeRoute = {
-    handler: (req, reply) => {
-        reply('Hello from server!');
+    config: {
+        handler: (req, reply) => {
+            reply({
+                message: 'Hello from server!'
+            });
+        },
+        plugins: {
+            'hapi-swagger': {
+                payloadType: 'form'
+            }
+        },
+        tags: [
+            'api',
+            'home'
+        ],
+        validate: {
+            headers: HeaderSchemas.unauthorizatedHeaderSchema
+        }
     },
     method: 'GET',
     path: '/'

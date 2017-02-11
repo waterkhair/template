@@ -1,5 +1,6 @@
 // Modules
 import Config from '../config/main';
+import HeaderSchemas from '../schemas/header';
 import SessionHelper from '../helpers/session';
 import SessionSchemas from '../schemas/session';
 import UsersSchemas from '../schemas/users';
@@ -7,11 +8,21 @@ import UsersSchemas from '../schemas/users';
 const SignInRoute = {
     config: {
         handler: SessionHelper.getToken,
+        plugins: {
+            'hapi-swagger': {
+                payloadType: 'form'
+            }
+        },
         pre: [{
             assign: 'credentials',
             method: SessionHelper.verifyCredentials
         }],
+        tags: [
+            'api',
+            'session'
+        ],
         validate: {
+            headers: HeaderSchemas.unauthorizatedHeaderSchema,
             payload: SessionSchemas.authenticateSchema
         }
     },
@@ -22,11 +33,21 @@ const SignInRoute = {
 const SignUpRoute = {
     config: {
         handler: SessionHelper.registerUser,
+        plugins: {
+            'hapi-swagger': {
+                payloadType: 'form'
+            }
+        },
         pre: [{
             assign: 'user',
             method: SessionHelper.verifyUniqueUser
         }],
+        tags: [
+            'api',
+            'session'
+        ],
         validate: {
+            headers: HeaderSchemas.unauthorizatedHeaderSchema,
             payload: UsersSchemas.createUserSchema
         }
     },
@@ -37,11 +58,24 @@ const SignUpRoute = {
 const UpdateProfileRoute = {
     config: {
         auth: {
-            scope: ['user', 'admin'],
+            scope: [
+                'user',
+                'admin'
+            ],
             strategy: 'jwt'
         },
         handler: SessionHelper.updateProfile,
+        plugins: {
+            'hapi-swagger': {
+                payloadType: 'form'
+            }
+        },
+        tags: [
+            'api',
+            'session'
+        ],
         validate: {
+            headers: HeaderSchemas.authorizatedHeaderSchema,
             payload: UsersSchemas.updateUserSchema
         }
     },
