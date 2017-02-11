@@ -52,23 +52,26 @@ class ProfilePage extends React.Component {
 
     onUpdateProfileHandle(event) {
         if (this.state.emailEdited || this.state.nameEdited || this.state.passwordEdited) {
-            const userEdited = {
+            const data = {
                 username: event.target.username_update.value
             };
 
             if (this.state.emailEdited) {
-                userEdited.email = event.target.email_update.value;
+                data.email = event.target.email_update.value;
             }
 
             if (this.state.nameEdited) {
-                userEdited.name = event.target.name_update.value;
+                data.name = event.target.name_update.value;
             }
 
             if (this.state.passwordEdited) {
-                userEdited.password = event.target.password_update.value;
+                data.password = event.target.password_update.value;
             }
 
-            this.props.updateProfile(userEdited, this.props.sessionState.token);
+            this.props.updateProfile({
+                data,
+                token: this.props.sessionState.token
+            });
         }
     }
 

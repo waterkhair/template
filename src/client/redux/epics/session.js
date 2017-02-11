@@ -6,6 +6,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/switchMap';
+import {createErrorNotification, createNotification} from '../../helpers/notifications';
 import ACTION_TYPES from '../../const/action_types';
 import Config from '../../config/main';
 import ERRORS from '../../const/errors';
@@ -13,159 +14,80 @@ import NOTIFICATIONS from '../../const/notifications';
 import {Observable} from 'rxjs/Observable';
 import SessionActions from '../actions/session';
 import {combineEpics} from 'redux-observable';
-import notificationsHelper from '../../helpers/notifications';
+import {createRequestHeader} from '../../helpers/header';
 
 const getSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.GET_SETTINGS)
-    .switchMap((action) => Observable.ajax
-            .get(window.config.API.ROUTES.SESSION.GET_SETTINGS, {
-                'Authorization': `Bearer ${action.token}`,
-                'Content-Type': 'application/json'
-            })
-            .map(SessionActions.getSettingsSuccess)
-            .catch((err) => {
-                const message = err.xhr && err.xhr.response && err.xhr.response.message ? err.xhr.response.message : Config.ERRORS.GENERAL_ERROR_MESSAGE;
-
-                return notificationsHelper.addNotification(
-                    ERRORS.CODES.GET_SETTINGS_ERROR,
-                    ERRORS.TYPES.SESSION,
-                    message);
-            })
+    .switchMap((action) =>
+        Observable.ajax
+            .get(window.config.API.ROUTES.SESSION.GET_SETTINGS, createRequestHeader(action.token))
+            .map((res) => SessionActions.getSettingsSuccess({settings: res.response.settings}))
+            .catch(createErrorNotification(ERRORS.CODES.GET_SETTINGS_ERROR, ERRORS.TYPES.SESSION))
     );
 
 const signIn = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_IN)
     .switchMap((action) =>
         Observable.ajax
-            .post(window.config.API.ROUTES.SESSION.SIGN_IN, {
-                password: action.password,
-                username: action.username
-            }, {
-                'Content-Type': 'application/json'
-            })
+            .post(window.config.API.ROUTES.SESSION.SIGN_IN, action.data, createRequestHeader())
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.signInSuccess(res)),
-                    notificationsHelper.addNotification(
-                        ACTION_TYPES.SESSION.SIGN_IN_SUCCESS,
-                        NOTIFICATIONS.TYPES.SESSION,
-                        'Logged in'))
+                    Observable.of(SessionActions.signInSuccess({token: res.response.token})),
+                    createNotification(ACTION_TYPES.SESSION.SIGN_IN_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Logged in'))
             )
-            .catch((err) => {
-                const message = err.xhr && err.xhr.response && err.xhr.response.message ? err.xhr.response.message : Config.ERRORS.GENERAL_ERROR_MESSAGE;
-
-                return notificationsHelper.addNotification(
-                    ERRORS.CODES.SIGN_IN_ERROR,
-                    ERRORS.TYPES.SESSION,
-                    message);
-            })
+            .catch(createErrorNotification(ERRORS.CODES.SIGN_IN_ERROR, ERRORS.TYPES.SESSION))
     );
 
 const signOut = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_OUT)
     .switchMap(() =>
         Observable.ajax
-            .get(window.config.API.ROUTES.SESSION.SIGN_OUT, {
-                'Content-Type': 'application/json'
-            })
+            .get(window.config.API.ROUTES.SESSION.SIGN_OUT, createRequestHeader())
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.signOutSuccess(res)),
-                    notificationsHelper.addNotification(
-                        ACTION_TYPES.SESSION.SIGN_OUT_SUCCESS,
-                        NOTIFICATIONS.TYPES.SESSION,
-                        'Logged out'))
+                    Observable.of(SessionActions.signOutSuccess({res})),
+                    createNotification(ACTION_TYPES.SESSION.SIGN_OUT_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Logged out'))
             )
-            .catch((err) => {
-                const message = err.xhr && err.xhr.response && err.xhr.response.message ? err.xhr.response.message : Config.ERRORS.GENERAL_ERROR_MESSAGE;
-
-                return notificationsHelper.addNotification(
-                    ERRORS.CODES.SIGN_OUT_ERROR,
-                    ERRORS.TYPES.SESSION,
-                    message);
-            })
+            .catch(createErrorNotification(ERRORS.CODES.SIGN_OUT_ERROR, ERRORS.TYPES.SESSION))
     );
 
 const signUp = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_UP)
     .switchMap((action) =>
         Observable.ajax
-            .post(window.config.API.ROUTES.SESSION.SIGN_UP, {
-                email: action.email,
-                name: action.name,
-                password: action.password,
-                username: action.username
-            }, {
-                'Content-Type': 'application/json'
-            })
+            .post(window.config.API.ROUTES.SESSION.SIGN_UP, action.data, createRequestHeader())
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.signUpSuccess(res)),
-                    notificationsHelper.addNotification(
-                        ACTION_TYPES.SESSION.SIGN_UP_SUCCESS,
-                        NOTIFICATIONS.TYPES.SESSION,
-                        'Signed up'))
+                    Observable.of(SessionActions.signUpSuccess({token: res.response.token})),
+                    createNotification(ACTION_TYPES.SESSION.SIGN_UP_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Signed up'))
             )
-            .catch((err) => {
-                const message = err.xhr && err.xhr.response && err.xhr.response.message ? err.xhr.response.message : Config.ERRORS.GENERAL_ERROR_MESSAGE;
-
-                return notificationsHelper.addNotification(
-                    ERRORS.CODES.SIGN_UP_ERROR,
-                    ERRORS.TYPES.SESSION,
-                    message);
-            })
+            .catch(createErrorNotification(ERRORS.CODES.SIGN_UP_ERROR, ERRORS.TYPES.SESSION))
     );
 
 const updateProfile = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_PROFILE)
     .switchMap((action) =>
         Observable.ajax
-            .put(Config.API.ROUTES.SESSION.UPDATE_PROFILE, action.profile, {
-                'Authorization': `Bearer ${action.token}`,
-                'Content-Type': 'application/json'
-            })
+            .put(Config.API.ROUTES.SESSION.UPDATE_PROFILE, action.data, createRequestHeader(action.token))
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.updateProfileSuccess(res)),
-                    notificationsHelper.addNotification(
-                        ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS,
-                        NOTIFICATIONS.TYPES.SESSION,
-                        'Updated'))
+                    Observable.of(SessionActions.updateProfileSuccess({token: res.response.token})),
+                    createNotification(ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Updated'))
             )
-            .catch((err) => {
-                const message = err.xhr && err.xhr.response && err.xhr.response.message ? err.xhr.response.message : Config.ERRORS.GENERAL_ERROR_MESSAGE;
-
-                return notificationsHelper.addNotification(
-                    ERRORS.CODES.UPDATE_PROFILE_ERROR,
-                    ERRORS.TYPES.SESSION,
-                    message);
-            })
+            .catch(createErrorNotification(ERRORS.CODES.UPDATE_PROFILE_ERROR, ERRORS.TYPES.SESSION))
     );
 
 const updateSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_SETTINGS)
     .switchMap((action) =>
         Observable.ajax
-            .put(Config.API.ROUTES.SESSION.UPDATE_SETTINGS, action.settings, {
-                'Authorization': `Bearer ${action.token}`,
-                'Content-Type': 'application/json'
-            })
+            .put(Config.API.ROUTES.SESSION.UPDATE_SETTINGS, action.data, createRequestHeader(action.token))
             .flatMap((res) =>
                 Observable.concat(
-                    Observable.of(SessionActions.updateSettingsSuccess(res)),
-                    notificationsHelper.addNotification(
-                        ACTION_TYPES.SESSION.UPDATE_SETTINGS_SUCCESS,
-                        NOTIFICATIONS.TYPES.SESSION,
-                        'Updated!'))
+                    Observable.of(SessionActions.updateSettingsSuccess({settings: res.response.settings})),
+                    createNotification(ACTION_TYPES.SESSION.UPDATE_SETTINGS_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Updated!'))
             )
-            .catch((err) => {
-                const message = err.xhr && err.xhr.response && err.xhr.response.message ? err.xhr.response.message : Config.ERRORS.GENERAL_ERROR_MESSAGE;
-
-                return notificationsHelper.addNotification(
-                    ERRORS.CODES.UPDATE_SETTINGS_ERROR,
-                    ERRORS.TYPES.SESSION,
-                    message);
-            })
+            .catch(createErrorNotification(ERRORS.CODES.UPDATE_SETTINGS_ERROR, ERRORS.TYPES.SESSION))
     );
 
 export default combineEpics(

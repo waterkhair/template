@@ -14,12 +14,15 @@ class SettingsPage extends React.Component {
     }
 
     onSettingChangeHandler(event) {
-        const settings = {
+        const data = {
             theme: event.target.value,
             username: this.props.sessionState.credentials.username
         };
 
-        this.props.updateSettings(settings, this.props.sessionState.token);
+        this.props.updateSettings({
+            data,
+            token: this.props.sessionState.token
+        });
     }
 
     render() {
@@ -28,17 +31,19 @@ class SettingsPage extends React.Component {
                 <h1>
                     Settings
                 </h1>
-                <Subheader>Theme</Subheader>
+                <Subheader>
+                    Theme
+                </Subheader>
                 <RadioButtonGroup
                     defaultSelected={this.props.sessionState.settings.theme}
                     name="theme"
                     onChange={this.onSettingChange}>
                     <RadioButton
-                        value="light"
-                        label="Light" />
+                        label="Light"
+                        value="light" />
                     <RadioButton
-                        value="dark"
-                        label="Dark" />
+                        label="Dark"
+                        value="dark" />
                 </RadioButtonGroup>
             </div>
         );

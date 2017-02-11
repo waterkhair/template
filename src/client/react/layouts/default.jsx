@@ -29,7 +29,9 @@ class DefaultLayout extends React.Component {
     }
 
     removeNotificationHandler() {
-        this.props.removeNotification(this.props.notificationsState.notifications[FIRST_INDEX].code);
+        this.props.removeNotification({
+            code: this.props.notificationsState.notifications[FIRST_INDEX].code
+        });
     }
 
     render() {
@@ -47,9 +49,9 @@ class DefaultLayout extends React.Component {
                         className="row">
                         <AppToolbar
                             className="col-xs-12 col-ms-12 col-md-12 col-lg-12"
+                            credentials={this.props.sessionState.credentials}
                             muiTheme={this.props.muiTheme}
-                            signOutSuccess={this.props.signOutSuccess}
-                            credentials={this.props.sessionState.credentials} />
+                            signOutSuccess={this.props.signOutSuccess} />
                     </div>
                     <div
                         className="page-container row">

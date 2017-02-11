@@ -72,18 +72,45 @@ const requireAdminScope = (nextState, replaceState) => {
 injectTapEventPlugin();
 
 render(
-    <Provider store={store}>
-        <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <Router history={history}>
-                <Route path="/" component={DefaultLayout} onEnter={requireUserScope}>
-                    <IndexRoute name="Home" component={HomePage} />
-                    <Route name="About" path="/about" component={AboutPage} />
-                    <Route name="Profile" path="/profile" component={ProfilePage} />
-                    <Route name="Settings" path="/settings" component={SettingsPage} />
-                    <Route name="Users" path="/users" component={UsersPage} onEnter={requireAdminScope} />
+    <Provider
+        store={store}>
+        <MuiThemeProvider
+            muiTheme={getMuiTheme()}>
+            <Router
+                history={history}>
+                <Route
+                    component={DefaultLayout}
+                    onEnter={requireUserScope}
+                    path="/">
+                    <IndexRoute
+                        component={HomePage}
+                        name="Home" />
+                    <Route
+                        component={AboutPage}
+                        name="About"
+                        path="/about" />
+                    <Route
+                        component={ProfilePage}
+                        name="Profile"
+                        path="/profile" />
+                    <Route
+                        component={SettingsPage}
+                        name="Settings"
+                        path="/settings" />
+                    <Route
+                        component={UsersPage}
+                        name="Users"
+                        onEnter={requireAdminScope}
+                        path="/users" />
                 </Route>
-                <Route name="Error" path="/error" component={ErrorPage} />
-                <Route name="Login" path="/login" component={LoginPage} />
+                <Route
+                    component={ErrorPage}
+                    name="Error"
+                    path="/error" />
+                <Route
+                    component={LoginPage}
+                    name="Login"
+                    path="/login" />
             </Router>
         </MuiThemeProvider>
     </Provider>,

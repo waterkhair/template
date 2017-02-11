@@ -41,7 +41,12 @@ class LoginPaper extends React.Component {
                             <form
                                 onSubmit={(event) => {
                                     event.preventDefault();
-                                    this.props.onSignIn(event.target.username.value, event.target.password.value);
+                                    this.props.onSignIn({
+                                        data: {
+                                            password: event.target.password.value,
+                                            username: event.target.username.value
+                                        }
+                                    });
                                 }}
                                 className="form">
                                 <TextField
@@ -76,7 +81,14 @@ class LoginPaper extends React.Component {
                             <form
                                 onSubmit={(event) => {
                                     event.preventDefault();
-                                    this.props.onSignUp(event.target.email.value, event.target.name.value, event.target.username.value, event.target.password.value);
+                                    this.props.onSignUp({
+                                        data: {
+                                            email: event.target.email.value,
+                                            name: event.target.name.value,
+                                            password: event.target.password.value,
+                                            username: event.target.username.value
+                                        }
+                                    });
                                 }}
                                 className="form">
                                 <TextField
@@ -108,8 +120,8 @@ class LoginPaper extends React.Component {
                                     className="form-button"
                                     fullWidth={true}
                                     label="Sing Up"
-                                    type="submit"
-                                    primary={true} />
+                                    primary={true}
+                                    type="submit" />
                             </form>
                         </Tab>
                     </Tabs>

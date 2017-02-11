@@ -11,7 +11,9 @@ class SessionMenu extends React.Component {
     render() {
         return (
             <div>
-                <Subheader>Session</Subheader>
+                <Subheader>
+                    Session
+                </Subheader>
                 <Link
                     className="no-text-decoration"
                     onTouchTap={this.props.drawerToggle}

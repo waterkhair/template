@@ -1,81 +1,18 @@
 // Modules
 import ACTION_TYPES from '../../const/action_types';
-
-const getSettings = (token) => ({
-    token,
-    type: ACTION_TYPES.SESSION.GET_SETTINGS
-});
-
-const getSettingsSuccess = (res) => ({
-    settings: res.response.settings,
-    type: ACTION_TYPES.SESSION.GET_SETTINGS_SUCCESS
-});
-
-const signIn = (username, password) => ({
-    password,
-    type: ACTION_TYPES.SESSION.SIGN_IN,
-    username
-});
-
-const signInSuccess = (res) => ({
-    token: res.response.token,
-    type: ACTION_TYPES.SESSION.SIGN_IN_SUCCESS
-});
-
-const signOut = () => ({
-    type: ACTION_TYPES.SESSION.SIGN_OUT
-});
-
-const signOutSuccess = () => ({
-    type: ACTION_TYPES.SESSION.SIGN_OUT_SUCCESS
-});
-
-const signUp = (email, name, username, password) => ({
-    email,
-    name,
-    password,
-    type: ACTION_TYPES.SESSION.SIGN_UP,
-    username
-});
-
-const signUpSuccess = (res) => ({
-    token: res.response.token,
-    type: ACTION_TYPES.SESSION.SIGN_UP_SUCCESS
-});
-
-const updateProfile = (profile, token) => ({
-    profile,
-    token,
-    type: ACTION_TYPES.SESSION.UPDATE_PROFILE
-});
-
-const updateProfileSuccess = (res) => ({
-    token: res.response.token,
-    type: ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS
-});
-
-const updateSettings = (settings, token) => ({
-    settings,
-    token,
-    type: ACTION_TYPES.SESSION.UPDATE_SETTINGS
-});
-
-const updateSettingsSuccess = (res) => ({
-    settings: res.response.settings,
-    type: ACTION_TYPES.SESSION.UPDATE_SETTINGS_SUCCESS
-});
+import {createAction} from '../../helpers/actions';
 
 export default {
-    getSettings,
-    getSettingsSuccess,
-    signIn,
-    signInSuccess,
-    signOut,
-    signOutSuccess,
-    signUp,
-    signUpSuccess,
-    updateProfile,
-    updateProfileSuccess,
-    updateSettings,
-    updateSettingsSuccess
+    getSettings: createAction(ACTION_TYPES.SESSION.GET_SETTINGS),
+    getSettingsSuccess: createAction(ACTION_TYPES.SESSION.GET_SETTINGS_SUCCESS),
+    signIn: createAction(ACTION_TYPES.SESSION.SIGN_IN),
+    signInSuccess: createAction(ACTION_TYPES.SESSION.SIGN_IN_SUCCESS),
+    signOut: createAction(ACTION_TYPES.SESSION.SIGN_OUT),
+    signOutSuccess: createAction(ACTION_TYPES.SESSION.SIGN_OUT_SUCCESS),
+    signUp: createAction(ACTION_TYPES.SESSION.SIGN_UP),
+    signUpSuccess: createAction(ACTION_TYPES.SESSION.SIGN_UP_SUCCESS),
+    updateProfile: createAction(ACTION_TYPES.SESSION.UPDATE_PROFILE),
+    updateProfileSuccess: createAction(ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS),
+    updateSettings: createAction(ACTION_TYPES.SESSION.UPDATE_SETTINGS),
+    updateSettingsSuccess: createAction(ACTION_TYPES.SESSION.UPDATE_SETTINGS_SUCCESS)
 };

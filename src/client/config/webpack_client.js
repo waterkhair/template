@@ -18,9 +18,7 @@ var imagesDestinationFolder = './images';
 var outputDestinationFolder = '/../../../build/Release/client/content';
 
 module.exports = {
-    devtool: process.env.NODE_ENV === 'production'
-        ? ''
-        : 'source-map',
+    devtool: process.env.NODE_ENV === 'production' ? '' : 'source-map',
     entry: {
         'scripts/bundle': scriptBundleInputPaths,
         'scripts/vendor': vendorBundleInputModules

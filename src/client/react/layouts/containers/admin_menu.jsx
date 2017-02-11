@@ -9,7 +9,9 @@ class AdminMenu extends React.Component {
     render() {
         return (
             <div>
-                <Subheader>Administration</Subheader>
+                <Subheader>
+                    Administration
+                </Subheader>
                 <Link
                     className="no-text-decoration"
                     onTouchTap={this.props.drawerToggle}

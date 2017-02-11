@@ -13,12 +13,19 @@ class UsersPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.props.getUsers(this.props.sessionState.token);
+        this.props.getUsers({token: this.props.sessionState.token});
+
         this.onUserAdminToggle = this.onUserAdminToggleHandle.bind(this);
     }
 
     onUserAdminToggleHandle(username, admin) {
-        this.props.setUserRole(username, admin, this.props.sessionState.token);
+        this.props.setUserRole({
+            data: {
+                admin,
+                username
+            },
+            token: this.props.sessionState.token
+        });
     }
 
     getUsers() {
@@ -26,10 +33,10 @@ class UsersPage extends React.Component {
             if (user.username !== '' && user.username !== this.props.sessionState.credentials.username) {
                 return <ListItem
                             key={index}
-                            primaryText={user.name}
                             leftAvatar={
                                 <Avatar src="images/user_avatar.png" />
                             }
+                            primaryText={user.name}
                             rightIcon={
                                 <Toggle
                                     className="admin-toggle"
@@ -51,7 +58,9 @@ class UsersPage extends React.Component {
                 </h1>
                 <List
                     className="align-left">
-                    <Subheader>Users</Subheader>
+                    <Subheader>
+                        Users
+                    </Subheader>
                     {this.getUsers()}
                 </List>
             </div>

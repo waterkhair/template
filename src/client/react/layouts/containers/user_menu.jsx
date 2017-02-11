@@ -10,7 +10,9 @@ class UserMenu extends React.Component {
     render() {
         return (
             <div>
-                <Subheader>Menu</Subheader>
+                <Subheader>
+                    Menu
+                </Subheader>
                 <IndexLink
                     className="no-text-decoration"
                     onTouchTap={this.props.drawerToggle}

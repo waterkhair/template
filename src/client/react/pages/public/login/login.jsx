@@ -19,22 +19,24 @@ class LoginPage extends React.Component {
 
     componentDidUpdate() {
         if (this.props.sessionState.isAuthenticated) {
-            this.props.getSettings(this.props.sessionState.token);
+            this.props.getSettings({token: this.props.sessionState.token});
             browserHistory.push(this.props.sessionState.navigation.loginLocation);
         }
     }
 
     removeNotificationHandler() {
-        this.props.removeNotification(this.props.notificationsState.notifications[FIRST_INDEX].code);
+        this.props.removeNotification({
+            code: this.props.notificationsState.notifications[FIRST_INDEX].code
+        });
     }
 
     render() {
         return (
             <div>
                 <LoginPaper
-                    token={this.props.sessionState.token}
                     onSignIn={this.props.signIn}
-                    onSignUp={this.props.signUp} />
+                    onSignUp={this.props.signUp}
+                    token={this.props.sessionState.token} />
                 <NotificationsSnackbar
                     notifications={this.props.notificationsState.notifications}
                     removeNotification={this.removeNotification} />

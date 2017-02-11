@@ -43,8 +43,8 @@ class ProfileForm extends React.Component {
                     className="form-button"
                     fullWidth={true}
                     label="Update"
-                    type="submit"
-                    primary={true} />
+                    primary={true}
+                    type="submit" />
             </form>
         );
     }
