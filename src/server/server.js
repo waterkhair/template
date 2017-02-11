@@ -38,6 +38,9 @@ hapiServer.start((err) => {
         throw err;
     }
     hapiServer.log('info', `Started at: ${hapiServer.info.uri}`);
+
+    // Start mongoose
+    Mongoose.Promise = global.Promise;
     Mongoose.connect(Config.MONGO_DB.CONNECTION_STRING, {}, (err) => {
         if (err) {
             throw err;
