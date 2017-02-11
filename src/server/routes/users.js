@@ -1,6 +1,7 @@
 // Modules
 import Config from '../config/main';
 import UsersHelper from '../helpers/users';
+import UsersSchemas from '../schemas/users';
 
 const GetUsersRoute = {
     config: {
@@ -20,7 +21,10 @@ const SetUserRoleRoute = {
             scope: ['admin'],
             strategy: 'jwt'
         },
-        handler: UsersHelper.setUserRole
+        handler: UsersHelper.setUserRole,
+        validate: {
+            payload: UsersSchemas.setUserRoleSchema
+        }
     },
     method: 'PUT',
     path: Config.ROUTES.USERS.SET_USER_ROLE

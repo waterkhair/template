@@ -21,6 +21,18 @@ const createUserSchema = Joi.object({
         .required()
 });
 
+const setUserRoleSchema = Joi.object({
+    admin: Joi
+        .boolean()
+        .required(),
+    username: Joi
+        .string()
+        .alphanum()
+        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
+        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
+        .required()
+});
+
 const updateUserSchema = Joi.object({
     email: Joi
         .string()
@@ -39,5 +51,6 @@ const updateUserSchema = Joi.object({
 
 export default {
     createUserSchema,
+    setUserRoleSchema,
     updateUserSchema
 };
