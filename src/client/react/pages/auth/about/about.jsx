@@ -1,6 +1,6 @@
 // Modules
 import React from 'react';
-import {connect} from 'react-redux';
+import connect from 'react-redux/lib/connect/connect';
 
 class HomePage extends React.Component {
     render() {

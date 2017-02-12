@@ -1,13 +1,14 @@
 // Modules
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 import AdminMenu from './admin_menu';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import React from 'react';
 import SessionMenu from './session_menu';
+import Toolbar from 'material-ui/Toolbar/Toolbar';
+import ToolbarGroup from 'material-ui/Toolbar/ToolbarGroup';
 import UserMenu from './user_menu';
-import {browserHistory} from 'react-router';
+import browserHistory from 'react-router/lib/browserHistory';
 
 class AppToolbar extends React.Component {
     constructor(props) {

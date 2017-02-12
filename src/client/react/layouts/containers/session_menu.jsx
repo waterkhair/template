@@ -1,6 +1,6 @@
 // Modules
 import AccountCircleIcon from 'material-ui/svg-icons/action/account-circle';
-import {Link} from 'react-router';
+import Link from 'react-router/lib/Link';
 import MenuItem from 'material-ui/MenuItem';
 import PowerSettingsNewIcon from 'material-ui/svg-icons/action/power-settings-new';
 import React from 'react';

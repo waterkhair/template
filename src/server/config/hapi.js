@@ -5,6 +5,7 @@ const httpLogUrl = 'http://localhost:3000';
 const interval = 1000;
 const logsFolderPath = '../../build/Release/server/logs';
 const opsLogsPathName = `${logsFolderPath}/ops.log`;
+const pack = '../package';
 const port = 3000;
 
 module.exports = {
@@ -82,7 +83,7 @@ module.exports = {
     },
     HAPI_SWAGGER: {
         title: 'Template API Documentation',
-        version: '1.0.0.0'
+        version: pack.version
     },
     LOGS_FOLDER_PATH: logsFolderPath
 };

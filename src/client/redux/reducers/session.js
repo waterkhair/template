@@ -1,6 +1,6 @@
 // Modules
 import ACTION_TYPES from '../../const/action_types';
-import JWT from 'jsonwebtoken';
+import decode from 'jsonwebtoken/decode';
 
 const INITIAL_STATE = {
         credentials: {
@@ -30,7 +30,7 @@ export default (state = initialState(), action) => {
         };
     case ACTION_TYPES.SESSION.SIGN_IN_SUCCESS:
     case ACTION_TYPES.SESSION.SIGN_UP_SUCCESS: {
-        const token = JWT.decode(action.token);
+        const token = decode(action.token);
 
         return {
             ...state,
@@ -45,7 +45,7 @@ export default (state = initialState(), action) => {
         };
     }
     case ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS: {
-        const token = JWT.decode(action.token);
+        const token = decode(action.token);
 
         return {
             ...state,

@@ -4,9 +4,9 @@ import NotificationsActions from '../../../../redux/actions/notifications';
 import NotificationsSnackbar from '../../../layouts/containers/notifications_snackbar';
 import React from 'react';
 import SessionActions from '../../../../redux/actions/session';
-import {bindActionCreators} from 'redux';
-import {browserHistory} from 'react-router';
-import {connect} from 'react-redux';
+import bindActionCreators from 'redux/lib/bindActionCreators';
+import browserHistory from 'react-router/lib/browserHistory';
+import connect from 'react-redux/lib/connect/connect';
 
 const FIRST_INDEX = 0;
 

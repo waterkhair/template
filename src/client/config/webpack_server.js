@@ -17,20 +17,20 @@ module.exports = {
         webpackNodeExternals()
     ],
     module: {
-        loaders: [{
+        rules: [{
+            enforce: 'pre',
             exclude: /node_module/,
-            loader: 'babel',
+            loader: 'eslint-loader',
+            test: /\.js$/
+        }, {
+            exclude: /node_module/,
+            loader: 'babel-loader',
             query: {
                 presets: [
                     'es2015',
                     'stage-3'
                 ]
             },
-            test: /\.js$/
-        }],
-        preLoaders: [{
-            exclude: /node_module/,
-            loader: 'eslint',
             test: /\.js$/
         }]
     },
@@ -52,7 +52,6 @@ module.exports = {
     ],
     resolve: {
         extensions: [
-            '',
             '.js'
         ]
     },

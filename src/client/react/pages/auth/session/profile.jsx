@@ -2,8 +2,8 @@
 import ProfileForm from './containers/profile_form';
 import React from 'react';
 import SessionActions from '../../../../redux/actions/session';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import bindActionCreators from 'redux/lib/bindActionCreators';
+import connect from 'react-redux/lib/connect/connect';
 
 class ProfilePage extends React.Component {
     constructor(props) {

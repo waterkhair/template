@@ -1,9 +1,10 @@
 // Modules
-import {Tab, Tabs} from 'material-ui/Tabs';
 import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import React from 'react';
+import Tab from 'material-ui/Tabs/Tab';
+import Tabs from 'material-ui/Tabs/Tabs';
 import TextField from 'material-ui/TextField';
 
 class LoginPaper extends React.Component {

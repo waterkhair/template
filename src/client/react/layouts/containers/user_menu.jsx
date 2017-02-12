@@ -1,7 +1,8 @@
 // Modules
-import {IndexLink, Link} from 'react-router';
 import HelpIcon from 'material-ui/svg-icons/action/help';
 import HomeIcon from 'material-ui/svg-icons/action/home';
+import IndexLink from 'react-router/lib/IndexLink';
+import Link from 'react-router/lib/Link';
 import MenuItem from 'material-ui/MenuItem';
 import React from 'react';
 import Subheader from 'material-ui/Subheader';

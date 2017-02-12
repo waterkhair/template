@@ -1,12 +1,13 @@
 // Modules
-import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
+import List from 'material-ui/List/List';
+import ListItem from 'material-ui/List/ListItem';
 import React from 'react';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
 import UserActions from '../../../../redux/actions/users';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import bindActionCreators from 'redux/lib/bindActionCreators';
+import connect from 'react-redux/lib/connect/connect';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class UsersPage extends React.Component {

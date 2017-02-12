@@ -1,10 +1,11 @@
 // Modules
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import RadioButton from 'material-ui/RadioButton/RadioButton';
+import RadioButtonGroup from 'material-ui/RadioButton/RadioButtonGroup';
 import React from 'react';
 import SessionActions from '../../../../redux/actions/session';
 import Subheader from 'material-ui/Subheader';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import bindActionCreators from 'redux/lib/bindActionCreators';
+import connect from 'react-redux/lib/connect/connect';
 
 class SettingsPage extends React.Component {
     constructor(props) {

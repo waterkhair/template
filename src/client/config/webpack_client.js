@@ -3,30 +3,30 @@ var AutoPrefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var Path = require('path');
 var PreCSS = require('precss');
+var Webpack = require('webpack');
 
 // Webpack Server configuration
 var scriptBundleInputPaths = [
     Path.resolve(`${__dirname}/../react/app`),
     Path.resolve(`${__dirname}/../content/css/main`)
 ];
-var vendorBundleInputModules = [
-    'font-awesome-webpack'
-];
 var cssDestinationPath = './css/styles.css';
-var fontsDestinationFolder = './fonts';
-var imagesDestinationFolder = './images';
 var outputDestinationFolder = '/../../../build/Release/client/content';
 
 module.exports = {
     devtool: process.env.NODE_ENV === 'production' ? '' : 'source-map',
     entry: {
-        'scripts/bundle': scriptBundleInputPaths,
-        'scripts/vendor': vendorBundleInputModules
+        'scripts/bundle': scriptBundleInputPaths
     },
     module: {
-        loaders: [{
+        rules: [{
+            enforce: 'pre',
             exclude: /node_module/,
-            loader: 'babel',
+            loader: 'eslint-loader',
+            test: /\.js$/
+        }, {
+            exclude: /node_module/,
+            loader: 'babel-loader',
             query: {
                 presets: [
                     'es2015',
@@ -36,25 +36,11 @@ module.exports = {
             },
             test: /\.jsx?$/
         }, {
-            loader: ExtractTextPlugin.extract('style', 'css!postcss'),
+            loader: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: 'css-loader!postcss-loader'
+            }),
             test: /\.css$/
-        }, {
-            loader: ExtractTextPlugin.extract('style', 'css!sass!postcss'),
-            test: /\.scss$/
-        }, {
-            loader: ExtractTextPlugin.extract('style', 'css!less!postcss'),
-            test: /\.less$/
-        }, {
-            loader: `url?limit=10000&name=${fontsDestinationFolder}/[name].[ext]`,
-            test: /\.(svg|ttf|eot|woff|woff2)(\?.*$|$)/
-        }, {
-            loader: `url?limit=10000&name=${imagesDestinationFolder}/[name].[ext]`,
-            test: /\.(jpg|jpeg|gif|png)(\?.*$|$)/
-        }],
-        preLoaders: [{
-            exclude: /node_module/,
-            loader: 'eslint',
-            test: /\.js$/
         }]
     },
     node: {
@@ -66,15 +52,26 @@ module.exports = {
         path: Path.resolve(Path.join(__dirname, outputDestinationFolder))
     },
     plugins: [
-        new ExtractTextPlugin(cssDestinationPath)
-    ],
-    postcss: () => [
-        PreCSS,
-        AutoPrefixer
+        new ExtractTextPlugin(cssDestinationPath),
+        new Webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: () => [
+                    PreCSS,
+                    AutoPrefixer
+                ]
+            }
+        }),
+        new Webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
+        new Webpack.optimize.UglifyJsPlugin({
+            sourceMap: process.env.NODE_ENV !== 'production'
+        })
     ],
     resolve: {
         extensions: [
-            '',
             '.js',
             '.jsx',
             '.css'

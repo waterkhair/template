@@ -1,19 +1,23 @@
 // Modules
 import 'flexboxgrid';
-import {IndexRoute, Route, Router, browserHistory} from 'react-router';
-import {applyMiddleware, createStore} from 'redux';
 import AboutPage from './pages/auth/about/about';
 import DefaultLayout from './layouts/default';
 import ErrorPage from './pages/public/error/error';
 import HomePage from './pages/auth/home/home';
+import IndexRoute from 'react-router/lib/IndexRoute';
 import LoginPage from './pages/public/login/login';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ProfilePage from './pages/auth/session/profile';
-import {Provider} from 'react-redux';
+import Provider from 'react-redux/lib/components/Provider';
 import React from 'react';
+import Route from 'react-router/lib/Route';
+import Router from 'react-router/lib/Router';
 import SettingsPage from './pages/auth/session/settings';
 import UsersPage from './pages/admin/users/users';
+import applyMiddleware from 'redux/lib/applyMiddleware';
+import browserHistory from 'react-router/lib/browserHistory';
 import {createEpicMiddleware} from 'redux-observable';
+import createStore from 'redux/lib/createStore';
 import epics from '../redux/epics/epics';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
