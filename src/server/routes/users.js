@@ -19,8 +19,7 @@ const GetUsersRoute = {
             }
         },
         tags: [
-            'api',
-            'users'
+            'api'
         ],
         validate: {
             headers: HeaderSchemas.authorizatedHeaderSchema
@@ -45,8 +44,7 @@ const SetUserRoleRoute = {
             }
         },
         tags: [
-            'api',
-            'users'
+            'api'
         ],
         validate: {
             headers: HeaderSchemas.authorizatedHeaderSchema,

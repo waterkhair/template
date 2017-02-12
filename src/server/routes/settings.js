@@ -20,8 +20,7 @@ const GetSettingsRoute = {
             }
         },
         tags: [
-            'api',
-            'settings'
+            'api'
         ],
         validate: {
             headers: HeaderSchemas.authorizatedHeaderSchema
@@ -47,8 +46,7 @@ const UpdateSettingsRoute = {
             }
         },
         tags: [
-            'api',
-            'settings'
+            'api'
         ],
         validate: {
             headers: HeaderSchemas.authorizatedHeaderSchema,

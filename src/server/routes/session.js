@@ -18,11 +18,9 @@ const SignInRoute = {
             method: SessionHelper.verifyCredentials
         }],
         tags: [
-            'api',
-            'session'
+            'api'
         ],
         validate: {
-            headers: HeaderSchemas.unauthorizatedHeaderSchema,
             payload: SessionSchemas.authenticateSchema
         }
     },
@@ -43,11 +41,9 @@ const SignUpRoute = {
             method: SessionHelper.verifyUniqueUser
         }],
         tags: [
-            'api',
-            'session'
+            'api'
         ],
         validate: {
-            headers: HeaderSchemas.unauthorizatedHeaderSchema,
             payload: UsersSchemas.createUserSchema
         }
     },
@@ -71,8 +67,7 @@ const UpdateProfileRoute = {
             }
         },
         tags: [
-            'api',
-            'session'
+            'api'
         ],
         validate: {
             headers: HeaderSchemas.authorizatedHeaderSchema,

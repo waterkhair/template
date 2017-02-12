@@ -2,29 +2,19 @@
 import Config from '../config/main';
 import Joi from 'joi';
 
-const authenticateSchema = Joi
-    .alternatives()
-    .try(
-        Joi.object({
-            password: Joi
-                .string()
-                .required(),
-            username: Joi
-                .string()
-                .alphanum()
-                .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
-                .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
-                .required()
-        }),
-        Joi.object({
-            password: Joi
-                .string()
-                .required(),
-            username: Joi
-                .string()
-                .email()
-                .required()
-        }));
+const authenticateSchema = Joi.object({
+    password: Joi
+        .string()
+        .required()
+        .description('User password (i.e. testpass)'),
+    username: Joi
+        .string()
+        .alphanum()
+        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
+        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
+        .required()
+        .description('Username (i.e. test)')
+});
 
 const sessionSchema = Joi.object({
     username: Joi
@@ -33,6 +23,7 @@ const sessionSchema = Joi.object({
         .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
         .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
         .required()
+        .description('Username (i.e. test)')
 });
 
 export default {

@@ -80,5 +80,9 @@ module.exports = {
             }]
         }
     },
+    HAPI_SWAGGER: {
+        title: 'Template API Documentation',
+        version: '1.0.0.0'
+    },
     LOGS_FOLDER_PATH: logsFolderPath
 };

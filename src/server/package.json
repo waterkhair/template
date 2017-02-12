@@ -15,7 +15,7 @@
   "keywords": [
     "template",
     "mongodb",
-    "express",
+    "hapi",
     "react",
     "node",
     "redux"
@@ -37,9 +37,11 @@
     "hapi": "16.1.0",
     "hapi-auth-jwt": "4.0.0",
     "hapi-swagger": "7.6.0",
+    "inert": "4.1.0",
     "joi": "10.1.0",
     "jsonwebtoken": "7.2.1",
-    "mongoose": "4.7.6"
+    "mongoose": "4.7.6",
+    "vision": "4.1.1"
   },
   "devDependencies": {
     "babel-core": "6.21.0",

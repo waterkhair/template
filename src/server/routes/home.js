@@ -1,6 +1,3 @@
-// Modules
-import HeaderSchemas from '../schemas/header';
-
 const HomeRoute = {
     config: {
         handler: (req, reply) => {
@@ -14,12 +11,8 @@ const HomeRoute = {
             }
         },
         tags: [
-            'api',
-            'home'
-        ],
-        validate: {
-            headers: HeaderSchemas.unauthorizatedHeaderSchema
-        }
+            'api'
+        ]
     },
     method: 'GET',
     path: '/'

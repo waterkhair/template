@@ -4,8 +4,11 @@ import Config from './config/main';
 import GoodPlugin from './plugins/good';
 import Hapi from 'hapi';
 import HapiAuthJwt from 'hapi-auth-jwt';
+import HapiSwagger from './plugins/hapi_swagger';
+import Inert from 'inert';
 import Mongoose from 'mongoose';
 import Routes from './routes/index';
+import Vision from 'vision';
 
 // Folders
 if (!existsSync(Config.HAPI.LOGS_FOLDER_PATH)) {
@@ -17,7 +20,7 @@ const hapiServer = new Hapi.Server();
 hapiServer.connection(Config.HAPI.CONNECTION);
 
 // PlugIns
-hapiServer.register([GoodPlugin, HapiAuthJwt], (err) => {
+hapiServer.register([GoodPlugin, HapiAuthJwt, HapiSwagger, Inert, Vision], (err) => {
     if (err) {
         throw err;
     }
