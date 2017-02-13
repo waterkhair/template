@@ -1,12 +1,11 @@
 // Modules
 import AdminMenu from './admin_menu';
+import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import React from 'react';
 import SessionMenu from './session_menu';
-import Toolbar from 'material-ui/Toolbar/Toolbar';
-import ToolbarGroup from 'material-ui/Toolbar/ToolbarGroup';
 import UserMenu from './user_menu';
 import browserHistory from 'react-router/lib/browserHistory';
 
@@ -42,31 +41,31 @@ class AppToolbar extends React.Component {
 
     render() {
         return (
-            <Toolbar
-                className={`app-toolbar ${this.props.className ? this.props.className : ''}`}>
-                <ToolbarGroup
-                    firstChild={true}>
+            <AppBar
+                className={`app-toolbar ${this.props.className ? this.props.className : ''}`}
+                title="Template"
+                iconElementLeft={
                     <IconButton
                         onTouchTap={this.drawerToggle}>
                         <MenuIcon />
                     </IconButton>
-                    <Drawer
-                        docked={false}
-                        onRequestChange={this.onDrawerRequestChange}
-                        open={this.state.drawerOpen}
-                        width={200}>
-                        <UserMenu
+                }>
+                <Drawer
+                    docked={false}
+                    onRequestChange={this.onDrawerRequestChange}
+                    open={this.state.drawerOpen}
+                    width={200}>
+                    <UserMenu
+                        drawerToggle={this.drawerToggle} />
+                    {this.props.credentials.scope === 'admin'
+                        ? <AdminMenu
                             drawerToggle={this.drawerToggle} />
-                        {this.props.credentials.scope === 'admin'
-                            ? <AdminMenu
-                                  drawerToggle={this.drawerToggle} />
-                            : null}
-                        <SessionMenu
-                            drawerToggle={this.drawerToggle}
-                            signOut={this.signOut} />
-                    </Drawer>
-                </ToolbarGroup>
-            </Toolbar>
+                        : null}
+                    <SessionMenu
+                        drawerToggle={this.drawerToggle}
+                        signOut={this.signOut} />
+                </Drawer>
+            </AppBar>
         );
     }
 }
