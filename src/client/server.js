@@ -20,12 +20,7 @@ const hapiServer = new Hapi.Server();
 hapiServer.connection(Config.HAPI.CONNECTION);
 
 // PlugIns
-hapiServer.register(GoodPlugin, (err) => {
-    if (err) {
-        throw err;
-    }
-});
-hapiServer.register(InertPlugin, (err) => {
+hapiServer.register([GoodPlugin, InertPlugin], (err) => {
     if (err) {
         throw err;
     }

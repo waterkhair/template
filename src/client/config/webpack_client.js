@@ -53,17 +53,17 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin(cssDestinationPath),
+        new Webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
         new Webpack.LoaderOptionsPlugin({
             options: {
                 postcss: () => [
                     PreCSS,
                     AutoPrefixer
                 ]
-            }
-        }),
-        new Webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
             }
         }),
         new Webpack.optimize.UglifyJsPlugin({
