@@ -25,7 +25,10 @@ import reducers from '../redux/reducers/reducers';
 import {render} from 'react-dom';
 import {syncHistoryWithStore} from 'react-router-redux';
 
-const store = createStore(reducers, applyMiddleware(createEpicMiddleware(epics)));
+const store = createStore(
+    reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), // eslint-disable-line
+    applyMiddleware(createEpicMiddleware(epics)));
 const history = syncHistoryWithStore(browserHistory, store);
 
 const requireUserScope = (nextState, replace) => {
