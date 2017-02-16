@@ -14,13 +14,13 @@ import NOTIFICATIONS from '../../const/notifications';
 import {Observable} from 'rxjs/Observable';
 import SessionActions from '../actions/session';
 import {combineEpics} from 'redux-observable';
-import {createRequestHeader} from '../../helpers/header';
+import {createRequestHeaders} from '../../helpers/headers';
 
 const getSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.GET_SETTINGS)
     .switchMap((action) =>
         Observable.ajax
-            .get(window.config.API.ROUTES.SESSION.GET_SETTINGS, createRequestHeader(action.token))
+            .get(window.config.API.ROUTES.SESSION.GET_SETTINGS, createRequestHeaders(action.token))
             .map((res) => SessionActions.getSettingsSuccess(res.response.payload))
             .catch(createErrorNotification(ERRORS.CODES.GET_SETTINGS_ERROR, ERRORS.TYPES.SESSION))
     );
@@ -29,7 +29,7 @@ const signIn = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_IN)
     .switchMap((action) =>
         Observable.ajax
-            .post(window.config.API.ROUTES.SESSION.SIGN_IN, action.data, createRequestHeader())
+            .post(window.config.API.ROUTES.SESSION.SIGN_IN, action.data, createRequestHeaders())
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.signInSuccess(res.response.payload)),
@@ -42,7 +42,7 @@ const signOut = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_OUT)
     .switchMap(() =>
         Observable.ajax
-            .get(window.config.API.ROUTES.SESSION.SIGN_OUT, createRequestHeader())
+            .get(window.config.API.ROUTES.SESSION.SIGN_OUT, createRequestHeaders())
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.signOutSuccess(res.response.payload)),
@@ -55,7 +55,7 @@ const signUp = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_UP)
     .switchMap((action) =>
         Observable.ajax
-            .post(window.config.API.ROUTES.SESSION.SIGN_UP, action.data, createRequestHeader())
+            .post(window.config.API.ROUTES.SESSION.SIGN_UP, action.data, createRequestHeaders())
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.signUpSuccess(res.response.payload)),
@@ -68,7 +68,7 @@ const updateProfile = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_PROFILE)
     .switchMap((action) =>
         Observable.ajax
-            .put(Config.API.ROUTES.SESSION.UPDATE_PROFILE, action.data, createRequestHeader(action.token))
+            .put(Config.API.ROUTES.SESSION.UPDATE_PROFILE, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.updateProfileSuccess(res.response.payload)),
@@ -81,7 +81,7 @@ const updateSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_SETTINGS)
     .switchMap((action) =>
         Observable.ajax
-            .put(Config.API.ROUTES.SESSION.UPDATE_SETTINGS, action.data, createRequestHeader(action.token))
+            .put(Config.API.ROUTES.SESSION.UPDATE_SETTINGS, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.updateSettingsSuccess(res.response.payload)),

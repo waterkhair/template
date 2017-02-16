@@ -24,7 +24,7 @@ const getToken = (req, reply) => {
             token: createToken(req.pre.credentials)
         }
     })
-    .code(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
+    .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
 };
 
 const registerUser = (req, reply) => {
