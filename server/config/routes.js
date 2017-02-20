@@ -1,6 +1,7 @@
 // Routes configuration
 module.exports = {
     SESSION: {
+        CLOSE_ACCOUNT: '/session/close-account',
         GET_SETTINGS: '/session/settings',
         SIGN_IN: '/session/sign-in',
         SIGN_UP: '/session/sign-up',

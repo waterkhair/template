@@ -16,6 +16,16 @@ const authenticateSchema = Joi.object({
         .description('Username (i.e. test)')
 });
 
+const closeAccountSchema = Joi.object({
+    username: Joi
+        .string()
+        .alphanum()
+        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
+        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
+        .required()
+        .description('Username (i.e. test)')
+});
+
 const sessionSchema = Joi.object({
     username: Joi
         .string()
@@ -28,5 +38,6 @@ const sessionSchema = Joi.object({
 
 module.exports = {
     authenticateSchema,
+    closeAccountSchema,
     sessionSchema
 };

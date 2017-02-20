@@ -7,6 +7,25 @@ const BCryptJS = require('bcryptjs'),
     Settings = require('../models/settings'),
     User = require('../models/user');
 
+const closeAccount = (req, reply) => {
+    if (req.auth.credentials.username === req.payload.username) {
+        User.findOneAndRemove({username: req.payload.username}, (err) => {
+            if (err) {
+                throw Boom.badRequest(err);
+            }
+
+            reply({
+                payload: {
+                    token: null
+                }
+            })
+            .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
+        });
+    } else {
+        reply(Boom.badRequest('Incorrect account close!'));
+    }
+};
+
 const createToken = (credentials) => JWT.sign({
     email: credentials.email,
     name: credentials.name,
@@ -173,6 +192,7 @@ const verifyUniqueUser = (req, reply) => {
 };
 
 module.exports = {
+    closeAccount,
     getToken,
     registerUser,
     updateProfile,

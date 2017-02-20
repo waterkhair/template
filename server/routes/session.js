@@ -5,6 +5,33 @@ const Config = require('../config/main'),
     SessionSchemas = require('../schemas/session'),
     UsersSchemas = require('../schemas/users');
 
+const CloseAccountRoute = {
+    config: {
+        auth: {
+            scope: [
+                'user',
+                'admin'
+            ],
+            strategy: 'jwt'
+        },
+        handler: SessionHelper.closeAccount,
+        plugins: {
+            'hapi-swagger': {
+                payloadType: 'form'
+            }
+        },
+        tags: [
+            'api'
+        ],
+        validate: {
+            headers: HeaderSchemas.authorizatedHeaderSchema,
+            payload: SessionSchemas.closeAccountSchema
+        }
+    },
+    method: 'DELETE',
+    path: Config.ROUTES.SESSION.CLOSE_ACCOUNT
+};
+
 const SignInRoute = {
     config: {
         handler: SessionHelper.getToken,
@@ -79,6 +106,7 @@ const UpdateProfileRoute = {
 };
 
 module.exports = {
+    CloseAccountRoute,
     SignInRoute,
     SignUpRoute,
     UpdateProfileRoute

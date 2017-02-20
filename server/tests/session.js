@@ -15,7 +15,11 @@ LabScript.experiment('Session', () => {
     const password = 'test';
     let token = '';
 
-    LabScript.test('Register', (done) => {
+    const setToken = (tokenValue) => {
+        token = tokenValue;
+    };
+
+    LabScript.test('Register user', (done) => {
         hapiServer.inject({
             method: 'POST',
             payload: {
@@ -35,7 +39,7 @@ LabScript.experiment('Session', () => {
         });
     });
 
-    LabScript.test('Login', (done) => {
+    LabScript.test('Login user', (done) => {
         hapiServer.inject({
             method: 'POST',
             payload: {
@@ -49,13 +53,13 @@ LabScript.experiment('Session', () => {
             expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_200_OK);
             expect(payload).to.have.property('token');
 
-            token = payload.token;
+            setToken(payload.token);
 
             done();
         });
     });
 
-    LabScript.test('Get Settings', (done) => {
+    LabScript.test('Get user settings', (done) => {
         hapiServer.inject({
             headers: createRequestHeaders(token),
             method: 'GET',
@@ -67,6 +71,25 @@ LabScript.experiment('Session', () => {
             expect(payload).to.have.property('settings');
             expect(payload.settings).to.have.property('theme');
             expect(payload.settings.theme).to.be.a('string');
+
+            done();
+        });
+    });
+
+    LabScript.test('Delete user', (done) => {
+        hapiServer.inject({
+            headers: createRequestHeaders(token),
+            method: 'DELETE',
+            payload: {
+                username
+            },
+            url: ROUTES.SESSION.CLOSE_ACCOUNT
+        }, (response) => {
+            const {payload} = JSON.parse(response.payload);
+
+            expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_200_OK);
+            expect(payload).to.have.property('token');
+            expect(payload.token).to.equal(null);
 
             done();
         });
