@@ -34,7 +34,7 @@ const updateSettings = (req, reply) => {
                     }
                 }
             })
-            .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+            .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
         });
     } else {
         reply(Boom.badRequest('Incorrect settings update'));

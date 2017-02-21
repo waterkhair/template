@@ -185,7 +185,7 @@ LabScript.experiment('Users -', () => {
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
-            expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+            expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_200_OK);
             expect(payload).to.have.property('token');
             expect(payload.token).to.not.be.equal(null);
             expect(payload.token).to.be.an('string');
@@ -218,7 +218,7 @@ LabScript.experiment('Users -', () => {
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
-            expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+            expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_200_OK);
             expect(payload).to.have.property('user');
             expect(payload.user).to.not.be.equal(null);
             expect(payload.user).to.have.property('admin');

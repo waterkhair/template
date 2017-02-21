@@ -68,7 +68,7 @@ LabScript.experiment('Settings -', () => {
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
-            expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+            expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_200_OK);
             expect(payload).to.have.property('settings');
             expect(payload.settings).to.not.be.equal(null);
             expect(payload.settings).to.be.an('object');

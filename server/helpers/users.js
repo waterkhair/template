@@ -101,7 +101,7 @@ const setUserRole = (req, reply) => {
                 }
             }
         })
-        .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+        .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
     });
 };
 
@@ -128,7 +128,7 @@ const updateUser = (req, reply) => {
                                 token: SessionHelper.createToken(user)
                             }
                         })
-                        .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+                        .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
                     });
                 });
             });
@@ -143,7 +143,7 @@ const updateUser = (req, reply) => {
                         token: SessionHelper.createToken(user)
                     }
                 })
-                .code(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+                .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
             });
         }
     } else {
