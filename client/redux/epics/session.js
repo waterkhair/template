@@ -20,7 +20,7 @@ const getSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.GET_SETTINGS)
     .switchMap((action) =>
         Observable.ajax
-            .get(window.config.API.ROUTES.SESSION.GET_SETTINGS, createRequestHeaders(action.token))
+            .get(window.config.API.ROUTES.SETTINGS.GET_SETTINGS, createRequestHeaders(action.token))
             .map((res) => SessionActions.getSettingsSuccess(res.response.payload))
             .catch(createErrorNotification(ERRORS.CODES.GET_SETTINGS_ERROR, ERRORS.TYPES.SESSION))
     );
@@ -29,7 +29,7 @@ const signIn = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_IN)
     .switchMap((action) =>
         Observable.ajax
-            .post(window.config.API.ROUTES.SESSION.SIGN_IN, action.data, createRequestHeaders())
+            .post(window.config.API.ROUTES.SESSION.LOGIN, action.data, createRequestHeaders())
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.signInSuccess(res.response.payload)),
@@ -55,7 +55,7 @@ const signUp = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_UP)
     .switchMap((action) =>
         Observable.ajax
-            .post(window.config.API.ROUTES.SESSION.SIGN_UP, action.data, createRequestHeaders())
+            .post(window.config.API.ROUTES.USERS.CREATE_USER, action.data, createRequestHeaders())
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.signUpSuccess(res.response.payload)),
@@ -68,7 +68,7 @@ const updateProfile = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_PROFILE)
     .switchMap((action) =>
         Observable.ajax
-            .put(Config.API.ROUTES.SESSION.UPDATE_PROFILE, action.data, createRequestHeaders(action.token))
+            .put(Config.API.ROUTES.USERS.UPDATE_USER, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.updateProfileSuccess(res.response.payload)),
@@ -81,7 +81,7 @@ const updateSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_SETTINGS)
     .switchMap((action) =>
         Observable.ajax
-            .put(Config.API.ROUTES.SESSION.UPDATE_SETTINGS, action.data, createRequestHeaders(action.token))
+            .put(Config.API.ROUTES.SETTINGS.UPDATE_SETTINGS, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.updateSettingsSuccess(res.response.payload)),

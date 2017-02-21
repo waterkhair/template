@@ -4,15 +4,18 @@ const host = 'http://localhost:3000';
 module.exports = {
     ROUTES: {
         SESSION: {
-            GET_SETTINGS: `${host}/session/settings`,
-            SIGN_IN: `${host}/session/sign-in`,
-            SIGN_UP: `${host}/session/sign-up`,
-            UPDATE_PROFILE: `${host}/session/profile`,
-            UPDATE_SETTINGS: `${host}/session/settings`
+            LOGIN: `${host}/session`
+        },
+        SETTINGS: {
+            GET_SETTINGS: `${host}/settings`,
+            UPDATE_SETTINGS: `${host}/settings`
         },
         USERS: {
-            GET_USERS: `${host}/session/users`,
-            SET_USER_ROLE: `${host}/session/user-role`
+            CREATE_USER: `${host}/users/user`,
+            DELETE_USER: '/users/user',
+            GET_USERS: `${host}/users`,
+            SET_USER_ROLE: `${host}/users/set-role`,
+            UPDATE_USER: `${host}/users/user`
         }
     }
 };

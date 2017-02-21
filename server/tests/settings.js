@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 // Modules
 const HTTP_STATUS_CODES = require('../const/http_status_codes'),
     Lab = require('lab'),
