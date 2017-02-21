@@ -2,7 +2,7 @@
 const Config = require('../config/main'),
     Joi = require('joi');
 
-const updateSettingsSchema = Joi.object({
+const updateSettings = Joi.object({
     theme: Joi
         .string()
         .required()
@@ -18,5 +18,5 @@ const updateSettingsSchema = Joi.object({
 });
 
 module.exports = {
-    updateSettingsSchema
+    updateSettings
 };

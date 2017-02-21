@@ -1,8 +1,8 @@
 // Modules
 const Config = require('../config/main'),
-    HeaderSchemas = require('../schemas/header'),
+    HeadersValidations = require('../validations/header'),
     SettingsHelper = require('../helpers/settings'),
-    SettingsSchemas = require('../schemas/settings');
+    SettingsValidations = require('../validations/settings');
 
 const GetSettingsRoute = {
     config: {
@@ -23,11 +23,11 @@ const GetSettingsRoute = {
             'api'
         ],
         validate: {
-            headers: HeaderSchemas.authorizatedHeaderSchema
+            headers: HeadersValidations.authorization
         }
     },
     method: 'GET',
-    path: Config.ROUTES.SESSION.GET_SETTINGS
+    path: Config.ROUTES.SETTINGS.GET_SETTINGS
 };
 
 const UpdateSettingsRoute = {
@@ -49,12 +49,12 @@ const UpdateSettingsRoute = {
             'api'
         ],
         validate: {
-            headers: HeaderSchemas.authorizatedHeaderSchema,
-            payload: SettingsSchemas.updateSettingsSchema
+            headers: HeadersValidations.authorization,
+            payload: SettingsValidations.updateSettings
         }
     },
     method: 'PUT',
-    path: Config.ROUTES.SESSION.UPDATE_SETTINGS
+    path: Config.ROUTES.SETTINGS.UPDATE_SETTINGS
 };
 
 module.exports = {

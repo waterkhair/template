@@ -6,12 +6,12 @@ const HomeRoutes = require('./home'),
 
 module.exports = [
     HomeRoutes.HomeRoute,
-    SessionRoutes.CloseAccountRoute,
-    SessionRoutes.SignInRoute,
-    SessionRoutes.SignUpRoute,
-    SessionRoutes.UpdateProfileRoute,
+    SessionRoutes.LoginRoute,
     SettingsRoutes.GetSettingsRoute,
     SettingsRoutes.UpdateSettingsRoute,
+    UsersRoutes.CreateUserRoute,
+    UsersRoutes.DeleteUserRoute,
     UsersRoutes.GetUsersRoute,
-    UsersRoutes.SetUserRoleRoute
+    UsersRoutes.SetUserRoleRoute,
+    UsersRoutes.UpdateUserRoute
 ];

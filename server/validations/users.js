@@ -2,7 +2,7 @@
 const Config = require('../config/main'),
     Joi = require('joi');
 
-const createUserSchema = Joi.object({
+const createUser = Joi.object({
     email: Joi
         .string()
         .email()
@@ -25,7 +25,17 @@ const createUserSchema = Joi.object({
         .description('Username (i.e. test)')
 });
 
-const setUserRoleSchema = Joi.object({
+const deleteUser = Joi.object({
+    username: Joi
+        .string()
+        .alphanum()
+        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
+        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
+        .required()
+        .description('Username (i.e. test)')
+});
+
+const setUserRole = Joi.object({
     admin: Joi
         .boolean()
         .required()
@@ -39,7 +49,7 @@ const setUserRoleSchema = Joi.object({
         .description('Username (i.e. test)')
 });
 
-const updateUserSchema = Joi.object({
+const updateUser = Joi.object({
     email: Joi
         .string()
         .email()
@@ -60,7 +70,8 @@ const updateUserSchema = Joi.object({
 });
 
 module.exports = {
-    createUserSchema,
-    setUserRoleSchema,
-    updateUserSchema
+    createUser,
+    deleteUser,
+    setUserRole,
+    updateUser
 };

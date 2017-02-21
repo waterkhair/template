@@ -1,16 +1,17 @@
-/* eslint-disable max-statements */
+/* eslint-disable max-lines,  max-statements */
 // Modules
 const HTTP_STATUS_CODES = require('../const/http_status_codes'),
     Lab = require('lab'),
     ROUTES = require('../config/routes'),
     {createRequestHeaders} = require('../helpers/headers'),
+    decode = require('jsonwebtoken/decode'),
     {expect} = require('chai'),
     hapiServer = require('../server');
 const LabScript = exports.lab = Lab.script(); // eslint-disable-line
 
-LabScript.experiment('Users', () => {
+LabScript.experiment('Users -', () => {
     const adminPassword = 'test';
-    const adminUser = 'test';
+    const adminUsername = 'test';
     const bits = 32;
     const username1 = `${Date.now().toString(bits)}1`;
     const username2 = `${Date.now().toString(bits)}2`;
@@ -50,9 +51,9 @@ LabScript.experiment('Users', () => {
             method: 'POST',
             payload: {
                 password: adminPassword,
-                username: adminUser
+                username: adminUsername
             },
-            url: ROUTES.SESSION.SIGN_IN
+            url: ROUTES.SESSION.LOGIN
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -65,7 +66,7 @@ LabScript.experiment('Users', () => {
         });
     });
 
-    LabScript.test('Register 1th User', (done) => {
+    LabScript.test('Create 1st User', (done) => {
         hapiServer.inject({
             method: 'POST',
             payload: {
@@ -74,20 +75,33 @@ LabScript.experiment('Users', () => {
                 password: password1,
                 username: username1
             },
-            url: ROUTES.SESSION.SIGN_UP
+            url: ROUTES.USERS.CREATE_USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
             expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
             expect(payload).to.have.property('token');
+            expect(payload.token).to.not.be.equal(null);
+            expect(payload.token).to.be.an('string');
 
             setToken(payload.token, '1');
+            const user = decode(payload.token);
+
+            expect(user).to.have.property('email');
+            expect(user.email).to.not.be.equal(null);
+            expect(user.email).to.be.a('string');
+            expect(user.email).to.be.equal(email1);
+            expect(user).to.have.property('name');
+            expect(user.name).to.not.be.equal(null);
+            expect(user.name).to.be.a('string');
+            expect(user.name).to.be.equal(name1);
+            expect(user).to.not.have.property('password');
 
             done();
         });
     });
 
-    LabScript.test('Register 2nd User', (done) => {
+    LabScript.test('Create 2nd User', (done) => {
         hapiServer.inject({
             method: 'POST',
             payload: {
@@ -96,20 +110,33 @@ LabScript.experiment('Users', () => {
                 password: password2,
                 username: username2
             },
-            url: ROUTES.SESSION.SIGN_UP
+            url: ROUTES.USERS.CREATE_USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
             expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
             expect(payload).to.have.property('token');
+            expect(payload.token).to.not.be.equal(null);
+            expect(payload.token).to.be.an('string');
 
             setToken(payload.token, '2');
+            const user = decode(payload.token);
+
+            expect(user).to.have.property('email');
+            expect(user.email).to.not.be.equal(null);
+            expect(user.email).to.be.a('string');
+            expect(user.email).to.be.equal(email2);
+            expect(user).to.have.property('name');
+            expect(user.name).to.not.be.equal(null);
+            expect(user.name).to.be.a('string');
+            expect(user.name).to.be.equal(name2);
+            expect(user).to.not.have.property('password');
 
             done();
         });
     });
 
-    LabScript.test('Register 3rd User', (done) => {
+    LabScript.test('Create 3rd User', (done) => {
         hapiServer.inject({
             method: 'POST',
             payload: {
@@ -118,14 +145,62 @@ LabScript.experiment('Users', () => {
                 password: password3,
                 username: username3
             },
-            url: ROUTES.SESSION.SIGN_UP
+            url: ROUTES.USERS.CREATE_USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
             expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_201_CREATED);
             expect(payload).to.have.property('token');
+            expect(payload.token).to.not.be.equal(null);
+            expect(payload.token).to.be.an('string');
 
             setToken(payload.token, '3');
+            const user = decode(payload.token);
+
+            expect(user).to.have.property('email');
+            expect(user.email).to.not.be.equal(null);
+            expect(user.email).to.be.a('string');
+            expect(user.email).to.be.equal(email3);
+            expect(user).to.have.property('name');
+            expect(user.name).to.not.be.equal(null);
+            expect(user.name).to.be.a('string');
+            expect(user.name).to.be.equal(name3);
+            expect(user).to.not.have.property('password');
+
+            done();
+        });
+    });
+
+    LabScript.test('Update 1st User', (done) => {
+        hapiServer.inject({
+            headers: createRequestHeaders(token1),
+            method: 'PUT',
+            payload: {
+                email: `testtest@abc${username1}.com`,
+                name: `Testtest ${username1}`,
+                password: 'testtest',
+                username: username1
+            },
+            url: ROUTES.USERS.UPDATE_USER
+        }, (response) => {
+            const {payload} = JSON.parse(response.payload);
+
+            expect(response.statusCode).to.equal(HTTP_STATUS_CODES.SUCCESS_202_ACCEPTED);
+            expect(payload).to.have.property('token');
+            expect(payload.token).to.not.be.equal(null);
+            expect(payload.token).to.be.an('string');
+
+            const user = decode(payload.token);
+
+            expect(user).to.have.property('email');
+            expect(user.email).to.not.be.equal(null);
+            expect(user.email).to.be.a('string');
+            expect(user.email).to.be.equal(`testtest@abc${username1}.com`);
+            expect(user).to.have.property('name');
+            expect(user.name).to.not.be.equal(null);
+            expect(user.name).to.be.a('string');
+            expect(user.name).to.be.equal(`Testtest ${username1}`);
+            expect(user).to.not.have.property('password');
 
             done();
         });
@@ -177,11 +252,23 @@ LabScript.experiment('Users', () => {
                     expect(user.admin).to.not.equal(null);
                     expect(user.admin).to.be.a('boolean');
 
-                    if (user.username === username2) {
+                    if (user.username === username1) {
+                        expect(user.admin).to.equal(false);
+                        expect(user).to.have.property('email');
+                        expect(user.email).to.not.be.equal(null);
+                        expect(user.email).to.be.a('string');
+                        expect(user.email).to.be.equal(`testtest@abc${username1}.com`);
+                        expect(user).to.have.property('name');
+                        expect(user.name).to.not.be.equal(null);
+                        expect(user.name).to.be.a('string');
+                        expect(user.name).to.be.equal(`Testtest ${username1}`);
+                    } else if (user.username === username2) {
                         expect(user.admin).to.equal(true);
                     } else {
                         expect(user.admin).to.equal(false);
                     }
+
+                    expect(user).to.not.have.property('password');
                 }
             });
 
@@ -189,14 +276,14 @@ LabScript.experiment('Users', () => {
         });
     });
 
-    LabScript.test('Delete 1th User', (done) => {
+    LabScript.test('Delete 1st User', (done) => {
         hapiServer.inject({
             headers: createRequestHeaders(token1),
             method: 'DELETE',
             payload: {
                 username: username1
             },
-            url: ROUTES.SESSION.CLOSE_ACCOUNT
+            url: ROUTES.USERS.DELETE_USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -215,7 +302,7 @@ LabScript.experiment('Users', () => {
             payload: {
                 username: username2
             },
-            url: ROUTES.SESSION.CLOSE_ACCOUNT
+            url: ROUTES.USERS.DELETE_USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -234,7 +321,7 @@ LabScript.experiment('Users', () => {
             payload: {
                 username: username3
             },
-            url: ROUTES.SESSION.CLOSE_ACCOUNT
+            url: ROUTES.USERS.DELETE_USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 

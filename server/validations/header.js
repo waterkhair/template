@@ -1,7 +1,7 @@
 // Modules
 const Joi = require('joi');
 
-const authorizatedHeaderSchema = Joi.object({
+const authorization = Joi.object({
     'authorization': Joi
         .string()
         .required()
@@ -10,5 +10,5 @@ const authorizatedHeaderSchema = Joi.object({
 }).unknown();
 
 module.exports = {
-    authorizatedHeaderSchema
+    authorization
 };
