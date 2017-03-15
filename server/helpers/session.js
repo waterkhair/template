@@ -36,23 +36,23 @@ const verifyCredentials = (req, reply) => {
     },
     (err, user) => {
         if (err) {
-            reply(Boom.badRequest(err));
+            reply(Boom.badImplementation(err));
         }
 
         if (user) {
             BCryptJS.compare(req.payload.password, user.password, (err, isValid) => {
                 if (err) {
-                    reply(Boom.badRequest(err));
+                    reply(Boom.badImplementation(err));
                 }
 
                 if (isValid) {
                     reply(user);
                 } else {
-                    reply(Boom.badRequest('Incorrect password'));
+                    reply(Boom.unauthorized('Incorrect password'));
                 }
             });
         } else {
-            reply(Boom.badRequest('Incorrect username or email'));
+            reply(Boom.unauthorized('Incorrect username or email'));
         }
     });
 };

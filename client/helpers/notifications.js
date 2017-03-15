@@ -4,7 +4,7 @@ import ACTION_TYPES from '../const/action_types';
 import Config from '../config/main';
 import {Observable} from 'rxjs/Observable';
 
-export const createErrorNotification = (err) => (code, group) =>
+export const createErrorNotification = (code, group) => (err) =>
     Observable.of({
         code,
         group,

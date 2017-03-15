@@ -6,7 +6,7 @@ const Boom = require('boom'),
 const getSettings = (req, reply) => {
     Settings.findOne({username: req.auth.credentials.username}, (err, settings) => {
         if (err) {
-            reply(Boom.badRequest(err));
+            reply(Boom.badImplementation(err));
         }
 
         reply({
@@ -24,7 +24,7 @@ const updateSettings = (req, reply) => {
     if (req.auth.credentials.username === req.payload.username) {
         Settings.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, settings) => {
             if (err) {
-                throw Boom.badRequest(err);
+                throw Boom.badImplementation(err);
             }
 
             reply({
@@ -37,7 +37,7 @@ const updateSettings = (req, reply) => {
             .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
         });
     } else {
-        reply(Boom.badRequest('Incorrect settings update'));
+        reply(Boom.badData('Incorrect settings update'));
     }
 };
 

@@ -21,13 +21,13 @@ const createUser = (req, reply) => {
 
         BCryptJS.hash(req.payload.password, salt, (err, hash) => {
             if (err) {
-                throw Boom.badRequest(err);
+                throw Boom.badData(err);
             }
 
             user.password = hash;
             user.save((err, user) => {
                 if (err) {
-                    throw Boom.badRequest(err);
+                    throw Boom.badData(err);
                 }
 
                 const settings = new Settings();
@@ -35,7 +35,7 @@ const createUser = (req, reply) => {
                 settings.username = user.username;
                 settings.save((err) => {
                     if (err) {
-                        throw Boom.badRequest(err);
+                        throw Boom.badData(err);
                     }
 
                     reply({
@@ -53,7 +53,7 @@ const deleteUser = (req, reply) => {
     if (req.auth.credentials.username === req.payload.username) {
         User.findOneAndRemove({username: req.payload.username}, (err) => {
             if (err) {
-                throw Boom.badRequest(err);
+                throw Boom.badData(err);
             }
 
             reply({
@@ -64,7 +64,7 @@ const deleteUser = (req, reply) => {
             .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
         });
     } else {
-        reply(Boom.badRequest('Incorrect user delete'));
+        reply(Boom.badData('Incorrect user delete'));
     }
 };
 
@@ -73,7 +73,7 @@ const getUsers = (req, reply) => {
         .select('-_id -password -__v')
         .exec((err, users) => {
             if (err) {
-                throw Boom.badRequest(err);
+                throw Boom.badData(err);
             }
             if (!users.length) {
                 throw Boom.notFound('No users found!');
@@ -90,7 +90,7 @@ const getUsers = (req, reply) => {
 const setUserRole = (req, reply) => {
     User.findOneAndUpdate({username: req.payload.username}, {admin: req.payload.admin}, (err) => {
         if (err) {
-            throw Boom.badRequest(err);
+            throw Boom.badImplementation(err);
         }
 
         reply({
@@ -110,17 +110,17 @@ const updateUser = (req, reply) => {
         if (req.payload.password) {
             BCryptJS.genSalt(Config.SESSION.SALT_NUMBER, (err, salt) => {
                 if (err) {
-                    throw err;
+                    throw Boom.badImplementation(err);
                 }
 
                 BCryptJS.hash(req.payload.password, salt, (err, hash) => {
                     if (err) {
-                        throw Boom.badRequest(err);
+                        throw Boom.badImplementation(err);
                     }
 
                     User.findOneAndUpdate({username: req.payload.username}, Object.assign(req.payload, {password: hash}), {new: true}, (err, user) => {
                         if (err) {
-                            throw Boom.badRequest(err);
+                            throw Boom.badImplementation(err);
                         }
 
                         reply({
@@ -135,7 +135,7 @@ const updateUser = (req, reply) => {
         } else {
             User.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, user) => {
                 if (err) {
-                    throw Boom.badRequest(err);
+                    throw Boom.badImplementation(err);
                 }
 
                 reply({
@@ -147,7 +147,7 @@ const updateUser = (req, reply) => {
             });
         }
     } else {
-        reply(Boom.badRequest('Incorrect user update'));
+        reply(Boom.badData('Incorrect user update'));
     }
 };
 
@@ -161,16 +161,16 @@ const verifyUniqueUser = (req, reply) => {
     },
     (err, user) => {
         if (err) {
-            throw Boom.badRequest(err);
+            throw Boom.badImplementation(err);
         }
 
         if (user) {
             if (user.username === req.payload.username) {
-                reply(Boom.badRequest('Username taken'));
+                reply(Boom.conflict('Username taken'));
             }
 
             if (user.email === req.payload.email) {
-                reply(Boom.badRequest('Email taken'));
+                reply(Boom.conflict('Email taken'));
             }
         }
         reply(req.payload);
