@@ -35,6 +35,13 @@
         "no-process-env": "off",
         "no-shadow": "off",
         "no-ternary": "off",
+        "no-underscore-dangle": [
+            "error", {
+                "allow": [
+                    "__REDUX_DEVTOOLS_EXTENSION__"
+                ]
+            }
+        ],
         "no-var": "off",
         "object-curly-newline": "off",
         "one-var": "off",

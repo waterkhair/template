@@ -7,7 +7,8 @@ const HTTP_STATUS_CODES = require('../const/http_status_codes'),
     decode = require('jsonwebtoken/decode'),
     {expect} = require('chai'),
     hapiServer = require('../server');
-const LabScript = exports.lab = Lab.script(); // eslint-disable-line
+exports.lab = Lab.script();
+const LabScript = exports.lab;
 
 LabScript.experiment('Users -', () => {
     const adminPassword = 'test';
