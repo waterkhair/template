@@ -7,6 +7,12 @@ const BCryptJS = require('bcryptjs'),
     Settings = require('../models/settings'),
     User = require('../models/user');
 
+/**
+ * Creates a user
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const createUser = (req, reply) => {
     const user = new User();
     user.admin = false;
@@ -49,6 +55,12 @@ const createUser = (req, reply) => {
     });
 };
 
+/**
+ * Deletes a user
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const deleteUser = (req, reply) => {
     if (req.auth.credentials.username === req.payload.username) {
         User.findOneAndRemove({username: req.payload.username}, (err) => {
@@ -68,6 +80,12 @@ const deleteUser = (req, reply) => {
     }
 };
 
+/**
+ * Get all users
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const getUsers = (req, reply) => {
     User.find()
         .select('-_id -password -__v')
@@ -87,6 +105,12 @@ const getUsers = (req, reply) => {
         });
 };
 
+/**
+ * Sets the role of a user
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const setUserRole = (req, reply) => {
     User.findOneAndUpdate({username: req.payload.username}, {admin: req.payload.admin}, (err) => {
         if (err) {
@@ -105,6 +129,12 @@ const setUserRole = (req, reply) => {
     });
 };
 
+/**
+ * Updates a user
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const updateUser = (req, reply) => {
     if (req.auth.credentials.username === req.payload.username) {
         if (req.payload.password) {
@@ -151,6 +181,12 @@ const updateUser = (req, reply) => {
     }
 };
 
+/**
+ * Verifies if a username and email is unique
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const verifyUniqueUser = (req, reply) => {
     User.findOne({
         $or: [{
@@ -173,6 +209,7 @@ const verifyUniqueUser = (req, reply) => {
                 reply(Boom.conflict('Email taken'));
             }
         }
+
         reply(req.payload);
     });
 };

@@ -3,6 +3,12 @@ const Boom = require('boom'),
     HTTP_STATUS_CODES = require('../const/http_status_codes'),
     Settings = require('../models/settings');
 
+/**
+ * Retrieves the settings of the current user
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const getSettings = (req, reply) => {
     Settings.findOne({username: req.auth.credentials.username}, (err, settings) => {
         if (err) {
@@ -20,6 +26,12 @@ const getSettings = (req, reply) => {
     });
 };
 
+/**
+ * Updates the settings of the current user
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const updateSettings = (req, reply) => {
     if (req.auth.credentials.username === req.payload.username) {
         Settings.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, settings) => {

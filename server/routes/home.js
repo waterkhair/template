@@ -1,3 +1,4 @@
+// Route to handle requests made to the root of the api url
 const HomeRoute = {
     config: {
         handler: (req, reply) => {

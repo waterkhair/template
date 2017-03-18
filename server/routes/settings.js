@@ -4,6 +4,7 @@ const Config = require('../config/main'),
     SettingsHelper = require('../helpers/settings'),
     SettingsValidations = require('../validations/settings');
 
+// Route to handle requests to get the settings of the current user
 const GetSettingsRoute = {
     config: {
         auth: {
@@ -30,6 +31,7 @@ const GetSettingsRoute = {
     path: Config.ROUTES.SETTINGS.GET_SETTINGS
 };
 
+// Route to handle requests to update the settings of the current user 
 const UpdateSettingsRoute = {
     config: {
         auth: {

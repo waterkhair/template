@@ -1,4 +1,9 @@
-exports.createRequestHeaders = (token) => {
+/**
+ * Creates a basic header object
+ * @param {string} [token] - Signed token
+ * @returns {object} HTTP Header
+ */
+const createRequestHeaders = (token) => {
     const requestHeader = {
         'Content-Type': 'application/json'
     };
@@ -8,4 +13,8 @@ exports.createRequestHeaders = (token) => {
     }
 
     return requestHeader;
+};
+
+module.exports = {
+    createRequestHeaders
 };

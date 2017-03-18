@@ -3,6 +3,7 @@ const Config = require('../config/main'),
     SessionHelper = require('../helpers/session'),
     SessionValidations = require('../validations/session');
 
+// Route to handle login requests
 const LoginRoute = {
     config: {
         handler: SessionHelper.login,

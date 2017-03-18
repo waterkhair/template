@@ -6,6 +6,11 @@ const BCryptJS = require('bcryptjs'),
     JWT = require('jsonwebtoken'),
     User = require('../models/user');
 
+/**
+ * Returns a signed token using a credentials object
+ * @param {object} credentials - Object containing email, name, admin and username
+ * @returns {string} token
+ */
 const createToken = (credentials) => JWT.sign({
     email: credentials.email,
     name: credentials.name,
@@ -17,6 +22,12 @@ Config.SESSION.SECRET_KEY, {
     expiresIn: Config.SESSION.SESESSION_EXPIRATION
 });
 
+/**
+ * Starts a user session
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const login = (req, reply) => {
     reply({
         payload: {
@@ -26,6 +37,12 @@ const login = (req, reply) => {
     .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
 };
 
+/**
+ * Authenticates a user
+ * @param {object} req - HTTP request object
+ * @param {function} reply - Function to create an HTTP response
+ * @returns {undefined}
+ */
 const verifyCredentials = (req, reply) => {
     User.findOne({
         $or: [{

@@ -4,6 +4,7 @@ const Config = require('../config/main'),
     UsersHelper = require('../helpers/users'),
     UsersValidations = require('../validations/users');
 
+// Route to handle requests to create a user
 const CreateUserRoute = {
     config: {
         handler: UsersHelper.createUser,
@@ -27,6 +28,7 @@ const CreateUserRoute = {
     path: Config.ROUTES.USERS.CREATE_USER
 };
 
+// Route to handle requests to delete a user
 const DeleteUserRoute = {
     config: {
         auth: {
@@ -54,6 +56,7 @@ const DeleteUserRoute = {
     path: Config.ROUTES.USERS.DELETE_USER
 };
 
+// Route to handle requests to get the current user's role
 const GetUsersRoute = {
     config: {
         auth: {
@@ -79,6 +82,7 @@ const GetUsersRoute = {
     path: Config.ROUTES.USERS.GET_USERS
 };
 
+// Route to handle requests to set a user's role
 const SetUserRoleRoute = {
     config: {
         auth: {
@@ -105,6 +109,7 @@ const SetUserRoleRoute = {
     path: Config.ROUTES.USERS.SET_USER_ROLE
 };
 
+// Route to handle requests to update a user
 const UpdateUserRoute = {
     config: {
         auth: {

@@ -10,7 +10,7 @@ Config.GULP.WATCH_PATTERNS.forEach((watchPattern) => {
     watchPatterns.push(Path.resolve(`${__dirname}/../${watchPattern}`));
 });
 
-// Start Server task
+// Task to start the API server
 Gulp.task(Config.GULP.START_SERVER_TASK_NAME, () => {
     gulpNodemon({
         env: {

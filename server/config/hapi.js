@@ -1,10 +1,22 @@
 // HapiJS configuration
 const apiKey = 12345;
+const additionalHeaders = [
+    'cache-control',
+    'x-requested-with'
+];
+const hapiSwaggerTitle = 'Template API Documentation';
+const headers = [
+    'Authorization',
+    'Content-Type'
+];
 const host = 'localhost';
 const httpLogUrl = 'http://localhost:3000';
 const interval = 1000;
 const logsFolderPath = 'logs';
 const opsLogsPathName = `${logsFolderPath}/ops.log`;
+const origin = [
+    'http://localhost:8080'
+];
 const pack = '../package';
 const port = 3000;
 
@@ -14,15 +26,9 @@ module.exports = {
         port,
         routes: {
             cors: {
-                additionalHeaders: [
-                    'cache-control',
-                    'x-requested-with'
-                ],
-                headers: [
-                    'Authorization',
-                    'Content-Type'
-                ],
-                origin: ['http://localhost:8080']
+                additionalHeaders,
+                headers,
+                origin
             }
         }
     },
@@ -82,7 +88,7 @@ module.exports = {
         }
     },
     HAPI_SWAGGER: {
-        title: 'Template API Documentation',
+        title: hapiSwaggerTitle,
         version: pack.version
     },
     LOGS_FOLDER_PATH: logsFolderPath
