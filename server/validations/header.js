@@ -1,6 +1,7 @@
 // Modules
 const Joi = require('joi');
 
+// Validates HTTP header schema
 const authorization = Joi.object({
     'authorization': Joi
         .string()

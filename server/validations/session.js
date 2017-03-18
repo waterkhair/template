@@ -2,6 +2,7 @@
 const Config = require('../config/main'),
     Joi = require('joi');
 
+// Validates login schema
 const login = Joi.object({
     password: Joi
         .string()

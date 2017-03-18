@@ -2,6 +2,7 @@
 const Config = require('../config/main'),
     Joi = require('joi');
 
+// Validates a user create schema
 const createUser = Joi.object({
     email: Joi
         .string()
@@ -25,6 +26,7 @@ const createUser = Joi.object({
         .description('Username (i.e. test)')
 });
 
+// Validates user delete schema
 const deleteUser = Joi.object({
     username: Joi
         .string()
@@ -35,6 +37,7 @@ const deleteUser = Joi.object({
         .description('Username (i.e. test)')
 });
 
+// Validates user's role set schema
 const setUserRole = Joi.object({
     admin: Joi
         .boolean()
@@ -49,6 +52,8 @@ const setUserRole = Joi.object({
         .description('Username (i.e. test)')
 });
 
+
+// Validates user update schema
 const updateUser = Joi.object({
     email: Joi
         .string()

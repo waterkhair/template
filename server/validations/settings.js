@@ -2,6 +2,7 @@
 const Config = require('../config/main'),
     Joi = require('joi');
 
+// Validates settings update schema
 const updateSettings = Joi.object({
     theme: Joi
         .string()
