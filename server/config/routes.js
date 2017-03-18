@@ -11,7 +11,7 @@ module.exports = {
         CREATE_USER: '/users/user',
         DELETE_USER: '/users/user',
         GET_USERS: '/users',
-        SET_USER_ROLE: '/users/set-role',
+        SET_USER_ROLE: '/users/role',
         UPDATE_USER: '/users/user'
     }
 };

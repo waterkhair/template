@@ -14,7 +14,7 @@ module.exports = {
             CREATE_USER: `${host}/users/user`,
             DELETE_USER: '/users/user',
             GET_USERS: `${host}/users`,
-            SET_USER_ROLE: `${host}/users/set-role`,
+            SET_USER_ROLE: `${host}/users/role`,
             UPDATE_USER: `${host}/users/user`
         }
     }

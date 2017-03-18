@@ -22,18 +22,18 @@ const createUser = (req, reply) => {
 
     BCryptJS.genSalt(Config.SESSION.SALT_NUMBER, (err, salt) => {
         if (err) {
-            throw err;
+            throw Boom.badImplementation(err);
         }
 
         BCryptJS.hash(req.payload.password, salt, (err, hash) => {
             if (err) {
-                throw Boom.badData(err);
+                throw Boom.badImplementation(err);
             }
 
             user.password = hash;
             user.save((err, user) => {
                 if (err) {
-                    throw Boom.badData(err);
+                    throw Boom.badImplementation(err);
                 }
 
                 const settings = new Settings();
@@ -41,7 +41,7 @@ const createUser = (req, reply) => {
                 settings.username = user.username;
                 settings.save((err) => {
                     if (err) {
-                        throw Boom.badData(err);
+                        throw Boom.badImplementation(err);
                     }
 
                     reply({
@@ -65,15 +65,21 @@ const deleteUser = (req, reply) => {
     if (req.auth.credentials.username === req.payload.username) {
         User.findOneAndRemove({username: req.payload.username}, (err) => {
             if (err) {
-                throw Boom.badData(err);
+                throw Boom.badImplementation(err);
             }
 
-            reply({
-                payload: {
-                    token: null
+            Settings.findOneAndRemove({username: req.payload.username}, (err) => {
+                if (err) {
+                    throw Boom.badImplementation(err);
                 }
-            })
-            .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
+
+                reply({
+                    payload: {
+                        token: null
+                    }
+                })
+                .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
+            });
         });
     } else {
         reply(Boom.badData('Incorrect user delete'));
@@ -91,11 +97,13 @@ const getUsers = (req, reply) => {
         .select('-_id -password -__v')
         .exec((err, users) => {
             if (err) {
-                throw Boom.badData(err);
+                throw Boom.badImplementation(err);
             }
+
             if (!users.length) {
                 throw Boom.notFound('No users found!');
             }
+
             reply({
                 payload: {
                     users
@@ -203,14 +211,12 @@ const verifyUniqueUser = (req, reply) => {
         if (user) {
             if (user.username === req.payload.username) {
                 reply(Boom.conflict('Username taken'));
-            }
-
-            if (user.email === req.payload.email) {
+            } else if (user.email === req.payload.email) {
                 reply(Boom.conflict('Email taken'));
             }
+        } else {
+            reply(req.payload);   
         }
-
-        reply(req.payload);
     });
 };
 
