@@ -77,7 +77,7 @@ const updateProfile = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_PROFILE)
     .switchMap((action) =>
         Observable.ajax
-            .put(Config.API.ROUTES.USERS.UPDATE_USER, action.data, createRequestHeaders(action.token))
+            .put(`${Config.API.ROUTES.USERS.UPDATE_USER}/${action.username}`, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.updateProfileSuccess(res.response.payload)),

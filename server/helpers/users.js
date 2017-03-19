@@ -120,7 +120,7 @@ const getUsers = (req, reply) => {
  * @returns {undefined}
  */
 const setUserRole = (req, reply) => {
-    User.findOneAndUpdate({username: req.payload.username}, {admin: req.payload.admin}, (err) => {
+    User.findOneAndUpdate({username: req.params.username}, {admin: req.payload.admin}, (err) => {
         if (err) {
             throw Boom.badImplementation(err);
         }
@@ -129,7 +129,7 @@ const setUserRole = (req, reply) => {
             payload: {
                 user: {
                     admin: req.payload.admin,
-                    username: req.payload.username
+                    username: req.params.username
                 }
             }
         })
@@ -144,7 +144,7 @@ const setUserRole = (req, reply) => {
  * @returns {undefined}
  */
 const updateUser = (req, reply) => {
-    if (req.auth.credentials.username === req.payload.username) {
+    if (req.auth.credentials.username === req.params.username) {
         if (req.payload.password) {
             BCryptJS.genSalt(Config.SESSION.SALT_NUMBER, (err, salt) => {
                 if (err) {
@@ -156,7 +156,7 @@ const updateUser = (req, reply) => {
                         throw Boom.badImplementation(err);
                     }
 
-                    User.findOneAndUpdate({username: req.payload.username}, Object.assign(req.payload, {password: hash}), {new: true}, (err, user) => {
+                    User.findOneAndUpdate({username: req.params.username}, Object.assign(req.payload, {password: hash}), {new: true}, (err, user) => {
                         if (err) {
                             throw Boom.badImplementation(err);
                         }
@@ -171,7 +171,7 @@ const updateUser = (req, reply) => {
                 });
             });
         } else {
-            User.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, user) => {
+            User.findOneAndUpdate({username: req.params.username}, req.payload, {new: true}, (err, user) => {
                 if (err) {
                     throw Boom.badImplementation(err);
                 }
@@ -215,7 +215,7 @@ const verifyUniqueUser = (req, reply) => {
                 reply(Boom.conflict('Email taken'));
             }
         } else {
-            reply(req.payload);   
+            reply(req.payload);
         }
     });
 };

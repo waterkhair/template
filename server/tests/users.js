@@ -173,16 +173,17 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Update 1st User', (done) => {
+        const url = ROUTES.USERS.UPDATE_USER.replace('{username}', username1);
+
         hapiServer.inject({
             headers: createRequestHeaders(token1),
             method: 'PUT',
             payload: {
                 email: `testtest@abc${username1}.com`,
                 name: `Testtest ${username1}`,
-                password: 'testtest',
-                username: username1
+                password: 'testtest'
             },
-            url: ROUTES.USERS.UPDATE_USER
+            url
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -208,14 +209,15 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Set Admin Role To 2nd User', (done) => {
+        const url = ROUTES.USERS.SET_USER_ROLE.replace('{username}', username2);
+
         hapiServer.inject({
             headers: createRequestHeaders(token),
             method: 'PUT',
             payload: {
-                admin: true,
-                username: username2
+                admin: true
             },
-            url: ROUTES.USERS.SET_USER_ROLE
+            url
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 

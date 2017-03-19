@@ -49,7 +49,7 @@ const DeleteUserRoute = {
         ],
         validate: {
             headers: HeadersValidations.authorization,
-            params: UsersValidations.deleteUser
+            params: UsersValidations.usernameParam
         }
     },
     method: 'DELETE',
@@ -102,6 +102,7 @@ const SetUserRoleRoute = {
         ],
         validate: {
             headers: HeadersValidations.authorization,
+            params: UsersValidations.usernameParam,
             payload: UsersValidations.setUserRole
         }
     },
@@ -130,6 +131,7 @@ const UpdateUserRoute = {
         ],
         validate: {
             headers: HeadersValidations.authorization,
+            params: UsersValidations.usernameParam,
             payload: UsersValidations.updateUser
         }
     },

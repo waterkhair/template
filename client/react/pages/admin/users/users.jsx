@@ -22,10 +22,10 @@ class UsersPage extends React.Component {
     onUserAdminToggleHandle(username, admin) {
         this.props.setUserRole({
             data: {
-                admin,
-                username
+                admin
             },
-            token: this.props.sessionState.token
+            token: this.props.sessionState.token,
+            username
         });
     }
 

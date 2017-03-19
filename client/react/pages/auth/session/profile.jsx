@@ -61,7 +61,6 @@ class ProfilePage extends React.Component {
     onUpdateProfileHandler(event) {
         if (this.state.emailEdited || this.state.nameEdited || this.state.passwordEdited) {
             const data = {
-                username: event.target.username_update.value
             };
 
             if (this.state.emailEdited) {
@@ -78,7 +77,8 @@ class ProfilePage extends React.Component {
 
             this.props.updateProfile({
                 data,
-                token: this.props.sessionState.token
+                token: this.props.sessionState.token,
+                username: event.target.username_update.value
             });
         }
     }

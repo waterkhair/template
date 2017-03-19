@@ -27,7 +27,7 @@ const setUserRole = (action$) => action$
     .ofType(ACTION_TYPES.USERS.SET_USER_ROLE)
     .switchMap((action) =>
         Observable.ajax
-            .put(Config.API.ROUTES.USERS.SET_USER_ROLE, action.data, createRequestHeaders(action.token))
+            .put(`${Config.API.ROUTES.USERS.SET_USER_ROLE}/${action.username}`, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(UsersActions.setUserRoleSuccess(res.response.payload)),

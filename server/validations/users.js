@@ -26,32 +26,13 @@ const createUser = Joi.object({
         .description('Username (i.e. test)')
 });
 
-// Validates user delete schema
-const deleteUser = Joi.object({
-    username: Joi
-        .string()
-        .alphanum()
-        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
-        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
-        .required()
-        .description('Username (i.e. test)')
-});
-
 // Validates user's role set schema
 const setUserRole = Joi.object({
     admin: Joi
         .boolean()
         .required()
-        .description('Admin role (i.e. true or false)'),
-    username: Joi
-        .string()
-        .alphanum()
-        .min(Config.SESSION.USER.USERNAME_MIN_CHARS)
-        .max(Config.SESSION.USER.USERNAME_MAX_CHARS)
-        .required()
-        .description('Username (i.e. test)')
+        .description('Admin role (i.e. true or false)')
 });
-
 
 // Validates user update schema
 const updateUser = Joi.object({
@@ -64,7 +45,11 @@ const updateUser = Joi.object({
         .description('User full name (i.e. Test User)'),
     password: Joi
         .string()
-        .description('User password (i.e. testpass)'),
+        .description('User password (i.e. testpass)')
+});
+
+// Validates username param
+const usernameParam = Joi.object({
     username: Joi
         .string()
         .alphanum()
@@ -76,7 +61,7 @@ const updateUser = Joi.object({
 
 module.exports = {
     createUser,
-    deleteUser,
     setUserRole,
-    updateUser
+    updateUser,
+    usernameParam
 };
