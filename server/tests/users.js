@@ -277,7 +277,7 @@ LabScript.experiment('Users -', () => {
         });
     });
 
-    LabScript.test('Delete 1st User', (done) => {
+    LabScript.test('Close 1st User Account', (done) => {
         hapiServer.inject({
             headers: createRequestHeaders(token1),
             method: 'DELETE',
@@ -296,7 +296,7 @@ LabScript.experiment('Users -', () => {
         });
     });
 
-    LabScript.test('Delete 2nd User', (done) => {
+    LabScript.test('Close 2nd User Account', (done) => {
         hapiServer.inject({
             headers: createRequestHeaders(token2),
             method: 'DELETE',
@@ -315,7 +315,7 @@ LabScript.experiment('Users -', () => {
         });
     });
 
-    LabScript.test('Delete 3rd User', (done) => {
+    LabScript.test('Close 3rd User Account', (done) => {
         hapiServer.inject({
             headers: createRequestHeaders(token3),
             method: 'DELETE',
