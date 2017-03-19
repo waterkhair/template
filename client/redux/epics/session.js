@@ -8,7 +8,6 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/switchMap';
 import {createErrorNotification, createNotification} from '../../helpers/notifications';
 import ACTION_TYPES from '../../const/action_types';
-import Config from '../../config/main';
 import ERRORS from '../../const/errors';
 import NOTIFICATIONS from '../../const/notifications';
 import {Observable} from 'rxjs/Observable';
@@ -29,7 +28,7 @@ const getSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.GET_SETTINGS)
     .switchMap((action) =>
         Observable.ajax
-            .get(window.config.API.ROUTES.SETTINGS.GET_SETTINGS, createRequestHeaders(action.token))
+            .get(`${window.config.API.ROUTES.SETTINGS.GET_SETTINGS}/${action.username}`, createRequestHeaders(action.token))
             .map((res) => SessionActions.getSettingsSuccess(res.response.payload))
             .catch(createErrorNotification(ERRORS.CODES.GET_SETTINGS_ERROR, ERRORS.TYPES.SESSION))
     );
@@ -77,7 +76,7 @@ const updateProfile = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_PROFILE)
     .switchMap((action) =>
         Observable.ajax
-            .put(`${Config.API.ROUTES.USERS.UPDATE_USER}/${action.username}`, action.data, createRequestHeaders(action.token))
+            .put(`${window.config.API.ROUTES.USERS.UPDATE_USER}/${action.username}`, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.updateProfileSuccess(res.response.payload)),
@@ -90,7 +89,7 @@ const updateSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_SETTINGS)
     .switchMap((action) =>
         Observable.ajax
-            .put(Config.API.ROUTES.SETTINGS.UPDATE_SETTINGS, action.data, createRequestHeaders(action.token))
+            .put(`${window.config.API.ROUTES.SETTINGS.UPDATE_SETTINGS}/${action.username}`, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.updateSettingsSuccess(res.response.payload)),

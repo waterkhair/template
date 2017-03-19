@@ -10,20 +10,24 @@ const Boom = require('boom'),
  * @returns {undefined}
  */
 const getSettings = (req, reply) => {
-    Settings.findOne({username: req.auth.credentials.username}, (err, settings) => {
-        if (err) {
-            reply(Boom.badImplementation(err));
-        }
-
-        reply({
-            payload: {
-                settings: {
-                    theme: settings.theme
-                }
+    if (req.auth.credentials.username === req.params.username) {
+        Settings.findOne({username: req.auth.credentials.username}, (err, settings) => {
+            if (err) {
+                reply(Boom.badImplementation(err));
             }
-        })
-        .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
-    });
+
+            reply({
+                payload: {
+                    settings: {
+                        theme: settings.theme
+                    }
+                }
+            })
+            .code(HTTP_STATUS_CODES.SUCCESS_200_OK);
+        });
+    } else {
+        reply(Boom.badData('Incorrect settings username'));
+    }
 };
 
 /**
@@ -33,8 +37,8 @@ const getSettings = (req, reply) => {
  * @returns {undefined}
  */
 const updateSettings = (req, reply) => {
-    if (req.auth.credentials.username === req.payload.username) {
-        Settings.findOneAndUpdate({username: req.payload.username}, req.payload, {new: true}, (err, settings) => {
+    if (req.auth.credentials.username === req.params.username) {
+        Settings.findOneAndUpdate({username: req.params.username}, req.payload, {new: true}, (err, settings) => {
             if (err) {
                 throw Boom.badImplementation(err);
             }

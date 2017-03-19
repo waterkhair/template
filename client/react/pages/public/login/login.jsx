@@ -19,7 +19,10 @@ class LoginPage extends React.Component {
 
     componentDidUpdate() {
         if (this.props.sessionState.isAuthenticated) {
-            this.props.getSettings({token: this.props.sessionState.token});
+            this.props.getSettings({
+                token: this.props.sessionState.token,
+                username: this.props.sessionState.credentials.username
+            });
             browserHistory.push(this.props.sessionState.navigation.loginLocation);
         }
     }

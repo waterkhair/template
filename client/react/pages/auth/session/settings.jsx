@@ -16,13 +16,13 @@ class SettingsPage extends React.Component {
 
     onSettingChangeHandler(event) {
         const data = {
-            theme: event.target.value,
-            username: this.props.sessionState.credentials.username
+            theme: event.target.value
         };
 
         this.props.updateSettings({
             data,
-            token: this.props.sessionState.token
+            token: this.props.sessionState.token,
+            username: this.props.sessionState.credentials.username
         });
     }
 

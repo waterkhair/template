@@ -39,10 +39,12 @@ LabScript.experiment('Settings -', () => {
     });
 
     LabScript.test('Get Settings', (done) => {
+        const url = ROUTES.SETTINGS.GET_SETTINGS.replace('{username}', username);
+
         hapiServer.inject({
             headers: createRequestHeaders(token),
             method: 'GET',
-            url: ROUTES.SETTINGS.GET_SETTINGS
+            url
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -59,14 +61,15 @@ LabScript.experiment('Settings -', () => {
     });
 
     LabScript.test('Update Settings', (done) => {
+        const url = ROUTES.SETTINGS.UPDATE_SETTINGS.replace('{username}', username);
+
         hapiServer.inject({
             headers: createRequestHeaders(token),
             method: 'PUT',
             payload: {
-                theme: 'dark',
-                username
+                theme: 'dark'
             },
-            url: ROUTES.SETTINGS.UPDATE_SETTINGS
+            url
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -84,10 +87,12 @@ LabScript.experiment('Settings -', () => {
     });
 
     LabScript.test('Get Updated Settings', (done) => {
+        const url = ROUTES.SETTINGS.GET_SETTINGS.replace('{username}', username);
+
         hapiServer.inject({
             headers: createRequestHeaders(token),
             method: 'GET',
-            url: ROUTES.SETTINGS.GET_SETTINGS
+            url
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 

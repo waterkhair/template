@@ -4,8 +4,8 @@ module.exports = {
         LOGIN: '/session'
     },
     SETTINGS: {
-        GET_SETTINGS: '/settings',
-        UPDATE_SETTINGS: '/settings'
+        GET_SETTINGS: '/settings/{username}',
+        UPDATE_SETTINGS: '/settings/{username}'
     },
     USERS: {
         CREATE_USER: '/users/user',
