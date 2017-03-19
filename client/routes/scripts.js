@@ -5,6 +5,7 @@ const Path = require('path');
 const scriptsFilesPath = 'dist/scripts';
 const scriptsRoutePath = '/scripts/{path*}';
 
+// Scripts route
 const ScriptsRoute = {
     handler: {
         directory: {

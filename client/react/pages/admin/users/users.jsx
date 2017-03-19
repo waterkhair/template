@@ -16,10 +16,10 @@ class UsersPage extends React.Component {
 
         this.props.getUsers({token: this.props.sessionState.token});
 
-        this.onUserAdminToggle = this.onUserAdminToggleHandle.bind(this);
+        this.onUserAdminToggle = this.onUserAdminToggleHandler.bind(this);
     }
 
-    onUserAdminToggleHandle(username, admin) {
+    onUserAdminToggleHandler(username, admin) {
         this.props.setUserRole({
             data: {
                 admin

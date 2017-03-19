@@ -1,5 +1,6 @@
 // Modules
 import 'flexboxgrid';
+import {adminScopeValidator, userScopeValidator} from '../helpers/scope';
 import AboutPage from './pages/auth/about/about';
 import DefaultLayout from './layouts/default';
 import ErrorPage from './pages/public/error/error';
@@ -25,59 +26,19 @@ import reducers from '../redux/reducers/reducers';
 import {render} from 'react-dom';
 import {syncHistoryWithStore} from 'react-router-redux';
 
+// Create redux store with reducers, redux dev tool extension and epics
 const store = createStore(
     reducers,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     applyMiddleware(createEpicMiddleware(epics)));
+
+// Sync history with redux store
 const history = syncHistoryWithStore(browserHistory, store);
 
-const requireUserScope = (nextState, replace) => {
-    let sessionState = store.getState().session;
-
-    if (!sessionState.isAuthenticated) {
-        sessionState = Object.assign(sessionState, {
-            navigation: {
-                loginLocation: nextState.location.pathname
-            }
-        });
-
-        replace({
-            pathname: '/login',
-            state: {
-                nextPathname: nextState.location.pathname
-            }
-        });
-    }
-};
-
-const requireAdminScope = (nextState, replaceState) => {
-    let sessionState = store.getState().session;
-
-    if (!sessionState.isAuthenticated) {
-        sessionState = Object.assign(sessionState, {
-            navigation: {
-                loginLocation: nextState.location.pathname
-            }
-        });
-
-        replaceState({
-            pathname: '/login',
-            state: {
-                nextPathname: nextState.location.pathname
-            }
-        });
-    } else if (sessionState.credentials.scope !== 'admin') {
-        replaceState({
-            pathname: '/',
-            state: {
-                nextPathname: nextState.location.pathname
-            }
-        });
-    }
-};
-
+// PlugIn to fix the onClick delay issue for React
 injectTapEventPlugin();
 
+// Render React App on the app div
 render(
     <Provider
         store={store}>
@@ -87,7 +48,7 @@ render(
                 history={history}>
                 <Route
                     component={DefaultLayout}
-                    onEnter={requireUserScope}
+                    onEnter={userScopeValidator(store)}
                     path="/">
                     <IndexRoute
                         component={HomePage}
@@ -107,7 +68,7 @@ render(
                     <Route
                         component={UsersPage}
                         name="Users"
-                        onEnter={requireAdminScope}
+                        onEnter={adminScopeValidator(store)}
                         path="/users" />
                 </Route>
                 <Route

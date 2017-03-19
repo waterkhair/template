@@ -1,4 +1,9 @@
-module.exports = (config) => `<!DOCTYPE html>
+/**
+ * Creator of the initial HTML
+ * @param {config} config - Inject app configuration into UI
+ * @return {string} Returns the initial HTML of the App
+ */
+const indexCreator = (config) => `<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -19,3 +24,7 @@ module.exports = (config) => `<!DOCTYPE html>
         <script src="/scripts/bundle.js"></script>
     </body>
     </html>`;
+
+module.exports = {
+    indexCreator
+};

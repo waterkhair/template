@@ -15,10 +15,10 @@ class LoginPaper extends React.Component {
             value: 'sign-in'
         };
 
-        this.onTabChange = this.handleTabChange.bind(this);
+        this.onTabChange = this.onTabChangeHandler.bind(this);
     }
 
-    handleTabChange(value) {
+    onTabChangeHandler(value) {
         this.setState({
             value
         });

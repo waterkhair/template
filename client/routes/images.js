@@ -1,10 +1,11 @@
 // Modules
 const Path = require('path');
 
-// Scripts configuration
+// Images configuration
 const imagesFilesPath = 'dist/images';
 const imagesRoutePath = '/images/{path*}';
 
+// Images route
 const ImagesRoute = {
     handler: {
         directory: {

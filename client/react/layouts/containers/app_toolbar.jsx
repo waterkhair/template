@@ -17,18 +17,18 @@ class AppToolbar extends React.Component {
             drawerOpen: false
         };
 
-        this.drawerToggle = this.drawerToggleHandle.bind(this);
-        this.onDrawerRequestChange = this.onDrawerRequestChangeHandle.bind(this);
+        this.drawerToggle = this.drawerToggleHandler.bind(this);
+        this.onDrawerRequestChange = this.onDrawerRequestChangeHandler.bind(this);
         this.signOut = this.signOutHandle.bind(this);
     }
 
-    drawerToggleHandle() {
+    drawerToggleHandler() {
         this.setState({
             drawerOpen: !this.state.drawerOpen
         });
     }
 
-    onDrawerRequestChangeHandle(drawerOpen) {
+    onDrawerRequestChangeHandler(drawerOpen) {
         this.setState({
             drawerOpen
         });

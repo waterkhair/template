@@ -6,7 +6,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import {createErrorNotification, createNotification} from '../../helpers/notifications';
 import ACTION_TYPES from '../../const/action_types';
-import Config from '../../config/main';
 import ERRORS from '../../const/errors';
 import NOTIFICATIONS from '../../const/notifications';
 import {Observable} from 'rxjs/Observable';
@@ -18,7 +17,7 @@ const getUsers = (action$) => action$
     .ofType(ACTION_TYPES.USERS.GET_USERS)
     .switchMap((action) =>
         Observable.ajax
-            .get(Config.API.ROUTES.USERS.GET_USERS, createRequestHeaders(action.token))
+            .get(window.config.API.ROUTES.USERS.GET_USERS, createRequestHeaders(action.token))
             .map((res) => UsersActions.getUsersSuccess(res.response.payload))
             .catch(createErrorNotification(ERRORS.CODES.GET_USERS_ERROR, ERRORS.TYPES.USERS))
     );
@@ -27,7 +26,7 @@ const setUserRole = (action$) => action$
     .ofType(ACTION_TYPES.USERS.SET_USER_ROLE)
     .switchMap((action) =>
         Observable.ajax
-            .put(`${Config.API.ROUTES.USERS.SET_USER_ROLE}/${action.username}`, action.data, createRequestHeaders(action.token))
+            .put(`${window.config.API.ROUTES.USERS.SET_USER_ROLE}/${action.username}`, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(UsersActions.setUserRoleSuccess(res.response.payload)),

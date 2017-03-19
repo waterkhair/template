@@ -1,10 +1,11 @@
 // Modules
 const Path = require('path');
 
-// Scripts configuration
+// CSS configuration
 const cssFilesPath = 'dist/css';
 const cssRoutePath = '/css/{path*}';
 
+// CSS route
 const CssRoute = {
     handler: {
         directory: {

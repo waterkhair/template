@@ -1,12 +1,15 @@
 // Modules
 const Config = require('../config/main'),
-    index = require('../helpers/index');
+    {indexCreator} = require('../helpers/index');
 
+// Index route
 const IndexRoute = {
     handler: (req, reply) => {
-        reply(index({
+        reply(indexCreator({
             API: Config.API,
-            APP: Config.APP
+            APP: Config.APP,
+            ERRORS: Config.ERRORS,
+            NOTIFICATIONS: Config.NOTIFICATIONS
         }));
     },
     method: 'GET',
