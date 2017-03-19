@@ -278,13 +278,12 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Close 1st User Account', (done) => {
+        const url = ROUTES.USERS.DELETE_USER.replace('{username}', username1);
+
         hapiServer.inject({
             headers: createRequestHeaders(token1),
             method: 'DELETE',
-            payload: {
-                username: username1
-            },
-            url: ROUTES.USERS.DELETE_USER
+            url
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -297,13 +296,12 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Close 2nd User Account', (done) => {
+        const url = ROUTES.USERS.DELETE_USER.replace('{username}', username2);
+
         hapiServer.inject({
             headers: createRequestHeaders(token2),
             method: 'DELETE',
-            payload: {
-                username: username2
-            },
-            url: ROUTES.USERS.DELETE_USER
+            url
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -316,13 +314,12 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Close 3rd User Account', (done) => {
+        const url = ROUTES.USERS.DELETE_USER.replace('{username}', username3);
+
         hapiServer.inject({
             headers: createRequestHeaders(token3),
             method: 'DELETE',
-            payload: {
-                username: username3
-            },
-            url: ROUTES.USERS.DELETE_USER
+            url
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
