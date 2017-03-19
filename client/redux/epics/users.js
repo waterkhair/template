@@ -13,6 +13,11 @@ import UsersActions from '../actions/users';
 import {combineEpics} from 'redux-observable';
 import {createRequestHeaders} from '../../helpers/headers';
 
+/**
+ * Epic handler for getting all Users
+ * @param {Observable} action$ - Observable action
+ * @return {Observable} Returns an Observable action
+ */
 const getUsers = (action$) => action$
     .ofType(ACTION_TYPES.USERS.GET_USERS)
     .switchMap((action) =>
@@ -22,6 +27,11 @@ const getUsers = (action$) => action$
             .catch(createErrorNotification(ERRORS.CODES.GET_USERS_ERROR, ERRORS.TYPES.USERS))
     );
 
+/**
+ * Epic handler for setting a User's Role
+ * @param {Observable} action$ - Observable action
+ * @return {Observable} Returns an Observable action
+ */
 const setUserRole = (action$) => action$
     .ofType(ACTION_TYPES.USERS.SET_USER_ROLE)
     .switchMap((action) =>
@@ -30,7 +40,7 @@ const setUserRole = (action$) => action$
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(UsersActions.setUserRoleSuccess(res.response.payload)),
-                    createNotification(ACTION_TYPES.SESSION.SIGN_IN_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Updated'))
+                    createNotification(ACTION_TYPES.SESSION.SIGN_IN_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'User role updated'))
             )
             .catch(createErrorNotification(ERRORS.CODES.SET_USER_ROLE_ERROR, ERRORS.TYPES.USERS))
     );

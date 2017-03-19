@@ -1,8 +1,7 @@
 // Modules
+import {FIRST_INDEX} from '../../../const/utils';
 import React from 'react';
 import Snackbar from 'material-ui/Snackbar';
-
-const FIRST_INDEX = 0;
 
 class NotificationsSnackbar extends React.Component {
     getNotifications() {

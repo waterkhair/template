@@ -1,4 +1,5 @@
 // Modules
+import {FIRST_INDEX} from '../../../../const/utils';
 import LoginPaper from './containers/login_paper';
 import NotificationsActions from '../../../../redux/actions/notifications';
 import NotificationsSnackbar from '../../../layouts/containers/notifications_snackbar';
@@ -7,8 +8,6 @@ import SessionActions from '../../../../redux/actions/session';
 import bindActionCreators from 'redux/lib/bindActionCreators';
 import browserHistory from 'react-router/lib/browserHistory';
 import connect from 'react-redux/lib/connect/connect';
-
-const FIRST_INDEX = 0;
 
 class LoginPage extends React.Component {
     constructor(props) {

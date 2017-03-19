@@ -15,6 +15,11 @@ import SessionActions from '../actions/session';
 import {combineEpics} from 'redux-observable';
 import {createRequestHeaders} from '../../helpers/headers';
 
+/**
+ * Epic handler for closing a User's Profile Account
+ * @param {Observable} action$ - Observable action
+ * @return {Observable} Returns an Observable action
+ */
 const closeProfile = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.CLOSE_PROFILE)
     .switchMap((action) =>
@@ -24,6 +29,11 @@ const closeProfile = (action$) => action$
             .catch(createErrorNotification(ERRORS.CODES.CLOSE_PROFILE_ERROR, ERRORS.TYPES.SESSION))
     );
 
+/**
+ * Epic handler for getting the Settings of the current User
+ * @param {Observable} action$ - Observable action
+ * @return {Observable} Returns an Observable action
+ */
 const getSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.GET_SETTINGS)
     .switchMap((action) =>
@@ -33,6 +43,11 @@ const getSettings = (action$) => action$
             .catch(createErrorNotification(ERRORS.CODES.GET_SETTINGS_ERROR, ERRORS.TYPES.SESSION))
     );
 
+/**
+ * Epic handler for Signing In a User's Session
+ * @param {Observable} action$ - Observable action
+ * @return {Observable} Returns an Observable action
+ */
 const signIn = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_IN)
     .switchMap((action) =>
@@ -46,6 +61,11 @@ const signIn = (action$) => action$
             .catch(createErrorNotification(ERRORS.CODES.SIGN_IN_ERROR, ERRORS.TYPES.SESSION))
     );
 
+/**
+ * Epic handler for Signing Out a Users' Session
+ * @param {Observable} action$ - Observable action
+ * @return {Observable} Returns an Observable action
+ */
 const signOut = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_OUT)
     .switchMap(() =>
@@ -59,6 +79,11 @@ const signOut = (action$) => action$
             .catch(createErrorNotification(ERRORS.CODES.SIGN_OUT_ERROR, ERRORS.TYPES.SESSION))
     );
 
+/**
+ * Epic handler for signing up a User's Profile Account
+ * @param {Observable} action$ - Observable action
+ * @return {Observable} Returns an Observable action
+ */
 const signUp = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.SIGN_UP)
     .switchMap((action) =>
@@ -72,6 +97,11 @@ const signUp = (action$) => action$
             .catch(createErrorNotification(ERRORS.CODES.SIGN_UP_ERROR, ERRORS.TYPES.SESSION))
     );
 
+/**
+ * Epic handler for updating a User's Profile Account
+ * @param {Observable} action$ - Observable action
+ * @return {Observable} Returns an Observable action
+ */
 const updateProfile = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_PROFILE)
     .switchMap((action) =>
@@ -80,11 +110,16 @@ const updateProfile = (action$) => action$
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.updateProfileSuccess(res.response.payload)),
-                    createNotification(ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Updated'))
+                    createNotification(ACTION_TYPES.SESSION.UPDATE_PROFILE_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Profile updated'))
             )
             .catch(createErrorNotification(ERRORS.CODES.UPDATE_PROFILE_ERROR, ERRORS.TYPES.SESSION))
     );
 
+/**
+ * Epic handler for updating a User's settings
+ * @param {Observable} action$ - Observable action
+ * @return {Observable} Returns an Observable action
+ */
 const updateSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.UPDATE_SETTINGS)
     .switchMap((action) =>
@@ -93,7 +128,7 @@ const updateSettings = (action$) => action$
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(SessionActions.updateSettingsSuccess(res.response.payload)),
-                    createNotification(ACTION_TYPES.SESSION.UPDATE_SETTINGS_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Updated!'))
+                    createNotification(ACTION_TYPES.SESSION.UPDATE_SETTINGS_SUCCESS, NOTIFICATIONS.TYPES.SESSION, 'Settings updated'))
             )
             .catch(createErrorNotification(ERRORS.CODES.UPDATE_SETTINGS_ERROR, ERRORS.TYPES.SESSION))
     );

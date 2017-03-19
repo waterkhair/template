@@ -1,5 +1,6 @@
 // Modules
 import AppToolbar from './containers/app_toolbar';
+import {FIRST_INDEX} from '../../const/utils';
 import NotificationsActions from '../../redux/actions/notifications';
 import NotificationsSnackbar from './containers/notifications_snackbar';
 import Paper from 'material-ui/Paper';
@@ -10,8 +11,6 @@ import connect from 'react-redux/lib/connect/connect';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import muiThemeable from 'material-ui/styles/muiThemeable';
-
-const FIRST_INDEX = 0;
 
 class DefaultLayout extends React.Component {
     constructor(props) {

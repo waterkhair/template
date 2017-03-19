@@ -1,9 +1,11 @@
 // Modules
+import {FIRST_INDEX, NEXT_INDEX} from '../../const/utils';
 import ACTION_TYPES from '../../const/action_types';
 
-const FIRST_INDEX = 0;
-const NEXT_INDEX = 1;
-
+/**
+ * Creates the initial notifications redux state
+ * @return {object} Returns initial notifications redux state
+ */
 const getInitialState = () => Object.assign({}, {
     notifications: []
 });
