@@ -45,6 +45,13 @@ class ProfileForm extends React.Component {
                     label="Update"
                     primary={true}
                     type="submit" />
+                <RaisedButton
+                    className="form-button"
+                    fullWidth={true}
+                    label="Close Account"
+                    onClick={this.props.onCloseProfile}
+                    primary={true}
+                    type="button" />
             </form>
         );
     }

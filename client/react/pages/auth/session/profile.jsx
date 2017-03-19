@@ -15,11 +15,19 @@ class ProfilePage extends React.Component {
             passwordEdited: false
         };
 
-        this.onProfileEdited = this.onProfileEditedHandle.bind(this);
-        this.onUpdateProfile = this.onUpdateProfileHandle.bind(this);
+        this.onCloseProfile = this.onCloseProfileHandler.bind(this);
+        this.onProfileEdited = this.onProfileEditedHandler.bind(this);
+        this.onUpdateProfile = this.onUpdateProfileHandler.bind(this);
     }
 
-    onProfileEditedHandle(field) {
+    onCloseProfileHandler() {
+        this.props.closeProfile({
+            token: this.props.sessionState.token,
+            username: this.props.sessionState.credentials.username
+        });
+    }
+
+    onProfileEditedHandler(field) {
         switch (field) {
         case 'email':
             this.setState({
@@ -50,7 +58,7 @@ class ProfilePage extends React.Component {
         }
     }
 
-    onUpdateProfileHandle(event) {
+    onUpdateProfileHandler(event) {
         if (this.state.emailEdited || this.state.nameEdited || this.state.passwordEdited) {
             const data = {
                 username: event.target.username_update.value
@@ -82,6 +90,7 @@ class ProfilePage extends React.Component {
                     Profile
                 </h1>
                 <ProfileForm
+                    onCloseProfile={this.onCloseProfile}
                     onProfileEdited={this.onProfileEdited}
                     onUpdateProfile={this.onUpdateProfile}
                     user={this.props.sessionState.credentials} />
@@ -99,6 +108,7 @@ const mapStateToProps = (state) => {
 };
 
 const matchDispatchToProps = (dispatch) => bindActionCreators({
+    closeProfile: SessionActions.closeProfile,
     updateProfile: SessionActions.updateProfile
 }, dispatch);
 

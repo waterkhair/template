@@ -62,13 +62,13 @@ const createUser = (req, reply) => {
  * @returns {undefined}
  */
 const deleteUser = (req, reply) => {
-    if (req.auth.credentials.username === req.payload.username) {
-        User.findOneAndRemove({username: req.payload.username}, (err) => {
+    if (req.auth.credentials.username === req.params.username || req.auth.credentials.admin) {
+        User.findOneAndRemove({username: req.params.username}, (err) => {
             if (err) {
                 throw Boom.badImplementation(err);
             }
 
-            Settings.findOneAndRemove({username: req.payload.username}, (err) => {
+            Settings.findOneAndRemove({username: req.params.username}, (err) => {
                 if (err) {
                     throw Boom.badImplementation(err);
                 }

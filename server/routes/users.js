@@ -49,7 +49,7 @@ const DeleteUserRoute = {
         ],
         validate: {
             headers: HeadersValidations.authorization,
-            payload: UsersValidations.deleteUser
+            params: UsersValidations.deleteUser
         }
     },
     method: 'DELETE',

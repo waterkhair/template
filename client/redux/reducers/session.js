@@ -57,6 +57,7 @@ export default (state = initialState(), action) => {
             }
         };
     }
+    case ACTION_TYPES.SESSION.CLOSE_PROFILE_SUCCESS:
     case ACTION_TYPES.SESSION.SIGN_OUT_SUCCESS:
         return initialState();
     default:

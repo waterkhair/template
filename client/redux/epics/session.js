@@ -16,6 +16,15 @@ import SessionActions from '../actions/session';
 import {combineEpics} from 'redux-observable';
 import {createRequestHeaders} from '../../helpers/headers';
 
+const closeProfile = (action$) => action$
+    .ofType(ACTION_TYPES.SESSION.CLOSE_PROFILE)
+    .switchMap((action) =>
+        Observable.ajax
+            .delete(`${window.config.API.ROUTES.USERS.DELETE_USER}/${action.username}`, createRequestHeaders(action.token))
+            .map((res) => SessionActions.closeProfileSuccess(res.response.payload))
+            .catch(createErrorNotification(ERRORS.CODES.CLOSE_PROFILE_ERROR, ERRORS.TYPES.SESSION))
+    );
+
 const getSettings = (action$) => action$
     .ofType(ACTION_TYPES.SESSION.GET_SETTINGS)
     .switchMap((action) =>
@@ -91,6 +100,7 @@ const updateSettings = (action$) => action$
     );
 
 export default combineEpics(
+    closeProfile,
     getSettings,
     signIn,
     signOut,
