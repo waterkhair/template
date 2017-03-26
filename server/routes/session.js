@@ -24,7 +24,7 @@ const LoginRoute = {
         }
     },
     method: 'POST',
-    path: Config.ROUTES.SESSION.LOGIN
+    path: Config.ROUTES.SESSION
 };
 
 module.exports = {

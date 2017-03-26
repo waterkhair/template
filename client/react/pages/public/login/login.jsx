@@ -6,7 +6,6 @@ import NotificationsSnackbar from '../../../layouts/containers/notifications_sna
 import React from 'react';
 import SessionActions from '../../../../redux/actions/session';
 import bindActionCreators from 'redux/lib/bindActionCreators';
-import browserHistory from 'react-router/lib/browserHistory';
 import connect from 'react-redux/lib/connect/connect';
 
 class LoginPage extends React.Component {
@@ -22,7 +21,9 @@ class LoginPage extends React.Component {
                 token: this.props.sessionState.token,
                 username: this.props.sessionState.credentials.username
             });
-            browserHistory.push(this.props.sessionState.navigation.loginLocation);
+            this.props.history.push({
+                pathname: this.props.sessionState.navigation.loginLocation
+            });
         }
     }
 

@@ -76,7 +76,7 @@ LabScript.experiment('Users -', () => {
                 password: password1,
                 username: username1
             },
-            url: ROUTES.USERS.CREATE_USER
+            url: ROUTES.USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -111,7 +111,7 @@ LabScript.experiment('Users -', () => {
                 password: password2,
                 username: username2
             },
-            url: ROUTES.USERS.CREATE_USER
+            url: ROUTES.USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -146,7 +146,7 @@ LabScript.experiment('Users -', () => {
                 password: password3,
                 username: username3
             },
-            url: ROUTES.USERS.CREATE_USER
+            url: ROUTES.USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -173,7 +173,7 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Update 1st User', (done) => {
-        const url = ROUTES.USERS.UPDATE_USER.replace('{username}', username1);
+        const url = ROUTES.USER.replace('{username}', username1);
 
         hapiServer.inject({
             headers: createRequestHeaders(token1),
@@ -209,7 +209,7 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Set Admin Role To 2nd User', (done) => {
-        const url = ROUTES.USERS.SET_USER_ROLE.replace('{username}', username2);
+        const url = ROUTES.ROLE.replace('{username}', username2);
 
         hapiServer.inject({
             headers: createRequestHeaders(token),
@@ -235,7 +235,7 @@ LabScript.experiment('Users -', () => {
         hapiServer.inject({
             headers: createRequestHeaders(token),
             method: 'GET',
-            url: ROUTES.USERS.GET_USERS
+            url: ROUTES.USER
         }, (response) => {
             const {payload} = JSON.parse(response.payload);
 
@@ -280,7 +280,7 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Close 1st User Account', (done) => {
-        const url = ROUTES.USERS.DELETE_USER.replace('{username}', username1);
+        const url = ROUTES.USER.replace('{username}', username1);
 
         hapiServer.inject({
             headers: createRequestHeaders(token1),
@@ -298,7 +298,7 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Close 2nd User Account', (done) => {
-        const url = ROUTES.USERS.DELETE_USER.replace('{username}', username2);
+        const url = ROUTES.USER.replace('{username}', username2);
 
         hapiServer.inject({
             headers: createRequestHeaders(token2),
@@ -316,7 +316,7 @@ LabScript.experiment('Users -', () => {
     });
 
     LabScript.test('Close 3rd User Account', (done) => {
-        const url = ROUTES.USERS.DELETE_USER.replace('{username}', username3);
+        const url = ROUTES.USER.replace('{username}', username3);
 
         hapiServer.inject({
             headers: createRequestHeaders(token3),

@@ -30,7 +30,7 @@ const GetSettingsRoute = {
         }
     },
     method: 'GET',
-    path: Config.ROUTES.SETTINGS.GET_SETTINGS
+    path: Config.ROUTES.SETTINGS
 };
 
 // Route to handle requests to update the settings of the current user
@@ -59,7 +59,7 @@ const UpdateSettingsRoute = {
         }
     },
     method: 'PUT',
-    path: Config.ROUTES.SETTINGS.UPDATE_SETTINGS
+    path: Config.ROUTES.SETTINGS
 };
 
 module.exports = {

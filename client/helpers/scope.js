@@ -1,54 +1,37 @@
+// Modules
+import DefaultLayout from '../react/layouts/default';
+import HomePage from '../react/pages/auth/home/home';
+import LoginPage from '../react/pages/public/login/login';
+import React from 'react';
+
 /**
  * Creates a admin scope validator
  * @param {object} store - Redux store
- * @return {undefined}
+ * @param {ReactComponent} Component - React component
+ * @return {ReactComponent} - Returns ReactComponent
  */
-export const adminScopeValidator = (store) => (nextState, replaceState) => {
-    let sessionState = store.getState().session;
+export const adminScopeValidator = (store, Component) => (mapProps) => {
+    const sessionState = store.getState().session;
 
-    if (!sessionState.isAuthenticated) {
-        sessionState = Object.assign(sessionState, {
-            navigation: {
-                loginLocation: nextState.location.pathname
-            }
-        });
-
-        replaceState({
-            pathname: '/login',
-            state: {
-                nextPathname: nextState.location.pathname
-            }
-        });
-    } else if (sessionState.credentials.scope !== 'admin') {
-        replaceState({
-            pathname: '/',
-            state: {
-                nextPathname: nextState.location.pathname
-            }
-        });
+    if (sessionState.credentials.scope === 'admin') {
+        return <DefaultLayout {...mapProps} children={<Component {...mapProps} />} />;
     }
+
+    return userScopeValidator(store, HomePage);
 };
 
 /**
  * Creates a user scope validator
  * @param {object} store - Redux store
- * @return {undefined}
+ * @param {ReactComponent} Component - React component
+ * @return {ReactComponent} - Returns ReactComponent
  */
-export const userScopeValidator = (store) => (nextState, replaceState) => {
-    let sessionState = store.getState().session;
+export const userScopeValidator = (store, Component) => (mapProps) => {
+    const sessionState = store.getState().session;
 
-    if (!sessionState.isAuthenticated) {
-        sessionState = Object.assign(sessionState, {
-            navigation: {
-                loginLocation: nextState.location.pathname
-            }
-        });
-
-        replaceState({
-            pathname: '/login',
-            state: {
-                nextPathname: nextState.location.pathname
-            }
-        });
+    if (sessionState.isAuthenticated) {
+        return <DefaultLayout {...mapProps} children={<Component {...mapProps} />} />;
     }
+
+    return <LoginPage {...mapProps} />;
 };

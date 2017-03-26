@@ -22,7 +22,7 @@ const getUsers = (action$) => action$
     .ofType(ACTION_TYPES.USERS.GET_USERS)
     .switchMap((action) =>
         Observable.ajax
-            .get(window.config.API.ROUTES.USERS.GET_USERS, createRequestHeaders(action.token))
+            .get(window.config.API.ROUTES.USER, createRequestHeaders(action.token))
             .map((res) => UsersActions.getUsersSuccess(res.response.payload))
             .catch(createErrorNotification(ERRORS.CODES.GET_USERS_ERROR, ERRORS.TYPES.USERS))
     );
@@ -36,7 +36,7 @@ const setUserRole = (action$) => action$
     .ofType(ACTION_TYPES.USERS.SET_USER_ROLE)
     .switchMap((action) =>
         Observable.ajax
-            .put(`${window.config.API.ROUTES.USERS.SET_USER_ROLE}/${action.username}`, action.data, createRequestHeaders(action.token))
+            .put(`${window.config.API.ROUTES.ROLE}/${action.username}`, action.data, createRequestHeaders(action.token))
             .flatMap((res) =>
                 Observable.concat(
                     Observable.of(UsersActions.setUserRoleSuccess(res.response.payload)),

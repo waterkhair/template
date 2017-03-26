@@ -3,19 +3,12 @@ const host = 'http://localhost:3000';
 
 module.exports = {
     ROUTES: {
+        ROLE: `${host}/role`,
         SESSION: {
-            LOGIN: `${host}/session`
+            LOGIN: `${host}/session`,
+            LOGOUT: `${host}/logout`
         },
-        SETTINGS: {
-            GET_SETTINGS: `${host}/settings`,
-            UPDATE_SETTINGS: `${host}/settings`
-        },
-        USERS: {
-            CREATE_USER: `${host}/users/user`,
-            DELETE_USER: `${host}/users/user`,
-            GET_USERS: `${host}/users`,
-            SET_USER_ROLE: `${host}/users/role`,
-            UPDATE_USER: `${host}/users/user`
-        }
+        SETTINGS: `${host}/settings`,
+        USER: `${host}/user`
     }
 };

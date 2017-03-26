@@ -19,6 +19,14 @@ class DefaultLayout extends React.Component {
         this.removeNotification = this.removeNotificationHandler.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.sessionState.isAuthenticated) {
+            this.props.history.push({
+                pathname: '/'
+            });
+        }
+    }
+
     getChildContext() {
         const currentTheme = this.props.sessionState.settings.theme === 'dark' ? getMuiTheme(darkBaseTheme) : getMuiTheme();
 
@@ -34,10 +42,6 @@ class DefaultLayout extends React.Component {
     }
 
     render() {
-        if (!this.props.sessionState.isAuthenticated) {
-            window.location.reload(false);
-        }
-
         return (
             <div
                 className="row">
@@ -49,6 +53,7 @@ class DefaultLayout extends React.Component {
                         <AppToolbar
                             className="col-xs-12 col-ms-12 col-md-12 col-lg-12"
                             credentials={this.props.sessionState.credentials}
+                            history={this.props.history}
                             muiTheme={this.props.muiTheme}
                             signOutSuccess={this.props.signOutSuccess} />
                     </div>

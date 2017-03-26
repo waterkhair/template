@@ -1,6 +1,6 @@
 // Modules
 import AccountCircleIcon from 'material-ui/svg-icons/action/account-circle';
-import Link from 'react-router/lib/Link';
+import Link from 'react-router-dom/Link';
 import MenuItem from 'material-ui/MenuItem';
 import PowerSettingsNewIcon from 'material-ui/svg-icons/action/power-settings-new';
 import React from 'react';
@@ -36,7 +36,8 @@ class SessionMenu extends React.Component {
                 </Link>
                 <Link
                     className="no-text-decoration"
-                    onTouchTap={this.props.signOut}>
+                    onTouchTap={this.props.signOut}
+                    to="/">
                     <MenuItem
                         leftIcon={
                             <PowerSettingsNewIcon />

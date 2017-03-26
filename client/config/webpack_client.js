@@ -6,11 +6,17 @@ const AutoPrefixer = require('autoprefixer'),
     Webpack = require('webpack');
 
 // Webpack Server configuration
+const cssDestinationPath = './css/bundle.css';
+const extensions = [
+    '.js',
+    '.jsx',
+    '.css'
+];
+const filename = '[name].js';
+const outputDestinationFolder = '/../dist';
 const scriptBundleInputPaths = [
     Path.resolve(`${__dirname}/../react/app`)
 ];
-const cssDestinationPath = './css/bundle.css';
-const outputDestinationFolder = '/../dist';
 
 module.exports = {
     devtool: process.env.NODE_ENV === 'production' ? '' : 'source-map',
@@ -42,21 +48,18 @@ module.exports = {
             test: /\.css$/
         }]
     },
-    node: {
-        dns: 'empty',
-        net: 'empty'
-    },
     output: {
-        filename: '[name].js',
+        filename,
         path: Path.resolve(Path.join(__dirname, outputDestinationFolder))
     },
     plugins: [
         new ExtractTextPlugin(cssDestinationPath),
-        new Webpack.DefinePlugin({
+
+        /* New Webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
             }
-        }),
+        }),*/
         new Webpack.LoaderOptionsPlugin({
             options: {
                 postcss: () => [
@@ -64,16 +67,13 @@ module.exports = {
                     AutoPrefixer
                 ]
             }
-        }),
-        new Webpack.optimize.UglifyJsPlugin({
-            sourceMap: process.env.NODE_ENV !== 'production'
         })
+
+        /* New Webpack.optimize.UglifyJsPlugin({
+            sourceMap: process.env.NODE_ENV !== 'production'
+        })*/
     ],
     resolve: {
-        extensions: [
-            '.js',
-            '.jsx',
-            '.css'
-        ]
+        extensions
     }
 };

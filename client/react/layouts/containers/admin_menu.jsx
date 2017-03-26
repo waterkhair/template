@@ -1,6 +1,6 @@
 // Modules
 import GroupIcon from 'material-ui/svg-icons/social/group';
-import Link from 'react-router/lib/Link';
+import Link from 'react-router-dom/Link';
 import MenuItem from 'material-ui/MenuItem';
 import React from 'react';
 import Subheader from 'material-ui/Subheader';

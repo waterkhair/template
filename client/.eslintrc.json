@@ -42,6 +42,7 @@
                 ]
             }
         ],
+        "no-use-before-define": "off",
         "no-var": "off",
         "object-curly-newline": "off",
         "one-var": "off",

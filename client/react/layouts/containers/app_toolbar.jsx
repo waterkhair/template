@@ -7,7 +7,6 @@ import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import React from 'react';
 import SessionMenu from './session_menu';
 import UserMenu from './user_menu';
-import browserHistory from 'react-router/lib/browserHistory';
 
 class AppToolbar extends React.Component {
     constructor(props) {
@@ -36,7 +35,9 @@ class AppToolbar extends React.Component {
 
     signOutHandle() {
         this.props.signOutSuccess();
-        browserHistory.push('/');
+        this.props.history.push({
+            pathname: '/'
+        });
     }
 
     render() {

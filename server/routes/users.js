@@ -25,7 +25,7 @@ const CreateUserRoute = {
         }
     },
     method: 'POST',
-    path: Config.ROUTES.USERS.CREATE_USER
+    path: Config.ROUTES.USER
 };
 
 // Route to handle requests to delete a user
@@ -53,7 +53,7 @@ const DeleteUserRoute = {
         }
     },
     method: 'DELETE',
-    path: Config.ROUTES.USERS.DELETE_USER
+    path: Config.ROUTES.USER
 };
 
 // Route to handle requests to get the current user's role
@@ -79,7 +79,7 @@ const GetUsersRoute = {
         }
     },
     method: 'GET',
-    path: Config.ROUTES.USERS.GET_USERS
+    path: Config.ROUTES.USER
 };
 
 // Route to handle requests to set a user's role
@@ -107,7 +107,7 @@ const SetUserRoleRoute = {
         }
     },
     method: 'PUT',
-    path: Config.ROUTES.USERS.SET_USER_ROLE
+    path: Config.ROUTES.ROLE
 };
 
 // Route to handle requests to update a user
@@ -136,7 +136,7 @@ const UpdateUserRoute = {
         }
     },
     method: 'PUT',
-    path: Config.ROUTES.USERS.UPDATE_USER
+    path: Config.ROUTES.USER
 };
 
 module.exports = {
